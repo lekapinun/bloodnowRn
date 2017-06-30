@@ -12,34 +12,11 @@ import {
 } from 'react-native';
 import { Font } from 'expo'
 
-import { withNavigation } from '@expo/ex-navigation';
 import { TestButton, NavigatorBackground,ExNavigationState} from '../components/common';
 import { MonoText } from '../components/StyledText';
 import Colors from '../constants/Colors';
 
-@withNavigation class ExponentButton extends Component {
-  _handlePress = () => {
-    this.props.navigator.push('requestBlood');
-  };
-  render() {
-    return (
-      <TouchableOpacity
-        onPress={this._handlePress}
-        style={{
-          flex: 1,
-          alignItems: 'center',
-          justifyContent: 'center',
-          marginRight: 10,
-          paddingTop: 1,
-        }}>
-        <Image
-          source={require('../assets/icons/exponent-icon.png')}
-          style={{ width: 21, height: 17 }}
-        />
-      </TouchableOpacity>
-    );
-  }
-}
+
 
 export default class FriendScreen extends Component {
 

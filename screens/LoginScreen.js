@@ -113,6 +113,8 @@ export default class LoginScreen extends Component {
 
 
     _loginPress = () => {
+        const { navigate } = this.props.navigation;
+        navigate('Bloodnow')
         /*console.log(addressServer.IPMac.toString() + '/login');
         const api = addressServer.IPMac.toString() + '/login';
         this.setState({error : false});

@@ -15,18 +15,6 @@ export default class RegisterScreen extends Component {
     gesturesEnabled: false,
   };
 
-    static route = {
-        navigationBar: { 
-            title: 'ลงทะเบียน',
-            backgroundColor: '#E84A5F',
-            titleStyle: [Font.style('CmPrasanmitBold'),{fontSize:29}],
-            tintColor: 'white',
-        },
-        style : {
-            gettures: null,
-        }
-    };
-
     state = {
         name: '',
         password: '',
@@ -179,7 +167,8 @@ export default class RegisterScreen extends Component {
           } else {
             AsyncStorage.setItem('@RegisData:key', JSON.stringify(this.state))
             .then(() => {
-              this.props.navigator.push('register2');
+              const { navigate } = this.props.navigation;
+              navigate('Register2')
             })
             .catch((error) => {
               console.log(error);

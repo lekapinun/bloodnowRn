@@ -7,18 +7,13 @@ import addressServer from '../utilities/addressServer';
 
 export default class RegisterScreen extends Component {
 
-    static route = {
-        navigationBar: { 
-            title: 'ลงทะเบียน',
-            backgroundColor: '#E84A5F',
-            titleStyle: [Font.style('CmPrasanmitBold'),{fontSize:29}],
-            tintColor: 'white',
-            renderLeft: () => null,
-        },
-        style : {
-            gettures: null,
-        }
-    };
+  static navigationOptions = {
+    title: 'ลงทะเบียน',
+    headerTintColor: 'white',
+    headerTitleStyle: [Font.style('CmPrasanmitBold'),{fontSize:29}],
+    headerStyle: {backgroundColor: '#E84A5F'},
+    gesturesEnabled: false,
+  };
 
     componentWillMount() {
         console.log('Register2')
