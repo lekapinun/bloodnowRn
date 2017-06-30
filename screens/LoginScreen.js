@@ -126,8 +126,18 @@ export default class LoginScreen extends Component {
 
 
     _loginPress = () => {
-        const { navigate } = this.props.navigation;
-        navigate('Bloodnow')
+        /*const { navigate } = this.props.navigation;
+        navigate('Bloodnow')*/
+        const resetAction = NavigationActions.reset(
+            {
+                index: 1,
+                actions: [ 
+                    NavigationActions.navigate({ routeName: 'Login'}) ,
+                    NavigationActions.navigate({ routeName: 'Bloodnow'})   
+                ]
+            }
+        )
+        this.props.navigation.dispatch(resetAction)
         /*console.log(addressServer.IPMac.toString() + '/login');
         const api = addressServer.IPMac.toString() + '/login';
         this.setState({error : false});

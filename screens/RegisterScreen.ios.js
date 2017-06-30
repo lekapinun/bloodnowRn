@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Text, ScrollView, StyleSheet, View, Modal, Image, ActivityIndicator,AsyncStorage } from 'react-native';
 import { Font } from 'expo';
 import { NavigatorBackground, Button, RegisterInput, PickerPartTouch, PickerModalDate, PickerModalBlood, PickerModalProvince } from '../components/common';
+import { NavigationActions } from 'react-navigation'
 
 import addressServer from '../utilities/addressServer';
 
@@ -167,8 +168,19 @@ export default class RegisterScreen extends Component {
           } else {
             AsyncStorage.setItem('@RegisData:key', JSON.stringify(this.state))
             .then(() => {
-              const { navigate } = this.props.navigation;
-              navigate('Register2')
+              /*const { navigate } = this.props.navigation;
+              navigate('Register2')*/
+              const resetAction = NavigationActions.reset(
+              {
+                index: 2,
+                actions: [ 
+                    NavigationActions.navigate({ routeName: 'Login'}) ,
+                    NavigationActions.navigate({ routeName: 'Register'}), 
+                    NavigationActions.navigate({ routeName: 'Register2'})
+                  ]
+                }
+              )
+              this.props.navigation.dispatch(resetAction)
             })
             .catch((error) => {
               console.log(error);
