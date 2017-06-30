@@ -1,13 +1,10 @@
-import React, { Component, PropTypes } from 'react';
-import { Text, View, TouchableOpacity, TextInput, Image, StyleSheet, AsyncStorage } from 'react-native';
-
+import React, { Component} from 'react';
+import { Text, View, TouchableOpacity, TextInput, Image, StyleSheet, AsyncStorage,ScrollView } from 'react-native';
 import { Font } from 'expo';
 
 import addressServer from '../utilities/addressServer';
 
 import { Button } from '../components/common';
-
-import Router from '../navigation/Router';
 
 export default class LoginScreen extends Component {
 
@@ -16,6 +13,11 @@ export default class LoginScreen extends Component {
         password: '',
         error: false,
     };
+
+    static navigationOptions = {
+        header: null
+    };
+
 
     componentWillMount() {
         console.log(addressServer.IPMac);
@@ -43,9 +45,10 @@ export default class LoginScreen extends Component {
 
     render() {
         return(
-            <View style={{flex: 1,flexDirection: 'column',justifyContent: 'center',alignItems: 'center', backgroundColor: '#FAFAFA'}}>
+            <ScrollView style={{flex: 1,flexDirection: 'column', backgroundColor: '#FAFAFA'}}> 
+            <View style={{flex: 1,marginTop:80,flexDirection: 'column',justifyContent: 'center',alignItems: 'center', backgroundColor: '#FAFAFA'}}>
                 <Image source={require('../assets/icons/logo.png')} style={{width:190,height:90}}/>
-                <Text style={[Font.style('CmPrasanmit'),styles.caption]}>ม า ก ก ว่ า ก า ร ใ ห้ เ ลื อ ด</Text>
+                <View><Text style={[Font.style('CmPrasanmit'),styles.caption]}>ม า ก ก ว่ า ก า ร ใ ห้ เ ลื อ ด</Text></View>
                 <View style={{width: 260}}>
                     <TextInput
                         style={[Font.style('CmPrasanmit'),styles.input]}
@@ -67,7 +70,7 @@ export default class LoginScreen extends Component {
                         underlineColorAndroid='rgba(0,0,0,0)'
                     />
                     {this.renderErrorMessage()}
-                    <View style={{height: 50, marginTop:10,justifyContent: 'flex-start',alignItems: 'flex-end'}}>
+                    <View style={{height: 30, marginTop:-5,justifyContent: 'flex-start',alignItems: 'flex-end'}}>
                         <TouchableOpacity>
                             <Text style={[Font.style('CmPrasanmit'),{ fontSize: 20,color:'#95989A',}]}>ลืมรหัสผ่าน?</Text>
                         </TouchableOpacity>
@@ -95,6 +98,7 @@ export default class LoginScreen extends Component {
                     />
                 </View>
             </View> 
+            </ScrollView >
         );
     }
 
@@ -109,7 +113,7 @@ export default class LoginScreen extends Component {
 
 
     _loginPress = () => {
-        console.log(addressServer.IPMac.toString() + '/login');
+        /*console.log(addressServer.IPMac.toString() + '/login');
         const api = addressServer.IPMac.toString() + '/login';
         this.setState({error : false});
         const myRequest = new Request(
@@ -145,16 +149,21 @@ export default class LoginScreen extends Component {
         })
         .catch((error) => {
             console.warn(error);
-        });  
+        });  */
     };
 
 
     _register = () => {
-        this.props.navigator.push("register");
+        const { navigate } = this.props.navigation;
+        navigate('Register')
     };
 }
 
 const styles = StyleSheet.create({
+  container: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   caption: {
     fontSize: 27,
     color:'#95989A',

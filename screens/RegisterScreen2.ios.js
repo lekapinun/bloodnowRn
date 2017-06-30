@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Text, ScrollView, StyleSheet, View, Modal, Image, ActivityIndicator, AsyncStorage } from 'react-native';
 import { Font } from 'expo';
-import DatePicker from 'react-native-datepicker';
 import { NavigatorBackground, Button, RegisterInput, PickerPartTouch, PickerModalDate, PickerModalBlood, PickerModalProvince } from '../components/common';
 
 import addressServer from '../utilities/addressServer';

@@ -1,13 +1,60 @@
 import React from 'react';
-import {
-  AppRegistry,
-  Text,
-  View,
-  Button
-} from 'react-native';
-import { StackNavigator,TabNavigator, TabBarTop } from 'react-navigation';
+import Expo, { Font } from 'expo';
+import PropTypes from 'prop-types';
+import { AppRegistry, Text, View, Button } from 'react-native';
+import cacheAssetsAsync from './utilities/cacheAssetsAsync';
+import { FontAwesome } from '@expo/vector-icons';
+import Stack from './navigator/StackNavigator';
 
-class ChatScreen extends React.Component {
+
+export default class App extends React.Component{
+  state = {
+    appIsReady: false,
+  };
+
+  componentWillMount() {
+    cacheAssetsAsync({
+      images: [
+        require('./assets/images/expo-wordmark.png'),
+        require('./assets/icons/logo.png'),
+        require('./assets/images/expo-icon@2x.png'),
+        require('./assets/icons/cr.png'),
+        require('./assets/icons/ex.png'),
+        require('./assets/icons/exponent-icon.png'),
+        require('./node_modules/react-navigation/src/views/assets/back-icon.png'),
+      ],
+      fonts: [
+        FontAwesome.font,
+        { 'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf') },
+        { 'CmPrasanmit': require('./assets/fonts/CmPrasanmit.ttf') },
+        {  'CmPrasanmitBold': require('./assets/fonts/CmPrasanmitBold.ttf') },
+      ],
+    })
+    .then(() => {
+      this.setState({ appIsReady: true });
+    })
+    .catch(( error ) => {
+      console.warn(
+        'There was an error caching assets (see: main.js), perhaps due to a ' +
+        'network timeout, so we skipped caching. Reload the app to try again.'
+      );
+      console.log(error.message);
+    })
+  }
+
+  render() {
+
+    if (this.state.appIsReady) {
+      return <Stack />
+    } else {
+      return <Expo.AppLoading />
+    }
+  }
+}
+
+
+
+/*class ChatScreen extends React.Component {
   static navigationOptions = {
     title: 'Chat with Lucy',
   };
@@ -74,4 +121,4 @@ const BasicApp = TabNavigator(
   }
 );
 
-export default () => <BasicApp  />;
+export default () => <BasicApp  />;*/
