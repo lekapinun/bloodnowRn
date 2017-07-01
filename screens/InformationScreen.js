@@ -4,8 +4,16 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
+import { Font } from 'expo'
 
 export default class InformationScreen extends Component {
+    static navigationOptions =  {
+        title: 'คำแนะนำ',
+        headerTintColor: 'white',
+        headerTitleStyle: [Font.style('CmPrasanmitBold'),{fontSize:29}],
+        headerStyle: {backgroundColor: '#E84A5F'},
+        gesturesEnabled: false,
+    };
     render() {
         return(
             <View style={{marginTop:30}}>

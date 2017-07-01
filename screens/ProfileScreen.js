@@ -19,7 +19,14 @@ import Colors from '../constants/Colors';
 
 
 export default class ProfileScreen extends Component {
-
+    static navigationOptions =  {
+        title: 'โปรไฟล์',
+        //headerBackTitle: 'โปรไฟล์',
+        headerTintColor: 'white',
+        headerTitleStyle: [Font.style('CmPrasanmitBold'),{fontSize:29}],
+        headerStyle: {marginLeft:-250,backgroundColor: '#E84A5F'},
+        gesturesEnabled: false,
+    };
     /*static route = {
         navigationBar: {
         title: 'เพื่อน',

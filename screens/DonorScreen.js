@@ -6,6 +6,9 @@ import {
 } from 'react-native';
 
 export default class DonorScreen extends Component {
+    static navigationOptions =  {
+        title: 'ให้เลือด',
+    };
     render() {
         return(
             <View style={{marginTop:30}}>

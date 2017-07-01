@@ -16,7 +16,7 @@ export default class Stack extends React.Component {
       Register2: {screen: RegisterScreen2},
       Bloodnow : {screen: Tab},
     },{
-        initialRouteName: 'Login',
+        initialRouteName: 'Bloodnow',
         mode: 'modal',
         headerMode: 'float',
     });

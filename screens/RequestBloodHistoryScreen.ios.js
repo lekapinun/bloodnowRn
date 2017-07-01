@@ -19,7 +19,13 @@ import Colors from '../constants/Colors';
 
 
 export default class RequestBloodHistoryScreenScreen extends Component {
-
+    static navigationOptions =  {
+        title: 'ขอเลือด',
+        headerTintColor: 'white',
+        headerTitleStyle: [Font.style('CmPrasanmitBold'),{fontSize:29}],
+        headerStyle: {backgroundColor: '#E84A5F'},
+        gesturesEnabled: false,
+    };
     /*static route = {
         navigationBar: {
         title: 'เพื่อน',

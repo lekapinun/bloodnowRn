@@ -18,59 +18,75 @@ import RequestBloodScreen from '../screens/RequestBloodScreen';
 import RequestBloodHistoryScreen from '../screens/RequestBloodHistoryScreen';
 import RequestBloodSubmitScreen from '../screens/RequestBloodSubmitScreen';
 
+import ProfileStack from './ProfileTab';
+import RequestStack from './RequestTab';
+import DonorStack from './DonorTab';
+import FriendStack from './FriendTab';
+import InformationStack from './InformationTab';
 
 
 export default class Tab extends React.Component {
-    static navigationOptions = {
-        headerLeft: null
-    };
-  render(){
-    const Tab = TabNavigator(
-    {
-        profile: {screen: ProfileScreen},
-        requestbloodhistory: {screen: RequestBloodHistoryScreen},
-        donor: {screen: DonorScreen},
-        friend: {screen: FriendScreen},
-        home: {screen: HomeScreen},
-    },{
-        ...TabNavigator.Presets.AndroidTopTabs,
-        tabBarOptions: {
-          //activeTintColor: 'red',
-          showLabel: false,
-          showIcon: true,
-          style: {backgroundColor: 'black'},
-          indicatorStyle: { borderBottomColor: Colors.tabIconSelected ,borderBottomWidth: 3},
-        },
-        tabBarPosition: 'top',
-        swipeEnabled: true,
-        animationEnabled: true,
-    });
+    static navigationOptions =  {
+        header: null
+    };   
 
-    ProfileScreen.navigationOptions = {
-        tabBarIcon: ({ tintColor, focused }) => ( this._renderIconSimpleLineIcons('user', focused)),
-    };
+    render(){
+        //console.log(this.props.navigation)
+        /*if(this.props.navigation.action){
 
-    RequestBloodHistoryScreen.navigationOptions = {
-        tabBarIcon: ({ tintColor, focused }) => ( this._renderIconSimpleLineIcons('heart', focused)),
-    };
+        }*/
+        const Tab = TabNavigator(
+        {
+            profile: {screen: ProfileStack},
+            requestbloodhistory: {screen: RequestStack},
+            donor: {screen: DonorStack},
+            friend: {screen: FriendStack},
+            Information: {screen: InformationStack},
+        },{
+            ...TabNavigator.Presets.AndroidTopTabs,
+            tabBarOptions: {
+                //activeTintColor: 'red',
+                showLabel: false,
+                showIcon: true,
+                style: {
+                    position: 'absolute',
+                    top:-600,
+                    left:0,
+                    right:0,
+                    backgroundColor: 'black'
+                },
+                indicatorStyle: { borderBottomColor: Colors.tabIconSelected ,borderBottomWidth: 3},
+            },
+            tabBarPosition: 'bottom',
+            swipeEnabled: true,
+            animationEnabled: true,
+        });
 
-    DonorScreen.navigationOptions = {
-        tabBarIcon: ({ tintColor, focused }) => ( this._renderIconSimpleLineIcons('drop', focused)),
-    };
+        ProfileStack.navigationOptions = {
+            tabBarIcon: ({ tintColor, focused }) => ( this._renderIconSimpleLineIcons('user', focused)),
+        };
 
-    FriendScreen.navigationOptions = {
-        tabBarIcon: ({ tintColor, focused }) => ( this._renderIconSimpleLineIcons('globe', focused)),
-    };
+        RequestStack.navigationOptions = {
+            tabBarIcon: ({ tintColor, focused }) => ( this._renderIconSimpleLineIcons('heart', focused)),
+        };
 
-    HomeScreen.navigationOptions = {
-        tabBarIcon: ({ tintColor, focused }) => ( this._renderIconSimpleLineIcons('notebook', focused)),
-    };
+        DonorStack.navigationOptions = {
+            tabBarIcon: ({ tintColor, focused }) => ( this._renderIconSimpleLineIcons('drop', focused)),
+        };
 
-    return(
-      <Tab/>
-    );
-    
-  }
+        FriendStack.navigationOptions = {
+            tabBarIcon: ({ tintColor, focused }) => ( this._renderIconSimpleLineIcons('globe', focused)),
+        };
+
+        InformationStack.navigationOptions = {
+            tabBarIcon: ({ tintColor, focused }) => ( this._renderIconSimpleLineIcons('notebook', focused)),
+        };
+
+        return(
+            <Tab/>
+        );
+        
+    }
     _renderIconSimpleLineIcons(name, focused){
         return (
             <SimpleLineIcons
