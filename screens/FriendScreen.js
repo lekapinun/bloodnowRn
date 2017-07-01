@@ -23,7 +23,7 @@ export default class FriendScreen extends Component {
         title: 'เพื่อน',
         headerTintColor: 'white',
         headerTitleStyle: [Font.style('CmPrasanmitBold'),{fontSize:29}],
-        headerStyle: {backgroundColor: '#E84A5F'},
+        headerStyle: {marginLeft:-250,backgroundColor: '#E84A5F'},
         gesturesEnabled: false,
     };
     /*static route = {

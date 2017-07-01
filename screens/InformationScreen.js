@@ -11,7 +11,7 @@ export default class InformationScreen extends Component {
         title: 'คำแนะนำ',
         headerTintColor: 'white',
         headerTitleStyle: [Font.style('CmPrasanmitBold'),{fontSize:29}],
-        headerStyle: {backgroundColor: '#E84A5F'},
+        headerStyle: {marginLeft:-250,backgroundColor: '#E84A5F'},
         gesturesEnabled: false,
     };
     render() {

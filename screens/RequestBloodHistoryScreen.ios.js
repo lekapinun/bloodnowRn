@@ -23,7 +23,7 @@ export default class RequestBloodHistoryScreenScreen extends Component {
         title: 'ขอเลือด',
         headerTintColor: 'white',
         headerTitleStyle: [Font.style('CmPrasanmitBold'),{fontSize:29}],
-        headerStyle: {backgroundColor: '#E84A5F'},
+        headerStyle: {marginLeft:-250,backgroundColor: '#E84A5F'},
         gesturesEnabled: false,
     };
     /*static route = {
