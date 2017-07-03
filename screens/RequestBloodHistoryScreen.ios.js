@@ -25,6 +25,7 @@ export default class RequestBloodHistoryScreenScreen extends Component {
         headerTitleStyle: [Font.style('CmPrasanmitBold'),{fontSize:29}],
         headerStyle: {marginLeft:-250,backgroundColor: '#E84A5F'},
         gesturesEnabled: false,
+       // headerRight: {/*<ButtonRequest></ButtonRequest>*/}
     };
     /*static route = {
         navigationBar: {
@@ -43,5 +44,12 @@ export default class RequestBloodHistoryScreenScreen extends Component {
             </View>
         );
     }
+}
 
+class ButtonRequest extends Component {
+    render(){
+        return(
+            <View style={{height:20,width:20,backgroundColor:'black'}}></View>
+        );
+    }
 }
