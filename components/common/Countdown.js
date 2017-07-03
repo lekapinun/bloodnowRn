@@ -5,8 +5,10 @@ import { Font } from 'expo';
 const Countdown = ({recentDonateDate}) => {
   const timeRemaining = (7776000000 -( (new Date()) - (new Date(recentDonateDate))))
     / (24*60*60*1000);
-  return (
-    <View style={styles.countdownContainerStyle}>
+  var countdownBar;
+  if( timeRemaining > 0) {
+    countdownBar = (
+      <View style={styles.countdownContainerStyle}>
       <View style={styles.countdownViewStyle}>
         <Text>เดือน</Text>
         <Text style={[Font.style('CmPrasanmit'),styles.countdownTextStyle]}>{Math.floor(timeRemaining/30)}</Text>
@@ -15,6 +17,16 @@ const Countdown = ({recentDonateDate}) => {
         <Text>วัน</Text>
         <Text style={[Font.style('CmPrasanmit'),styles.countdownTextStyle]}>{Math.floor(timeRemaining%30)}</Text>
       </View>
+    </View>
+  );
+  }
+  else {
+    countdownBar = <Text style={{fontSize: 23, alignSelf: 'center'}}>Ready</Text>
+  }
+
+  return (
+    <View style={{width: '80%', height: '30%', alignSelf: 'center'}}>
+      {countdownBar}
     </View>
   );
 }

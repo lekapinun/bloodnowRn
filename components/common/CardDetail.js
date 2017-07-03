@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, TouchableOpacity, Text, Image, StyleSheet } from 'react-native';
 
-const CardDetail = ({ list }) => {
+const CardDetail = ({ list, onPress }) => {
   //console.log({list});
   return(
-    <TouchableOpacity style={styles.requestCardContainerStyle} onPress={() => console.log("Press")}>
+    <TouchableOpacity style={styles.requestCardContainerStyle} onPress={onPress}>
       <Image
         style={styles.imageRequestStyle}
         source={{ uri: list.thumbnail_image }}
@@ -18,6 +18,7 @@ const CardDetail = ({ list }) => {
 
 const styles = StyleSheet.create({
   requestCardContainerStyle: {
+    marginTop: 15,
     height: '20%',
     flexDirection: 'row',
     alignItems: 'center',
@@ -25,8 +26,8 @@ const styles = StyleSheet.create({
   imageRequestStyle: {
     marginLeft: 10,
     marginTop: 10,
-    height: 50,
-    width: 50,
+    height: 80,
+    width: 80,
   },
   detailRequestStyle: {
     paddingLeft: 20,
