@@ -43,43 +43,39 @@ export default class Tab extends React.Component {
             friend: {screen: FriendStack},
             Information: {screen: InformationStack},
         },{
-            ...TabNavigator.Presets.AndroidTopTabs,
+           // ...TabNavigator.Presets.AndroidTopTabs,
             tabBarOptions: {
                 //activeTintColor: 'red',
                 showLabel: false,
                 showIcon: true,
                 style: {
-                    position: 'absolute',
-                    top:-600,
-                    left:0,
-                    right:0,
-                    backgroundColor: 'black'
+                    //backgroundColor: 'black'
                 },
-                indicatorStyle: { borderBottomColor: Colors.tabIconSelected ,borderBottomWidth: 3},
+                //indicatorStyle: { borderBottomColor: Colors.tabIconSelected ,borderBottomWidth: 3},
             },
             tabBarPosition: 'bottom',
-            swipeEnabled: true,
+            swipeEnabled: false,
             animationEnabled: true,
         });
 
         ProfileStack.navigationOptions = {
-            tabBarIcon: ({ tintColor, focused }) => ( this._renderIconSimpleLineIcons('user', focused)),
+            tabBarIcon: ({ tintColor, focused }) => ( this._renderIconSimpleLineIcons('user', focused, 20)),
         };
 
         RequestStack.navigationOptions = {
-            tabBarIcon: ({ tintColor, focused }) => ( this._renderIconSimpleLineIcons('heart', focused)),
+            tabBarIcon: ({ tintColor, focused }) => ( this._renderIconSimpleLineIcons('heart', focused, 20)),
         };
 
         DonorStack.navigationOptions = {
-            tabBarIcon: ({ tintColor, focused }) => ( this._renderIconSimpleLineIcons('drop', focused)),
+            tabBarIcon: ({ tintColor, focused }) => ( this._renderIconSimpleLineIcons('drop', focused, 25)),
         };
 
         FriendStack.navigationOptions = {
-            tabBarIcon: ({ tintColor, focused }) => ( this._renderIconSimpleLineIcons('globe', focused)),
+            tabBarIcon: ({ tintColor, focused }) => ( this._renderIconSimpleLineIcons('globe', focused, 20)),
         };
 
         InformationStack.navigationOptions = {
-            tabBarIcon: ({ tintColor, focused }) => ( this._renderIconSimpleLineIcons('notebook', focused)),
+            tabBarIcon: ({ tintColor, focused }) => ( this._renderIconSimpleLineIcons('notebook', focused, 20)),
         };
 
         return(
@@ -87,11 +83,11 @@ export default class Tab extends React.Component {
         );
         
     }
-    _renderIconSimpleLineIcons(name, focused){
+    _renderIconSimpleLineIcons(name, focused, size){
         return (
             <SimpleLineIcons
                 name={name}
-                size={20}
+                size={size}
                 color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
             />
         );
