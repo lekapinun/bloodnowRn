@@ -6,8 +6,6 @@ import LoginScreen from '../screens/LoginScreen'
 import RegisterScreen from '../screens/RegisterScreen'
 import RegisterScreen2 from '../screens/RegisterScreen2'
 import HomeScreen from '../screens/HomeScreen'
-
-=======
 import Tab from './TabNavigator.js'
 
 export default class Stack extends React.Component {

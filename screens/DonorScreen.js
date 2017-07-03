@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
   Text,
-  View,
+  ScrollView,
   TouchableOpacity,
 } from 'react-native';
 import { Font } from 'expo'
@@ -16,9 +16,10 @@ export default class DonorScreen extends Component {
     };
     render() {
         return(
-            <View style={{marginTop:30}}>
+            <ScrollView style={{position: 'relative',bottom: 0}}>
                 <Text>Donor SCREEN</Text>
-            </View>
+
+            </ScrollView>
         );
     }
 

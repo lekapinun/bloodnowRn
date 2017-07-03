@@ -25,7 +25,7 @@ export default class LoginScreen extends Component {
         console.log(addressServer.IPMac);
         /*this._checkLogin();*/
     }
-    
+
 
 /*    async _checkLogin() {
       try {
@@ -126,23 +126,20 @@ export default class LoginScreen extends Component {
 
 
     _loginPress = () => {
-<<<<<<< HEAD
         const { navigate } = this.props.navigation;
         navigate('Home');
-=======
         /*const { navigate } = this.props.navigation;
         navigate('Bloodnow')*/
         const resetAction = NavigationActions.reset(
             {
                 index: 1,
-                actions: [ 
+                actions: [
                     NavigationActions.navigate({ routeName: 'Login'}) ,
-                    NavigationActions.navigate({ routeName: 'Bloodnow'})   
+                    NavigationActions.navigate({ routeName: 'Bloodnow'})
                 ]
             }
         )
         this.props.navigation.dispatch(resetAction)
->>>>>>> master
         /*console.log(addressServer.IPMac.toString() + '/login');
         const api = addressServer.IPMac.toString() + '/login';
         this.setState({error : false});
@@ -191,9 +188,9 @@ export default class LoginScreen extends Component {
         const resetAction = NavigationActions.reset(
             {
                 index: 1,
-                actions: [ 
+                actions: [
                     NavigationActions.navigate({ routeName: 'Login'}) ,
-                    NavigationActions.navigate({ routeName: 'Register'})   
+                    NavigationActions.navigate({ routeName: 'Register'})
                 ]
             }
         )

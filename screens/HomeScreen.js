@@ -11,7 +11,6 @@ import {
   AsyncStorage
 } from 'react-native';
 import { Font } from 'expo'
-<<<<<<< HEAD
 import { TestButton, NavigatorBackground,ExNavigationState, Button} from '../components/common';
 import { MonoText } from '../components/StyledText';
 import Colors from '../constants/Colors';
@@ -65,18 +64,7 @@ export default class HomeScreen extends React.Component {
       console.log('error');
     }
   }
-=======
 
-import { TestButton, NavigatorBackground,ExNavigationState} from '../components/common';
-import { MonoText } from '../components/StyledText';
-import Colors from '../constants/Colors';
-
->>>>>>> master
-
-
-export default class HomeScreen extends Component {
-
-<<<<<<< HEAD
   _logout = (navigation) => {
     const { navigate } = this.props.navigation;
     //const rootNavigator = this.props.navigation.getNavigator('root');
@@ -84,7 +72,6 @@ export default class HomeScreen extends Component {
     this._clearUserData();
     navigate('Login');
   }
-=======
     /*static route = {
         navigationBar: {
         title: 'เพื่อน',
@@ -94,8 +81,6 @@ export default class HomeScreen extends Component {
         renderRight: () => <ExponentButton />,
         },
     };*/
->>>>>>> master
-
     render() {
         return(
             <View style={{marginTop:30}}>
