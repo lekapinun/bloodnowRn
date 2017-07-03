@@ -7,6 +7,8 @@ import RegisterScreen from '../screens/RegisterScreen'
 import RegisterScreen2 from '../screens/RegisterScreen2'
 import HomeScreen from '../screens/HomeScreen'
 
+=======
+import Tab from './TabNavigator.js'
 
 export default class Stack extends React.Component {
   render(){
@@ -16,8 +18,9 @@ export default class Stack extends React.Component {
       Register : {screen: RegisterScreen},
       Register2: {screen: RegisterScreen2},
       Home: {screen: HomeScreen},
+      Bloodnow : {screen: Tab},
     },{
-        initialRouteName: 'Login',
+        initialRouteName: 'Bloodnow',
         mode: 'modal',
         headerMode: 'float',
     });

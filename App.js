@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { AppRegistry, Text, View, Button } from 'react-native';
 import cacheAssetsAsync from './utilities/cacheAssetsAsync';
 import { FontAwesome } from '@expo/vector-icons';
-import Stack from './navigator/StackNavigator';
+import Stack from './navigator/mainStack';
 
 
 export default class App extends React.Component{

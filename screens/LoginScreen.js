@@ -1,6 +1,7 @@
 import React, { Component} from 'react';
-import { Text, View, TouchableOpacity, TextInput, Image, StyleSheet, AsyncStorage,ScrollView } from 'react-native';
+import { Text, View, TouchableOpacity, TextInput, Image, StyleSheet, AsyncStorage, ScrollView, ActivityIndicator } from 'react-native';
 import { Font } from 'expo';
+import { NavigationActions } from 'react-navigation'
 
 import addressServer from '../utilities/addressServer';
 
@@ -12,6 +13,7 @@ export default class LoginScreen extends Component {
         name: '',
         password: '',
         error: false,
+        loadRegis: false,
     };
 
     static navigationOptions = {
@@ -23,6 +25,7 @@ export default class LoginScreen extends Component {
         console.log(addressServer.IPMac);
         /*this._checkLogin();*/
     }
+    
 
 /*    async _checkLogin() {
       try {
@@ -41,6 +44,24 @@ export default class LoginScreen extends Component {
             return <Text />
         }
         return <Text style={[Font.style('CmPrasanmit'),{ fontSize: 20,color:'red',}]}>ลองใหม่อีกครั้ง</Text>
+    }
+
+    renderRegisButton(){
+        if(this.state.loadRegis){
+            return <ActivityIndicator size="large" color='#9FAC9B'/>
+        } else {
+            return(
+                <Button
+                    title='ลงทะเบียน'
+                    buttonColor='#9FAC9B'
+                    sizeFont={25}
+                    onPress={this._register}
+                    ButtonWidth={260}
+                    ButtonHeight={50}
+                    colorFont='white'
+                />
+            );
+        }
     }
 
     render() {
@@ -87,15 +108,7 @@ export default class LoginScreen extends Component {
                     <View style={{justifyContent: 'center',alignItems: 'center'}}>
                         <Text style={[Font.style('CmPrasanmit'),{ fontSize: 23,color:'#95989A',marginBottom:5,marginTop:5}]}>หรือ</Text>
                     </View>
-                    <Button
-                        title='ลงทะเบียน'
-                        buttonColor='#9FAC9B'
-                        sizeFont={25}
-                        onPress={this._register}
-                        ButtonWidth={260}
-                        ButtonHeight={50}
-                        colorFont='white'
-                    />
+                    {this.renderRegisButton()}
                 </View>
             </View>
             </ScrollView>
@@ -113,8 +126,23 @@ export default class LoginScreen extends Component {
 
 
     _loginPress = () => {
+<<<<<<< HEAD
         const { navigate } = this.props.navigation;
         navigate('Home');
+=======
+        /*const { navigate } = this.props.navigation;
+        navigate('Bloodnow')*/
+        const resetAction = NavigationActions.reset(
+            {
+                index: 1,
+                actions: [ 
+                    NavigationActions.navigate({ routeName: 'Login'}) ,
+                    NavigationActions.navigate({ routeName: 'Bloodnow'})   
+                ]
+            }
+        )
+        this.props.navigation.dispatch(resetAction)
+>>>>>>> master
         /*console.log(addressServer.IPMac.toString() + '/login');
         const api = addressServer.IPMac.toString() + '/login';
         this.setState({error : false});
@@ -156,8 +184,20 @@ export default class LoginScreen extends Component {
 
 
     _register = () => {
+        /*this.setState({loadRegis: true})
         const { navigate } = this.props.navigation;
         navigate('Register')
+        this.setState({loadRegis: false})*/
+        const resetAction = NavigationActions.reset(
+            {
+                index: 1,
+                actions: [ 
+                    NavigationActions.navigate({ routeName: 'Login'}) ,
+                    NavigationActions.navigate({ routeName: 'Register'})   
+                ]
+            }
+        )
+        this.props.navigation.dispatch(resetAction)
     };
 }
 

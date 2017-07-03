@@ -11,6 +11,7 @@ import {
   AsyncStorage
 } from 'react-native';
 import { Font } from 'expo'
+<<<<<<< HEAD
 import { TestButton, NavigatorBackground,ExNavigationState, Button} from '../components/common';
 import { MonoText } from '../components/StyledText';
 import Colors from '../constants/Colors';
@@ -64,27 +65,18 @@ export default class HomeScreen extends React.Component {
       console.log('error');
     }
   }
+=======
 
-  componentWillMount() {
-    this._userData();
-  }
+import { TestButton, NavigatorBackground,ExNavigationState} from '../components/common';
+import { MonoText } from '../components/StyledText';
+import Colors from '../constants/Colors';
 
-  render() {
-    return (
-      <View style={{marginTop:30}}>
-         <Text>HOME SCREEN</Text>
-         <Button
-          title='ออกจากระบบ'
-          buttonColor='#9FAC9B'
-          sizeFont={25}
-          onPress={ () => this._logout(navigation=this.props.navigation) } //console.log(this.props.navigation)// }
-          ButtonWidth={260}
-          ButtonHeight={50}
-          />
-      </View>
-    );
-  }
+>>>>>>> master
 
+
+export default class HomeScreen extends Component {
+
+<<<<<<< HEAD
   _logout = (navigation) => {
     const { navigate } = this.props.navigation;
     //const rootNavigator = this.props.navigation.getNavigator('root');
@@ -92,13 +84,24 @@ export default class HomeScreen extends React.Component {
     this._clearUserData();
     navigate('Login');
   }
+=======
+    /*static route = {
+        navigationBar: {
+        title: 'เพื่อน',
+        backgroundColor: Colors.routeColor,
+        titleStyle: [Font.style('CmPrasanmitBold'),{fontSize:25}],
+        tintColor: 'white',
+        renderRight: () => <ExponentButton />,
+        },
+    };*/
+>>>>>>> master
 
-  async _clearUserData(){
-    try {
-      await AsyncStorage.removeItem('@userData:key');
-    } catch ( error ) {
-      console.log('error');
+    render() {
+        return(
+            <View style={{marginTop:30}}>
+                <Text>HOME</Text>
+            </View>
+        );
     }
-  }
 
 }
