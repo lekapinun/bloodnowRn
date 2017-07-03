@@ -16,8 +16,11 @@ export default class RequestStack extends React.Component {
     },{
         initialRouteName: 'RequestHistory',
         mode: 'modal',
-        headerMode: 'float',
     });
+
+    
+
+    
 
     return(
       <RequestStack/>

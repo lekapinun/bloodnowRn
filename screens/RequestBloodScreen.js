@@ -12,7 +12,8 @@ export default class RequestBloodScreen extends Component {
         const { navigation } = props;
         const { state, setParams } = navigation;
         const { params } = state;
-        console.log(navigation)
+        //console.log(navigation)
+        //console.log(props)
         return {
             title: 'คำร้องขอรับเลือด',
             headerTintColor: Colors.tintColor,

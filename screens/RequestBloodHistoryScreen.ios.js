@@ -52,14 +52,15 @@ export default class RequestBloodHistoryScreen extends Component {
         const { navigation } = props;
         const { state, setParams } = navigation;
         const { params } = state;
-        console.log(navigation)
+        //console.log(navigation)
         return {
             title: 'ขอเลือด',
             headerTintColor: Colors.tintColor,
             headerTitleStyle: [Font.style('CmPrasanmitBold'),{fontSize:29}],
             headerStyle: {backgroundColor: Colors.tabBar},
             gesturesEnabled: false,
-            headerRight: <ButtonRequest navigation={navigation}/> 
+            headerRight: <ButtonRequest navigation={navigation}/>,
+            tabBarVisible: false
         };
     };
 
