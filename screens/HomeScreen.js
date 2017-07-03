@@ -11,22 +11,15 @@ import {
   AsyncStorage
 } from 'react-native';
 import { Font } from 'expo'
-import { Router } from '../navigation/Router';
-import { withNavigation, getNavigator } from '@expo/ex-navigation';
 import { TestButton, NavigatorBackground,ExNavigationState, Button} from '../components/common';
 import { MonoText } from '../components/StyledText';
 import Colors from '../constants/Colors';
 
+/*
 @withNavigation class ExponentButton extends Component {
   _handlePress = () => {
     this.props.navigator.push('requestBlood');
   };
-
-/*  _logOut = () => {
-    this.props.navigation.performAction(({ tabs, stacks }) => {
-      tabs('tab-navigation').jumpToTab('second');
-    });
-  };*/
 
   render() {
     return (
@@ -47,7 +40,7 @@ import Colors from '../constants/Colors';
     );
   }
 }
-
+*/
 export default class HomeScreen extends React.Component {
   /*static route = {
     navigationBar: {
@@ -93,14 +86,11 @@ export default class HomeScreen extends React.Component {
   }
 
   _logout = (navigation) => {
+    const { navigate } = this.props.navigation;
     //const rootNavigator = this.props.navigation.getNavigator('root');
-    const rootNavigator = this.props.navigation.getNavigator('root');
-    console.log(this.props);
     //console.log(navigator);
     this._clearUserData();
-    //this.props.navigator.pop();
-    //this.props.navigator.replace('login');
-    rootNavigator.push("login");
+    navigate('Login');
   }
 
   async _clearUserData(){

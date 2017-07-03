@@ -5,6 +5,8 @@ import { StackNavigator } from 'react-navigation';
 import LoginScreen from '../screens/LoginScreen'
 import RegisterScreen from '../screens/RegisterScreen'
 import RegisterScreen2 from '../screens/RegisterScreen2'
+import HomeScreen from '../screens/HomeScreen'
+
 
 export default class Stack extends React.Component {
   render(){
@@ -13,6 +15,7 @@ export default class Stack extends React.Component {
       Login : {screen: LoginScreen},
       Register : {screen: RegisterScreen},
       Register2: {screen: RegisterScreen2},
+      Home: {screen: HomeScreen},
     },{
         initialRouteName: 'Login',
         mode: 'modal',

@@ -29,7 +29,7 @@ export default class LoginScreen extends Component {
             const name = await AsyncStorage.getItem('@name:key');
             if (name !== null) {
                 console.log(name);
-                this.props.navigator.push('rootNavigation'); 
+                this.props.navigator.push('rootNavigation');
             }
         } catch ( error ) {
             console.log('error');
@@ -45,7 +45,7 @@ export default class LoginScreen extends Component {
 
     render() {
         return(
-            <ScrollView style={{flex: 1,flexDirection: 'column', backgroundColor: '#FAFAFA'}}> 
+            <ScrollView style={{flex: 1,flexDirection: 'column', backgroundColor: '#FAFAFA'}}>
             <View style={{flex: 1,marginTop:80,flexDirection: 'column',justifyContent: 'center',alignItems: 'center', backgroundColor: '#FAFAFA'}}>
                 <Image source={require('../assets/icons/logo.png')} style={{width:190,height:90}}/>
                 <View><Text style={[Font.style('CmPrasanmit'),styles.caption]}>ม า ก ก ว่ า ก า ร ใ ห้ เ ลื อ ด</Text></View>
@@ -97,8 +97,8 @@ export default class LoginScreen extends Component {
                         colorFont='white'
                     />
                 </View>
-            </View> 
-            </ScrollView >
+            </View>
+            </ScrollView>
         );
     }
 
@@ -113,6 +113,8 @@ export default class LoginScreen extends Component {
 
 
     _loginPress = () => {
+        const { navigate } = this.props.navigation;
+        navigate('Home');
         /*console.log(addressServer.IPMac.toString() + '/login');
         const api = addressServer.IPMac.toString() + '/login';
         this.setState({error : false});
