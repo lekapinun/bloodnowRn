@@ -16,40 +16,42 @@ import { TestButton, NavigatorBackground,ExNavigationState} from '../components/
 import { MonoText } from '../components/StyledText';
 import Colors from '../constants/Colors';
 
+class ButtonRequest extends Component {
+    _handlePress = () => {
+        console.log(this.props);
+        /*//const { navigate } = this.props.navigation;
+        navigate('RequestBlood')*/
+    };
+    render(){
+        return(
+            <TouchableOpacity 
+                onPress={this._handlePress}
+                style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginRight: 10, paddingTop: 1,}}
+            >
+                <Image
+                    source={require('../assets/icons/exponent-icon.png')}
+                    style={{ width: 21, height: 17 }}
+                />
+            </TouchableOpacity>
+        );
+    }
+}
 
-
-export default class RequestBloodHistoryScreenScreen extends Component {
+export default class RequestBloodHistoryScreen extends Component {
     static navigationOptions =  {
         title: 'ขอเลือด',
         headerTintColor: 'white',
         headerTitleStyle: [Font.style('CmPrasanmitBold'),{fontSize:29}],
         headerStyle: {marginLeft:-250,backgroundColor: '#E84A5F'},
         gesturesEnabled: false,
-       // headerRight: {/*<ButtonRequest></ButtonRequest>*/}
+        headerRight: <ButtonRequest />
     };
-    /*static route = {
-        navigationBar: {
-        title: 'เพื่อน',
-        backgroundColor: Colors.routeColor,
-        titleStyle: [Font.style('CmPrasanmitBold'),{fontSize:25}],
-        tintColor: 'white',
-        renderRight: () => <ExponentButton />,
-        },
-    };*/
 
     render() {
         return(
             <View style={{marginTop:30}}>
                 <Text>Re Blood His</Text>
             </View>
-        );
-    }
-}
-
-class ButtonRequest extends Component {
-    render(){
-        return(
-            <View style={{height:20,width:20,backgroundColor:'black'}}></View>
         );
     }
 }
