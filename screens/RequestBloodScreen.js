@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Text, TextInput, Modal, TouchableOpacity, Picker, StyleSheet,AsyncStorage,Dimensions, TouchableWithoutFeedback } from 'react-native';
+import { ScrollView, View, Text, TextInput, Modal, TouchableOpacity, Picker, StyleSheet,AsyncStorage,Dimensions, TouchableWithoutFeedback ,Animated} from 'react-native';
 import { Font } from 'expo';
-import { Map, InputText, InputTextLarge , PickerPartTouch, PickerModalDate, PickerModalBlood, Button, ButtonBack,DetailBox} from '../components/common';
+import { Map, InputText, InputTextLarge , PickerPartTouch, PickerModalDate, PickerModalBlood, Button, ButtonBack,DetailBox,} from '../components/common';
 import Colors from '../constants/Colors';
 import Layout from '../constants/Layout';
 import MapView, {PROVIDER_GOOGLE } from 'react-native-maps';
 import { NavigationActions } from 'react-navigation'
 import addressServer from '../utilities/addressServer';
+import RequestSubmitScreen from './RequestBloodSubmitScreen';
 
 export default class RequestBloodScreen extends Component {
 
@@ -27,11 +28,14 @@ export default class RequestBloodScreen extends Component {
     };
 
 
-    static tabBarOptions = {
-        tabBarVisible: false
-    };
-
-    
+    componentWillMount() {
+        var rand_x = 500; 
+        var rand_y = 0; 
+        this.positon = new Animated.ValueXY({ x: rand_y, y: rand_x});
+        Animated.decay(this.positon,{
+            toValue: { x: 0, y: 0}
+        }).start();
+    }
 
     state = {
         patient_name: '',
@@ -63,77 +67,14 @@ export default class RequestBloodScreen extends Component {
         this.setState({modalpatient_bloodVisible: visible});
     }
 
-    render() {
-        if(this.state.patient_blood !== ''){
-            blood = <Text style={[Font.style('CmPrasanmit'), styles.pickerText]}>{this.state.patient_blood + this.state.patient_blood_type }</Text>;
-        }else{
-            blood = <Text />
-        }
-        return(
-            <View>
-                
-                <Modal
+    _renderPageREQUEST = () => {
+        if( this.state.displayRequest === true ){
+            return(
+            /*<Modal
                     animationType={'slide'}
                     transparent={true}
                     visible= {this.state.displayRequest}
-                >
-                    <Modal
-                        animationType={'fade'}
-                        transparent={true}
-                        visible= {this.state.displayConfirm}
-                        >
-                        <View style={[styles.container,{flex:1,backgroundColor:'transparent'}]}>
-                            <View style={{height:20,width:Layout.window.width,backgroundColor: Colors.tabBar}}/>
-                            <View style={{height:44,flexDirection:'row',justifyContent: 'space-between',width:Layout.window.width,backgroundColor: Colors.tabBar}}>
-                                <View style={[styles.center,{height:44,width:80}]}>
-                                    <ButtonBack onPress={this._backToRequest} color='white' />
-                                </View>
-                                <View style={[styles.center,{height:44,width:Layout.window.width-160}]}>
-                                    <Text style={[Font.style('CmPrasanmitBold'),{fontSize:29,color:'white'}]}>คำร้องขอรับเลือด</Text>
-                                </View>
-                                <View style={{height:44,width:80}}></View>
-                            </View>
-                            <View style={{flex: 1,width:Dimensions.get('window').width,flexDirection: 'column',alignItems: 'center', backgroundColor: '#FAFAFA'}}>
-                            <ScrollView style={{flex: 1}}>
-                            <View style={{flex: 1,width:Dimensions.get('window').width,flexDirection: 'column',alignItems: 'center', backgroundColor: '#FAFAFA'}}>
-                                <View style={{marginTop:15}}></View>
-                                <DetailBox label='ชื่อผู้ป่วย' information='อักศร แลดูดี'/>
-                                <DetailBox label='รหัสผู้ป่วย' information='14249269'/>
-                                <DetailBox label='กรุ๊ปเลือด' information='O-' />
-                                <DetailBox label='จำนวนเลือดที่ต้องการ' information='5 ถุง' />
-                                <DetailBox label='รายละเอียด' information='อักศรไปทำหน้า หมอจัดหนักไปหน่อยมีดแทงเข้าไปหัวใจ ไม่รู้เหมือนกันว่าไปโดยหัวใจอีศรได้ยังไง'/>
-                                <DetailBox label='จังหวัด' information='เชียงใหม่'/>
-                                <DetailBox label='สถานพยาบาล' information='กรุงเทพ'/>
-                                <View style={{marginTop:25,flexDirection:'row'}}>
-                                    <View style={styles.borderBottom}>
-                                        <Button
-                                            title='ยืนยัน'
-                                            onPress={() => {}}
-                                            buttonColor='#E84A5F'
-                                            sizeFont={25}
-                                            ButtonWidth={100}
-                                            ButtonHeight={40}
-                                            colorFont='white'
-                                        />
-                                    </View>
-                                    <View style={{marginLeft:15}} ></View>
-                                    <View style={styles.borderBottom}>
-                                        <Button
-                                            title='ยกเลิก'
-                                            onPress={this._backToHistory2}
-                                            buttonColor='white'
-                                            sizeFont={25}
-                                            ButtonWidth={100}
-                                            ButtonHeight={40}
-                                            colorFont= {Colors.tabBar}
-                                        />
-                                    </View>
-                                </View>
-                            </View>
-                            </ScrollView>
-                            </View>
-                        </View>
-                    </Modal>
+                >*/
                     <View style={[styles.container,{flex:1,backgroundColor:'transparent'}]}>
                         <View style={{height:20,width:Layout.window.width,backgroundColor: Colors.tabBar}}/>
                             <View style={{height:44,flexDirection:'row',justifyContent: 'space-between',width:Layout.window.width,backgroundColor: Colors.tabBar}}>
@@ -146,6 +87,7 @@ export default class RequestBloodScreen extends Component {
                             <View style={{height:44,width:80}}></View>
                         </View>
                         <View style={{flex:1,alignItems: 'center',width:Dimensions.get('window').width,backgroundColor:'#FAFAFA'}}>
+                            <Animated.View style={this.positon.getLayout()}>
                             <ScrollView style={{flex: 1,width:Dimensions.get('window').width, backgroundColor: '#FAFAFA'}}>
                                 <PickerModalBlood
                                         pickerVisible = {this.state.modalpatient_bloodVisible}
@@ -221,14 +163,103 @@ export default class RequestBloodScreen extends Component {
                                     </View>
                                     <View style={{marginTop:40}}></View>
                             </ScrollView>
+                            </Animated.View >
                     </View>
                 </View>
+                                                        
+               /* </Modal>*/
+            );                
+        } else if( this.state.displayConfirm === true){
+            return (
+                /*<Modal
+                        animationType={'slide'}
+                        transparent={true}
+                        visible= {this.state.displayConfirm}
+                        >*/
+                        
+                        <View style={[styles.container,{flex:1,backgroundColor:'transparent'}]}>
+                            <View style={{height:20,width:Layout.window.width,backgroundColor: Colors.tabBar}}/>
+                            <View style={{height:44,flexDirection:'row',justifyContent: 'space-between',width:Layout.window.width,backgroundColor: Colors.tabBar}}>
+                                <View style={[styles.center,{height:44,width:80}]}>
+                                    <ButtonBack onPress={this._backToRequest} color='white' />
+                                </View>
+                                <View style={[styles.center,{height:44,width:Layout.window.width-160}]}>
+                                    <Text style={[Font.style('CmPrasanmitBold'),{fontSize:29,color:'white'}]}>คำร้องขอรับเลือด</Text>
+                                </View>
+                                <View style={{height:44,width:80}}></View>
+                            </View>
+                            <View style={{flex: 1,width:Dimensions.get('window').width,flexDirection: 'column',alignItems: 'center', backgroundColor: '#FAFAFA'}}>
+                            <Animated.View style={this.positon.getLayout()}>
+                            <ScrollView style={{flex: 1}}>
+                            <View style={{flex: 1,width:Dimensions.get('window').width,flexDirection: 'column',alignItems: 'center', backgroundColor: '#FAFAFA'}}>
+                                <View style={{marginTop:15}}></View>
+                                <DetailBox label='ชื่อผู้ป่วย' information='อักศร แลดูดี'/>
+                                <DetailBox label='รหัสผู้ป่วย' information='14249269'/>
+                                <DetailBox label='กรุ๊ปเลือด' information='O-' />
+                                <DetailBox label='จำนวนเลือดที่ต้องการ' information='5 ถุง' />
+                                <DetailBox label='รายละเอียด' information='อักศรไปทำหน้า หมอจัดหนักไปหน่อยมีดแทงเข้าไปหัวใจ ไม่รู้เหมือนกันว่าไปโดยหัวใจอีศรได้ยังไง'/>
+                                <DetailBox label='จังหวัด' information='เชียงใหม่'/>
+                                <DetailBox label='สถานพยาบาล' information='กรุงเทพ'/>
+                                <View style={{marginTop:25,flexDirection:'row'}}>
+                                    <View style={styles.borderBottom}>
+                                        <Button
+                                            title='ยืนยัน'
+                                            onPress={() => {}}
+                                            buttonColor='#E84A5F'
+                                            sizeFont={25}
+                                            ButtonWidth={100}
+                                            ButtonHeight={40}
+                                            colorFont='white'
+                                        />
+                                    </View>
+                                    <View style={{marginLeft:15}} ></View>
+                                    <View style={styles.borderBottom}>
+                                        <Button
+                                            title='ยกเลิก'
+                                            onPress={this._backToHistory2}
+                                            buttonColor='white'
+                                            sizeFont={25}
+                                            ButtonWidth={100}
+                                            ButtonHeight={40}
+                                            colorFont= {Colors.tabBar}
+                                        />
+                                    </View>
+                                </View>
+                            </View>
+                            </ScrollView>
+                             </Animated.View>
+                            </View>
+                        </View>
+                    
+                    /*</Modal>*/
+            );
+        }
+    }
+
+    render() {
+        if(this.state.patient_blood !== ''){
+            blood = <Text style={[Font.style('CmPrasanmit'), styles.pickerText]}>{this.state.patient_blood + this.state.patient_blood_type }</Text>;
+        }else{
+            blood = <Text />
+        }
+        return(
+            <View style={{flex: 1,flexDirection: 'column',alignItems: 'center', backgroundColor: '#FAFAFA'}}>
+                <Modal
+                    animationType={'slide'}
+                    transparent={true}
+                    visible= {true}
+                >
+                    {this._renderPageREQUEST()}
                 </Modal>
-                
+                <View style={{alignItems: 'center'}}>
+                    <View style={{marginTop:15}}></View>
+                    <DetailBox label='ชื่อผู้ป่วย' information=''/>
+                    <DetailBox label='รหัสผู้ป่วย' information=''/>
+                    <DetailBox label='กรุ๊ปเลือด' information='' />
+                </View>
             </View>
         );
     }
-    
 
     _backToHistory = () => {
         this.setState({displayRequest : false,displayConfirm : false})
@@ -244,12 +275,32 @@ export default class RequestBloodScreen extends Component {
     }
 
     _backToRequest = () => {
+        this.setState({displayRequest: true})
         this.setState({displayConfirm : false})
-        return 'Done'
+        var rand_x = 350; 
+        var rand_y = 0; 
+        this.positon = new Animated.ValueXY({ x: rand_y, y: rand_x});
+        Animated.timing(this.positon,{
+            toValue: { x: 0, y: 0},
+            duration: 350
+        }).start();
+
+        this.forceUpdate();
     }
 
     _goToConfirmRequest = () => {
         this.setState({displayConfirm: true})
+        this.setState({displayRequest: false})
+        var rand_x = 350; 
+        var rand_y = 0; 
+        this.positon = new Animated.ValueXY({ x: rand_y, y: rand_x});
+        Animated.timing(this.positon,{
+            toValue: { x: 0, y: 0},
+            duration: 350
+        }).start();
+
+        this.forceUpdate();
+        
         //this.setState({displayRequest : false})
         /*AsyncStorage.setItem('@RequestData:key', JSON.stringify(this.state))
         .then(() => {
