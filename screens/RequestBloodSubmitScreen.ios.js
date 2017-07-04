@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Text, TextInput, Modal, TouchableOpacity, Picker, StyleSheet,AsyncStorage } from 'react-native';
+import { ScrollView, View, Text, TextInput, Modal, TouchableOpacity, Picker, StyleSheet,AsyncStorage, Image } from 'react-native';
 import { Font } from 'expo';
-import { Map, InputText, InputTextLarge , PickerPartTouch, PickerModalDate, PickerModalBlood, Button} from '../components/common';
+import { Map, InputText, InputTextLarge , PickerPartTouch, PickerModalDate, PickerModalBlood, Button, ButtonBack, DetailBox} from '../components/common';
 import Colors from '../constants/Colors';
 import addressServer from '../utilities/addressServer';
 import { NavigationActions } from 'react-navigation'
@@ -15,19 +15,16 @@ export default class RequestSubmitScreen extends Component {
         const { navigation } = props;
         const { state, setParams } = navigation;
         const { params } = state;
-        console.log('sadfasdlfuiln')
-        console.log(navigation)
+        //console.log('sadfasdlfuiln')
+        //console.log(navigation)
         return {
-            title: 'x',
             headerTintColor: Colors.tintColor,
             headerTitleStyle: [Font.style('CmPrasanmitBold'),{fontSize:29}],
             headerStyle: {backgroundColor: Colors.tabBar},
             gesturesEnabled: false,
             headerTitle:'คำร้องขอรับเลือด',
-            headerLeft: <TouchableOpacity onPress={() => { navigation.goBack()}}>
-                <Image source={require('../node_modules/react-navigation/src/views/assets/back-icon.png')} style={{tintColor: 'white',marginLeft:10}} />
-            </TouchableOpacity>
-            
+            headerLeft: <ButtonBack onPress={() => navigation.goBack()} color='white' />,
+    
         };
     };
 
@@ -52,10 +49,10 @@ export default class RequestSubmitScreen extends Component {
     }
 
       componentWillMount() {
-        console.log('RequestSubmit')
+        //console.log('RequestSubmit')
         AsyncStorage.getItem('@RequestData:key')
         .then((result) => {
-            console.log(result);
+            //console.log(result);
             const dataRequest = JSON.parse(result)
             this.setState({patient_name : dataRequest.name})
             this.setState({patient_id : dataRequest.patientID})
@@ -67,13 +64,44 @@ export default class RequestSubmitScreen extends Component {
             this.setState({patient_hos_la : dataRequest.region.latitude.toString()})
             this.setState({patient_hos_long : dataRequest.region.longitude.toString()})
             this.setState({region : { latitude: dataRequest.region.latitude, longitude: dataRequest.region.longitude, latitudeDelta: 0.00922, longitudeDelta: 0.00421}});
-            console.log(this.state)
+           // console.log(this.state)
         })
     }
 
     render() {
         return(
-            <View
+            <View style={{flex: 1,flexDirection: 'column',alignItems: 'center', backgroundColor: '#FAFAFA'}}>
+                <View style={{marginTop:10}}></View>
+                <DetailBox 
+                    label='ชื่อผู้ป่วย'
+                    information='sdfa'
+                />
+                <DetailBox 
+                    label='รหัสผู้ป่วย'
+                    information='sdfa'
+                />
+                <DetailBox 
+                    label='กรุ๊ปเลือด'
+                    information='sdfa'
+                />
+                <DetailBox 
+                    label='จำนวนเลือดที่ต้องการ'
+                    information='sdfa'
+                />
+                <DetailBox 
+                    label='รายละเอียด'
+                    information='sdfa'
+                />
+                <DetailBox 
+                    label='จังหวัด'
+                    information='sdfa'
+                />
+                <DetailBox 
+                    label='สถานพยาบาล'
+                    information='sdfa'
+                />
+            </View>
+            /*<View
                     style={{backgroundColor:'rgba(131, 145, 146,0.7)', flex:1,flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
                     <View style={{ backgroundColor:'white', width: 300, height: 300,flexDirection: 'column', justifyContent: 'space-between', }}>
                     <View style={{ paddingTop: 15}}>
@@ -111,7 +139,7 @@ export default class RequestSubmitScreen extends Component {
                         }}/>
                     </View>
                     </View>
-                </View>
+                </View>*/
         );
     }
 
