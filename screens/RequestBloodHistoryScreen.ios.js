@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import { Font } from 'expo'
   import { NavigationActions } from 'react-navigation'
+import { NavigationActions } from 'react-navigation'
 import { TestButton, NavigatorBackground,ExNavigationState} from '../components/common';
 import { MonoText } from '../components/StyledText';
 import Colors from '../constants/Colors';
@@ -28,6 +29,19 @@ class ButtonRequest extends Component {
     this.props.navigation.dispatch(navigateAction)
             /*//const { navigate } = this.props.navigation;
             navigate('RequestBlood')*/
+        //console.log(this.props);
+        //const { navigate } = this.props.navigation;
+        //navigate('RequestBlood')
+        const resetAction = NavigationActions.reset(
+            {
+                index: 1,
+                actions: [ 
+                    NavigationActions.navigate({ routeName: 'RequestHistory'}) ,
+                    NavigationActions.navigate({ routeName: 'RequestBlood'})   
+                ]
+            }
+        )
+        this.props.navigation.dispatch(resetAction)
     };
     render() {
         return(
@@ -58,13 +72,29 @@ export default class RequestBloodHistoryScreen extends Component {
         headerStyle: {marginLeft:-250,backgroundColor: '#E84A5F'},
         gesturesEnabled: false,
         headerRight: <Button title="test" onPress={this._onPress} />
+    static navigationOptions = props => {
+        const { navigation } = props;
+        const { state, setParams } = navigation;
+        const { params } = state;
+        console.log(navigation)
+        return {
+            title: 'ขอเลือด',
+            headerTintColor: Colors.tintColor,
+            headerTitleStyle: [Font.style('CmPrasanmitBold'),{fontSize:29}],
+            headerStyle: {backgroundColor: Colors.tabBar},
+            gesturesEnabled: false,
+            headerRight: <ButtonRequest navigation={navigation}/> 
+        };
     };
 
     render() {
         return(
             <View style={{marginTop:30}}>
               <Text>Re Blood His</Text>
+                <Text>Re Blood His</Text>
+
             </View>
         );
     }
 }
+
