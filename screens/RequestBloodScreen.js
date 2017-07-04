@@ -60,12 +60,53 @@ export default class RequestBloodScreen extends Component {
         this.setState({modalpatient_bloodVisible: visible});
     }
 
-    _renderRequest = () => {
-        if(this.state.displayConfirm === false && this.state.displayRequest === true ){
-            return(
-                <View style={[styles.container,{flex:1,backgroundColor:'transparent'}]}>
-                    <View style={{height:20,width:Layout.window.width,backgroundColor: Colors.tabBar}}/>
-                        <View style={{height:44,flexDirection:'row',justifyContent: 'space-between',width:Layout.window.width,backgroundColor: Colors.tabBar}}>
+    render() {
+        if(this.state.patient_blood !== ''){
+            blood = <Text style={[Font.style('CmPrasanmit'), styles.pickerText]}>{this.state.patient_blood + this.state.patient_blood_type }</Text>;
+        }else{
+            blood = <Text />
+        }
+        return(
+            <View>
+                
+                <Modal
+                    animationType={'slide'}
+                    transparent={true}
+                    visible= {this.state.displayRequest}
+                >
+                    <Modal
+                        animationType={'slide'}
+                        transparent={true}
+                        visible= {this.state.displayConfirm}
+                        >
+                        <View style={[styles.container,{flex:1,backgroundColor:'transparent'}]}>
+                            <View style={{height:20,width:Layout.window.width,backgroundColor: Colors.tabBar}}/>
+                            <View style={{height:44,flexDirection:'row',justifyContent: 'space-between',width:Layout.window.width,backgroundColor: Colors.tabBar}}>
+                                <View style={[styles.center,{height:44,width:80}]}>
+                                    <ButtonBack onPress={() => {
+                                        this.setState({displayConfirm : false})
+                                    }} color='white' />
+                                </View>
+                                <View style={[styles.center,{height:44,width:Layout.window.width-160}]}>
+                                    <Text style={[Font.style('CmPrasanmitBold'),{fontSize:29,color:'white'}]}>คำร้องขอรับเลือด</Text>
+                                </View>
+                                <View style={{height:44,width:80}}></View>
+                            </View>
+                            <View style={{flex: 1,width:Dimensions.get('window').width,flexDirection: 'column',alignItems: 'center', backgroundColor: '#FAFAFA'}}>
+                                <View style={{marginTop:10}}></View>
+                                    <DetailBox label='ชื่อผู้ป่วย' information='sdfa'/>
+                                        <DetailBox label='รหัสผู้ป่วย' information='sdfa'/>
+                                        <DetailBox label='กรุ๊ปเลือด' information='sdfa' />
+                                        <DetailBox label='จำนวนเลือดที่ต้องการ' information='sdfa' />
+                                        <DetailBox label='รายละเอียด' information='sdfa'/>
+                                        <DetailBox label='จังหวัด' information='sdfa'/>
+                                        <DetailBox label='สถานพยาบาล' information='sdfa'/>
+                                </View>
+                        </View>
+                    </Modal>
+                    <View style={[styles.container,{flex:1,backgroundColor:'transparent'}]}>
+                        <View style={{height:20,width:Layout.window.width,backgroundColor: Colors.tabBar}}/>
+                            <View style={{height:44,flexDirection:'row',justifyContent: 'space-between',width:Layout.window.width,backgroundColor: Colors.tabBar}}>
                             <View style={[styles.center,{height:44,width:80}]}>
                                 <ButtonBack onPress={() => {
                                     this.setState({displayRequest : false})
@@ -77,7 +118,7 @@ export default class RequestBloodScreen extends Component {
                                 <Text style={[Font.style('CmPrasanmitBold'),{fontSize:29,color:'white'}]}>คำร้องขอรับเลือด</Text>
                             </View>
                             <View style={{height:44,width:80}}></View>
-                    </View>
+                        </View>
                         <View style={{flex:1,alignItems: 'center',width:Dimensions.get('window').width,backgroundColor:'#FAFAFA'}}>
                             <ScrollView style={{flex: 1,width:Dimensions.get('window').width, backgroundColor: '#FAFAFA'}}>
                                 <PickerModalBlood
@@ -153,83 +194,15 @@ export default class RequestBloodScreen extends Component {
                                         />
                                     </View>
                             </ScrollView>
-                        </View>
-                </View>
-            )
-        } else if(this.state.displayConfirm === true && this.state.displayRequest === false){
-            return(
-                <View style={[styles.container,{flex:1,backgroundColor:'transparent'}]}>
-                        <View style={{height:20,width:Layout.window.width,backgroundColor: Colors.tabBar}}/>
-                        <View style={{height:44,flexDirection:'row',justifyContent: 'space-between',width:Layout.window.width,backgroundColor: Colors.tabBar}}>
-                            <View style={[styles.center,{height:44,width:80}]}>
-                                <ButtonBack onPress={() => {
-                                    this.setState({displayRequest : true})
-                                    this.setState({displayConfirm : false})
-                                }} color='white' />
-                            </View>
-                            <View style={[styles.center,{height:44,width:Layout.window.width-160}]}>
-                                <Text style={[Font.style('CmPrasanmitBold'),{fontSize:29,color:'white'}]}>คำร้องขอรับเลือด</Text>
-                            </View>
-                            <View style={{height:44,width:80}}></View>
-                        </View>
-                        <View style={{flex: 1,width:Dimensions.get('window').width,flexDirection: 'column',alignItems: 'center', backgroundColor: '#FAFAFA'}}>
-                            <View style={{marginTop:10}}></View>
-                                <DetailBox 
-                                    label='ชื่อผู้ป่วย'
-                                    information='sdfa'
-                                />
-                                <DetailBox 
-                                    label='รหัสผู้ป่วย'
-                                    information='sdfa'
-                                />
-                                <DetailBox 
-                                    label='กรุ๊ปเลือด'
-                                    information='sdfa'
-                                />
-                                <DetailBox 
-                                    label='จำนวนเลือดที่ต้องการ'
-                                    information='sdfa'
-                                />
-                                <DetailBox 
-                                    label='รายละเอียด'
-                                    information='sdfa'
-                                />
-                                <DetailBox 
-                                    label='จังหวัด'
-                                    information='sdfa'
-                                />
-                                <DetailBox 
-                                    label='สถานพยาบาล'
-                                    information='sdfa'
-                                />
-                            </View>
                     </View>
-            );
-        }
-
-    }
-
-    render() {
-        if(this.state.patient_blood !== ''){
-            blood = <Text style={[Font.style('CmPrasanmit'), styles.pickerText]}>{this.state.patient_blood + this.state.patient_blood_type }</Text>;
-        }else{
-            blood = <Text />
-        }
-        return(
-            <View>
-                <Modal
-                    animationType={'slide'}
-                    transparent={true}
-                    visible= {true}
-                >
-                    {this._renderRequest()}
+                </View>
                 </Modal>
+                
             </View>
         );
     }
 
     _goToConfirmRequest = () => {
-        this.setState({displayRequest: false})
         this.setState({displayConfirm: true})
         //this.setState({displayRequest : false})
         /*AsyncStorage.setItem('@RequestData:key', JSON.stringify(this.state))
