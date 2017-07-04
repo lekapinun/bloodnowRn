@@ -22,8 +22,8 @@ export default class DonorScreen extends Component {
     };
 
     state = {
-      modalVisible: false,
-      modalBloodVisible: false,
+      onMoreDetail: false,
+      readyDonate: false,
       list: {
         title: "test",
         thumbnail_image: "http://www.japanstyle.info/wordpress/wp-content/images/henohenomoheji.bmp"
@@ -36,11 +36,9 @@ export default class DonorScreen extends Component {
               <Modal
                 animationType={"slide"}
                 transparent={true}
-                visible={this.state.modalBloodVisible}
+                visible={this.state.onMoreDetail}
               >
-                <Modal
-                  visible={this.state.modalVisible}
-                >
+
                     <View
                       style={{ alignSelf: 'center', marginVertical: 150, width: 300, height: 300, backgroundColor: 'white' }}
                     >
@@ -51,36 +49,28 @@ export default class DonorScreen extends Component {
                     <TouchableOpacity
                       style={{ position:'absolute', left: 0, right: 0, bottom: 0}}
                       title="Back"
-                      onPress={ () => this.setState({ modalVisible: false})}
+                      onPress={ () => this.setState({ onMoreDetail: false})}
                     >
                       <Text style={{fontSize: 23, alignSelf: 'center'}}>Back</Text>
                     </TouchableOpacity>
 
                   </View>
-                </Modal>
 
-                <TouchableOpacity style={{marginTop: 100}} onPress={() => this.setState({modalVisible: true})} >
-                  <Text>Open</Text>
-                </TouchableOpacity>
-
-
-                <TouchableOpacity style={{marginTop: 100}} onPress={() => this.setState({modalBloodVisible: false})} >
-                  <Text>
-                    Testqqqqqqqq
-                  </Text>
-                </TouchableOpacity>
               </Modal>
 
               <Countdown recentDonateDate='12/2/17'/>
 
               <View style={{alignSelf: 'center', flexDirection: 'row'}}>
                 <Text>คุณพร้อมบริจาคหรือไม่</Text>
-                <Switch style={{width: 100}} />
+                <Switch value={this.state.readyDonate} onChange={() => { this.setState({readyDonate: !this.state.readyDonate}); }} />
               </View>
 
-              <CardDetail list={this.state.list}
-                onPress={() => this.setState({ modalBloodVisible: true }) }
+              <CardDetail
+                list={this.state.list}
+                onPress={() => this.setState({ onMoreDetail: true }) }
+                visible={this.state.readyDonate}
               />
+
             </View>
         );
     }

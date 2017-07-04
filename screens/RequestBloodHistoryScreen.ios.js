@@ -12,7 +12,6 @@ import {
   Button,
 } from 'react-native';
 import { Font } from 'expo'
-  import { NavigationActions } from 'react-navigation'
 import { NavigationActions } from 'react-navigation'
 import { TestButton, NavigatorBackground,ExNavigationState} from '../components/common';
 import { MonoText } from '../components/StyledText';
@@ -35,9 +34,9 @@ class ButtonRequest extends Component {
         const resetAction = NavigationActions.reset(
             {
                 index: 1,
-                actions: [ 
+                actions: [
                     NavigationActions.navigate({ routeName: 'RequestHistory'}) ,
-                    NavigationActions.navigate({ routeName: 'RequestBlood'})   
+                    NavigationActions.navigate({ routeName: 'RequestBlood'})
                 ]
             }
         )
@@ -72,20 +71,6 @@ export default class RequestBloodHistoryScreen extends Component {
         headerStyle: {marginLeft:-250,backgroundColor: '#E84A5F'},
         gesturesEnabled: false,
         headerRight: <Button title="test" onPress={this._onPress} />
-    static navigationOptions = props => {
-        const { navigation } = props;
-        const { state, setParams } = navigation;
-        const { params } = state;
-        //console.log(navigation)
-        return {
-            title: 'ขอเลือด',
-            headerTintColor: Colors.tintColor,
-            headerTitleStyle: [Font.style('CmPrasanmitBold'),{fontSize:29}],
-            headerStyle: {backgroundColor: Colors.tabBar},
-            gesturesEnabled: false,
-            headerRight: <ButtonRequest navigation={navigation}/>,
-            tabBarVisible: false
-        };
     };
 
     render() {
@@ -98,4 +83,3 @@ export default class RequestBloodHistoryScreen extends Component {
         );
     }
 }
-

@@ -1,10 +1,12 @@
 import React from 'react';
 import { View, TouchableOpacity, Text, Image, StyleSheet } from 'react-native';
+import { Button } from './Button';
 
-const CardDetail = ({ list, onPress }) => {
+const CardDetail = ({ list, onPress, visible }) => {
   //console.log({list});
+  if(visible){
   return(
-    <TouchableOpacity style={styles.requestCardContainerStyle} onPress={onPress}>
+    <View style={styles.requestCardContainerStyle} >
       <Image
         style={styles.imageRequestStyle}
         source={{ uri: list.thumbnail_image }}
@@ -12,14 +14,24 @@ const CardDetail = ({ list, onPress }) => {
       <Text style={[styles.detailRequestStyle]}>
         {list.title}
       </Text>
-    </TouchableOpacity>
-  );
+      <View style={{ position: 'absolute', right: 10}}>
+        <Button
+          title="รายละเอียด"
+          onPress={onPress}
+          sizeFont={20}
+        />
+      </View>
+    </View>
+  );}
+  else {
+    return (
+      <View />
+    );}
 }
 
 const styles = StyleSheet.create({
   requestCardContainerStyle: {
-    marginTop: 15,
-    height: '20%',
+    height: '30%',
     flexDirection: 'row',
     alignItems: 'center',
   },

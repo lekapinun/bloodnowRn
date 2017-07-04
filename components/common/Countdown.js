@@ -9,11 +9,10 @@ const Countdown = ({recentDonateDate}) => {
     remainMonth = Math.floor(timeRemaining/30);
     remainDate = Math.floor(timeRemaining%30);
     nextDonation = new Date(recentDonateDate);
-    //nextDonation.setDate(nextDonation.getDate());
     countdownStatus =
       <Text>
         {'การบริจาคครั้งถัดไป วันที่' + nextDonation.getDate().toString()
-        + '/' + nextDonation.getMonth().toString()
+        + '/' + (nextDonation.getMonth() + 1)
         + '/' + nextDonation.getFullYear().toString()}
       </Text>
 
