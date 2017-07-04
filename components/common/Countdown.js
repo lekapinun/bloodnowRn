@@ -5,28 +5,41 @@ import { Font } from 'expo';
 const Countdown = ({recentDonateDate}) => {
   const timeRemaining = (7776000000 -( (new Date()) - (new Date(recentDonateDate))))
     / (24*60*60*1000);
-  var countdownBar;
   if( timeRemaining > 0) {
-    countdownBar = (
-      <View style={styles.countdownContainerStyle}>
-      <View style={styles.countdownViewStyle}>
-        <Text>เดือน</Text>
-        <Text style={[Font.style('CmPrasanmit'),styles.countdownTextStyle]}>{Math.floor(timeRemaining/30)}</Text>
-      </View>
-      <View style={styles.countdownViewStyle}>
-        <Text>วัน</Text>
-        <Text style={[Font.style('CmPrasanmit'),styles.countdownTextStyle]}>{Math.floor(timeRemaining%30)}</Text>
-      </View>
-    </View>
-  );
+    remainMonth = Math.floor(timeRemaining/30);
+    remainDate = Math.floor(timeRemaining%30);
+    nextDonation = new Date(recentDonateDate);
+    //nextDonation.setDate(nextDonation.getDate());
+    countdownStatus =
+      <Text>
+        {'การบริจาคครั้งถัดไป วันที่' + nextDonation.getDate().toString()
+        + '/' + nextDonation.getMonth().toString()
+        + '/' + nextDonation.getFullYear().toString()}
+      </Text>
+
   }
   else {
-    countdownBar = <Text style={{fontSize: 23, alignSelf: 'center'}}>Ready</Text>
+    remainDate = 0;
+    remainMonth = 0;
+    countdownStatus = <Text style={{fontSize: 23, alignSelf: 'center'}}>ตอนนี้คุณสามารถบริจาคได้แล้ว</Text>
   }
 
   return (
-    <View style={{width: '80%', height: '30%', alignSelf: 'center'}}>
-      {countdownBar}
+    <View style={{width: '80%', height: '50%', alignSelf: 'center'}}>
+      <Text>
+        นับถอยหลัง
+      </Text>
+        <View style={styles.countdownContainerStyle}>
+        <View style={styles.countdownViewStyle}>
+          <Text>เดือน</Text>
+          <Text style={[Font.style('CmPrasanmit'),styles.countdownTextStyle]}>{remainMonth}</Text>
+        </View>
+        <View style={styles.countdownViewStyle}>
+          <Text>วัน</Text>
+          <Text style={[Font.style('CmPrasanmit'),styles.countdownTextStyle]}>{remainDate}</Text>
+        </View>
+      </View>
+      {countdownStatus}
     </View>
   );
 }
