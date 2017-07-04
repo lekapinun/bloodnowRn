@@ -6,6 +6,7 @@ import Colors from '../constants/Colors';
 import Layout from '../constants/Layout';
 import MapView, {PROVIDER_GOOGLE } from 'react-native-maps';
 import { NavigationActions } from 'react-navigation'
+import addressServer from '../utilities/addressServer';
 
 export default class RequestBloodScreen extends Component {
 
@@ -94,25 +95,46 @@ export default class RequestBloodScreen extends Component {
                             </View>
                             <View style={{flex: 1,width:Dimensions.get('window').width,flexDirection: 'column',alignItems: 'center', backgroundColor: '#FAFAFA'}}>
                                 <View style={{marginTop:10}}></View>
-                                    <DetailBox label='ชื่อผู้ป่วย' information='sdfa'/>
-                                        <DetailBox label='รหัสผู้ป่วย' information='sdfa'/>
-                                        <DetailBox label='กรุ๊ปเลือด' information='sdfa' />
-                                        <DetailBox label='จำนวนเลือดที่ต้องการ' information='sdfa' />
-                                        <DetailBox label='รายละเอียด' information='sdfa'/>
-                                        <DetailBox label='จังหวัด' information='sdfa'/>
-                                        <DetailBox label='สถานพยาบาล' information='sdfa'/>
+                                <DetailBox label='ชื่อผู้ป่วย' information='sdfa'/>
+                                <DetailBox label='รหัสผู้ป่วย' information='sdfa'/>
+                                <DetailBox label='กรุ๊ปเลือด' information='sdfa' />
+                                <DetailBox label='จำนวนเลือดที่ต้องการ' information='sdfa' />
+                                <DetailBox label='รายละเอียด' information='sdfa'/>
+                                <DetailBox label='จังหวัด' information='sdfa'/>
+                                <DetailBox label='สถานพยาบาล' information='sdfa'/>
+                                <View style={{marginTop:25,flexDirection:'row'}}>
+                                    <View style={styles.borderBottom}>
+                                        <Button
+                                            title='ยืนยัน'
+                                            onPress={() => {}}
+                                            buttonColor='#E84A5F'
+                                            sizeFont={25}
+                                            ButtonWidth={100}
+                                            ButtonHeight={40}
+                                            colorFont='white'
+                                        />
+                                    </View>
+                                    <View style={{marginLeft:15}} ></View>
+                                    <View style={styles.borderBottom}>
+                                        <Button
+                                            title='ยกเลิก'
+                                            onPress={this._backToHistory}
+                                            buttonColor='white'
+                                            sizeFont={25}
+                                            ButtonWidth={100}
+                                            ButtonHeight={40}
+                                            colorFont= {Colors.tabBar}
+                                        />
+                                    </View>
                                 </View>
+                            </View>
                         </View>
                     </Modal>
                     <View style={[styles.container,{flex:1,backgroundColor:'transparent'}]}>
                         <View style={{height:20,width:Layout.window.width,backgroundColor: Colors.tabBar}}/>
                             <View style={{height:44,flexDirection:'row',justifyContent: 'space-between',width:Layout.window.width,backgroundColor: Colors.tabBar}}>
                             <View style={[styles.center,{height:44,width:80}]}>
-                                <ButtonBack onPress={() => {
-                                    this.setState({displayRequest : false})
-                                    this.setState({displayConfirm : false})
-                                    this.props.navigation.goBack()
-                                }} color='white' />
+                                <ButtonBack onPress={this._backToHistory} color='white' />
                             </View>
                             <View style={[styles.center,{height:44,width:Layout.window.width-160}]}>
                                 <Text style={[Font.style('CmPrasanmitBold'),{fontSize:29,color:'white'}]}>คำร้องขอรับเลือด</Text>
@@ -182,7 +204,7 @@ export default class RequestBloodScreen extends Component {
                                     region={this.state.region}
                                     onRegionChange={(region) => {this.setState({region})}}
                                     />
-                                    <View style={{marginTop:40}}></View>
+                                    <View style={{marginTop:20}}></View>
                                         <Button
                                             title="ส่งคำร้องขอ"
                                             onPress={this._goToConfirmRequest}
@@ -193,6 +215,7 @@ export default class RequestBloodScreen extends Component {
                                             colorFont='white'
                                         />
                                     </View>
+                                    <View style={{marginTop:40}}></View>
                             </ScrollView>
                     </View>
                 </View>
@@ -200,6 +223,11 @@ export default class RequestBloodScreen extends Component {
                 
             </View>
         );
+    }
+
+    _backToHistory = () => {
+        this.setState({displayRequest : false,displayConfirm : false})
+        this.props.navigation.goBack()
     }
 
     _goToConfirmRequest = () => {
@@ -220,6 +248,30 @@ export default class RequestBloodScreen extends Component {
         .catch((error) => {
         console.log(error);
         });*/
+    }
+
+    _ConfirmRequest = () => {
+        console.log(addressServer.IPMac.toString() + '/request');
+        const api = addressServer.IPMac.toString() + '/request';
+        const myRequest = new Request(
+        api,
+        {
+            method: 'POST',
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(this.state)
+        });
+        fetch(myRequest)
+        .then((response) => response.text())
+        .then((responseText) => {
+            console.log(responseText);
+        })
+        .catch((error) => {
+        this.setState({load: false});
+        console.log(error);
+        });
     }
 
     _findLocation = () => {
@@ -294,4 +346,8 @@ const styles = StyleSheet.create({
         borderColor: '#EEEDEE',
         borderWidth: 1
     },
+    borderBottom: {
+        borderColor: Colors.tabBar,
+        borderWidth: 1
+    }
 });
