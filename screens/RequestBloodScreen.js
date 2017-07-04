@@ -31,6 +31,8 @@ export default class RequestBloodScreen extends Component {
         tabBarVisible: false
     };
 
+    
+
     state = {
         patient_name: '',
         patient_id: '',
@@ -76,7 +78,7 @@ export default class RequestBloodScreen extends Component {
                     visible= {this.state.displayRequest}
                 >
                     <Modal
-                        animationType={'slide'}
+                        animationType={'fade'}
                         transparent={true}
                         visible= {this.state.displayConfirm}
                         >
@@ -84,9 +86,7 @@ export default class RequestBloodScreen extends Component {
                             <View style={{height:20,width:Layout.window.width,backgroundColor: Colors.tabBar}}/>
                             <View style={{height:44,flexDirection:'row',justifyContent: 'space-between',width:Layout.window.width,backgroundColor: Colors.tabBar}}>
                                 <View style={[styles.center,{height:44,width:80}]}>
-                                    <ButtonBack onPress={() => {
-                                        this.setState({displayConfirm : false})
-                                    }} color='white' />
+                                    <ButtonBack onPress={this._backToRequest} color='white' />
                                 </View>
                                 <View style={[styles.center,{height:44,width:Layout.window.width-160}]}>
                                     <Text style={[Font.style('CmPrasanmitBold'),{fontSize:29,color:'white'}]}>คำร้องขอรับเลือด</Text>
@@ -94,14 +94,16 @@ export default class RequestBloodScreen extends Component {
                                 <View style={{height:44,width:80}}></View>
                             </View>
                             <View style={{flex: 1,width:Dimensions.get('window').width,flexDirection: 'column',alignItems: 'center', backgroundColor: '#FAFAFA'}}>
-                                <View style={{marginTop:10}}></View>
-                                <DetailBox label='ชื่อผู้ป่วย' information='sdfa'/>
-                                <DetailBox label='รหัสผู้ป่วย' information='sdfa'/>
-                                <DetailBox label='กรุ๊ปเลือด' information='sdfa' />
-                                <DetailBox label='จำนวนเลือดที่ต้องการ' information='sdfa' />
-                                <DetailBox label='รายละเอียด' information='sdfa'/>
-                                <DetailBox label='จังหวัด' information='sdfa'/>
-                                <DetailBox label='สถานพยาบาล' information='sdfa'/>
+                            <ScrollView style={{flex: 1}}>
+                            <View style={{flex: 1,width:Dimensions.get('window').width,flexDirection: 'column',alignItems: 'center', backgroundColor: '#FAFAFA'}}>
+                                <View style={{marginTop:15}}></View>
+                                <DetailBox label='ชื่อผู้ป่วย' information='อักศร แลดูดี'/>
+                                <DetailBox label='รหัสผู้ป่วย' information='14249269'/>
+                                <DetailBox label='กรุ๊ปเลือด' information='O-' />
+                                <DetailBox label='จำนวนเลือดที่ต้องการ' information='5 ถุง' />
+                                <DetailBox label='รายละเอียด' information='อักศรไปทำหน้า หมอจัดหนักไปหน่อยมีดแทงเข้าไปหัวใจ ไม่รู้เหมือนกันว่าไปโดยหัวใจอีศรได้ยังไง'/>
+                                <DetailBox label='จังหวัด' information='เชียงใหม่'/>
+                                <DetailBox label='สถานพยาบาล' information='กรุงเทพ'/>
                                 <View style={{marginTop:25,flexDirection:'row'}}>
                                     <View style={styles.borderBottom}>
                                         <Button
@@ -118,7 +120,7 @@ export default class RequestBloodScreen extends Component {
                                     <View style={styles.borderBottom}>
                                         <Button
                                             title='ยกเลิก'
-                                            onPress={this._backToHistory}
+                                            onPress={this._backToHistory2}
                                             buttonColor='white'
                                             sizeFont={25}
                                             ButtonWidth={100}
@@ -127,6 +129,8 @@ export default class RequestBloodScreen extends Component {
                                         />
                                     </View>
                                 </View>
+                            </View>
+                            </ScrollView>
                             </View>
                         </View>
                     </Modal>
@@ -224,10 +228,24 @@ export default class RequestBloodScreen extends Component {
             </View>
         );
     }
+    
 
     _backToHistory = () => {
         this.setState({displayRequest : false,displayConfirm : false})
         this.props.navigation.goBack()
+    }
+
+    _backToHistory2 = () => {
+        //this.setState({displayConfirm : false})
+        setTimeout(() => {
+            this.setState({displayRequest : false})
+            this.props.navigation.goBack()
+        },0)
+    }
+
+    _backToRequest = () => {
+        this.setState({displayConfirm : false})
+        return 'Done'
     }
 
     _goToConfirmRequest = () => {
@@ -238,9 +256,9 @@ export default class RequestBloodScreen extends Component {
             const resetAction = NavigationActions.reset({
                 index: 2,
                 actions: [ 
-                    NavigationActions.navigate({ routepatient_name: 'RequestHistory'}) ,
-                    NavigationActions.navigate({ routepatient_name: 'Requestpatient_blood'}) ,
-                    NavigationActions.navigate({ routepatient_name: 'RequestSubmit'})   
+                    NavigationActions.navigate({ routeName: 'RequestHistory'}) ,
+                    NavigationActions.navigate({ routeName: 'Requestpatient_blood'}) ,
+                    NavigationActions.navigate({ routeNamee: 'RequestSubmit'})   
                 ]
             })
             this.props.navigation.dispatch(resetAction)
