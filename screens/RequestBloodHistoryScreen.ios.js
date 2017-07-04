@@ -70,6 +70,13 @@ export default class RequestBloodHistoryScreen extends Component {
     render() {
         return(
             <View style={{flex:1,marginTop:30,backgroundColor:'transparent'}}>
+                <View style={{height:20,width:20,backgroundColor:'red',position:'absolute'}}>
+
+                </View>
+                <View style={{height:20,width:20,backgroundColor:'black',position:'absolute'}}>
+
+                </View>
+                
                 {/*<Modal style={{backgroundColor:'transparent'}}>   
                    <RequestBloodScreen/>
                 </Modal>*/}
