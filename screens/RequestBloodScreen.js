@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Text, TextInput, Modal, TouchableOpacity, Picker, StyleSheet,AsyncStorage } from 'react-native';
+import { ScrollView, View, Text, TextInput, Modal, TouchableOpacity, Picker, StyleSheet,AsyncStorage,Dimensions, TouchableWithoutFeedback } from 'react-native';
 import { Font } from 'expo';
-import { Map, InputText, InputTextLarge , PickerPartTouch, PickerModalDate, PickerModalBlood, Button} from '../components/common';
+import { Map, InputText, InputTextLarge , PickerPartTouch, PickerModalDate, PickerModalpatient_blood, Button} from '../components/common';
 import Colors from '../constants/Colors';
 import MapView, {PROVIDER_GOOGLE } from 'react-native-maps';
 import { NavigationActions } from 'react-navigation'
 
-export default class RequestBloodScreen extends Component {
+export default class Requestpatient_bloodScreen extends Component {
 
     static navigationOptions = props => {
         const { navigation } = props;
@@ -20,7 +20,6 @@ export default class RequestBloodScreen extends Component {
             headerTitleStyle: [Font.style('CmPrasanmitBold'),{fontSize:29}],
             headerStyle: {backgroundColor: Colors.tabBar},
             gesturesEnabled: false,
-            tabBarOptions: { tabBarVisible: false}
         };
     };
 
@@ -30,142 +29,195 @@ export default class RequestBloodScreen extends Component {
     };
 
     state = {
-        name: '',
-        patientID: '',
-        blood: '',
-        blood_type: '',
-        bloodUnit: '',
-        description: '',
-        hostpital: '',
-        bloodTemp: 'A',
-        blood_Temp: '+',
+        patient_name: '',
+        patient_id: '',
+        patient_blood: '',
+        patient_blood_type: '',
+        patient_bloodUnit: '',
+        countblood: 0,
+        patient_detail: '',
+        patient_hos: '',
+        patient_bloodTemp: 'A',
+        patient_blood_Temp: '+',
+        patient_hos_la: '',
+        patient_hos_long: '',
+        patient_province: 'เชียงใหม่',
         region: {
-        latitude: 18.788488, 
-        longitude: 98.971420, 
-        latitudeDelta: 0.00922, 
-        longitudeDelta: 0.00421
+            latitude: 18.788488, 
+            longitude: 98.971420, 
+            latitudeDelta: 0.00922, 
+            longitudeDelta: 0.00421
         },
-        modalBloodVisible: false,
+        modalpatient_bloodVisible: false,
         ConfirmationModalVisible: false,
         confirm: false,
+        display: true,
     }
 
-    setModalBloodVisible(visible) {
-    this.setState({modalBloodVisible: visible});
+    setModalpatient_bloodVisible(visible) {
+    this.setState({modalpatient_bloodVisible: visible});
     }
     setConfrimationModalVisible(visible) {
         this.setState({ConfirmationModalVisible: visible});
     }
 
     render() {
-        if(this.state.blood !== ''){
-        blood = <Text style={[Font.style('CmPrasanmit'), styles.pickerText]}>{this.state.blood + this.state.blood_type }</Text>;
+        if(this.state.patient_blood !== ''){
+        patient_blood = <Text style={[Font.style('CmPrasanmit'), styles.pickerText]}>{this.state.patient_blood + this.state.patient_blood_type }</Text>;
       }else{
-        blood = <Text />
+        patient_blood = <Text />
       }
         return(
-            <ScrollView style={{flex: 1,flexDirection: 'column', backgroundColor: '#FAFAFA'}}>
-                <PickerModalBlood
-                        pickerVisible = {this.state.modalBloodVisible}
-                        onPressCancel = {() => { this.setModalBloodVisible(!this.state.modalBloodVisible)}}
-                        onPressSubmit = {() => {
-                            if(this.state.bloodTemp === ''){
-                            this.setState({blood: 'A'});
-                            }else{
-                            this.setState({blood: this.state.bloodTemp});
-                            }  
-                            if(this.state.blood_typeTemp === ''){
-                            this.setState({blood_type: '+'});
-                            }else{
-                            this.setState({blood_type: this.state.blood_typeTemp});
-                            }          
-                            this.setModalBloodVisible(!this.state.modalBloodVisible);
-                        }}
-                        selectOne = {this.state.bloodTemp}
-                        onChangeOne = {(itemValue, itemIndex) => this.setState({bloodTemp: itemValue})}
-                        selectTwo = {this.state.blood_typeTemp}
-                        onChangeTwo = {(itemValue2, itemIndex2) => this.setState({blood_typeTemp: itemValue2})}
-                    />
-
-
+            <View>
                 <Modal
-                    animationType={"slide"}
+                    animationType={'slide'}
                     transparent={true}
-                    visible={this.state.ConfirmationModalVisible}
+                    visible= {this.state.display}
                 >
-                    <View
-                    style={{backgroundColor:'rgba(131, 145, 146,0.7)', flex:1,flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-                    <View style={{ backgroundColor:'white', width: 300, height: 300,flexDirection: 'column', justifyContent: 'space-between', }}>
-                    <View style={{ paddingTop: 15}}>
-                        <View style={{flexDirection: 'row', justifyContent: 'space-around' , alignItems:'flex-start'}}>
-                        <Text>{"ชื่อผู้ป่วย"}</Text>
-                        <Text>{this.state.name}</Text>
+                    <View style={[styles.container,{flex:1,width:Dimensions.get('window').width,backgroundColor:'transparent'}]}>
+                        <View style={{height:20,width:0}}>
+                            {/*<View style={{height:20,backgroundColor:'red',width:Dimensions.get('window').width}}></View>*/}
                         </View>
-                        <View style={{flexDirection: 'row', justifyContent: 'space-around' , alignItems:'flex-start'}}>
-                        <Text>{"รหัสผู้ป่วย"}</Text>
-                        <Text>{this.state.patientID}</Text>
+                        <View style={{height:44,width:Dimensions.get('window').width}}>
+                            <TouchableWithoutFeedback onPress={() => {
+                                this.setState({display : false})
+                                this.props.navigation.goBack()
+                            }}>
+                                <View style={{height:44,width:80}}></View>
+                            </TouchableWithoutFeedback>
                         </View>
-                        <View style={{flexDirection: 'row', justifyContent: 'space-around' , alignItems:'flex-start'}}>
-                        <Text>{"กรุ๊ปเลือด "}</Text>
-                        <Text>{this.state.bloodType}</Text>
-                        </View>
-                        <View style={{flexDirection: 'row', justifyContent: 'space-around' , alignItems:'flex-start'}}>
-                        <Text>{"จำนวน(ยูนิต)"}</Text>
-                        <Text>{this.state.bloodUnit}</Text>
-                        </View>
-                        <View style={{flexDirection: 'row', justifyContent: 'space-around' , alignItems:'flex-start'}}>
-                        <Text>{"รายละเอียด"}</Text>
-                        <Text>{this.state.description}</Text>
-                        </View><View style={{flexDirection: 'row', justifyContent: 'space-around' , alignItems:'flex-start'}}>
-                        <Text>{"สถานพยาบาล"}</Text>
-                        <Text>{this.state.hostpital}</Text>
+                        <View style={{flex:1,alignItems: 'center',width:Dimensions.get('window').width,backgroundColor:'#FAFAFA'}}>
+                            <ScrollView style={{flex: 1,width:Dimensions.get('window').width, backgroundColor: '#FAFAFA'}}>
+                                <PickerModalpatient_blood
+                                        pickerVisible = {this.state.modalpatient_bloodVisible}
+                                        onPressCancel = {() => { this.setModalpatient_bloodVisible(!this.state.modalpatient_bloodVisible)}}
+                                        onPressSubmit = {() => {
+                                            if(this.state.patient_bloodTemp === ''){
+                                            this.setState({patient_blood: 'A'});
+                                            }else{
+                                            this.setState({patient_blood: this.state.patient_bloodTemp});
+                                            }  
+                                            if(this.state.patient_blood_typeTemp === ''){
+                                            this.setState({patient_blood_type: '+'});
+                                            }else{
+                                            this.setState({patient_blood_type: this.state.patient_blood_typeTemp});
+                                            }          
+                                            this.setModalpatient_bloodVisible(!this.state.modalpatient_bloodVisible);
+                                        }}
+                                        selectOne = {this.state.patient_bloodTemp}
+                                        onChangeOne = {(itemValue, itemIndex) => this.setState({patient_bloodTemp: itemValue})}
+                                        selectTwo = {this.state.patient_blood_typeTemp}
+                                        onChangeTwo = {(itemValue2, itemIndex2) => this.setState({patient_blood_typeTemp: itemValue2})}
+                                    />
+                                <View style={{alignItems: 'center'}}>
+                                    <View style={{width: 310,marginTop:15}}>
+                                    <InputText
+                                        label = 'ชื่อผู้ป่วย'
+                                        onChangeText={(patient_name) => this.setState({patient_name})}
+                                        value={this.state.patient_name}
+                                    />
+                                    <InputText
+                                        label = 'รหัสผู้ป่วย'
+                                        onChangeText={(patient_id) => this.setState({patient_id})}
+                                        value={this.state.patient_id}
+                                    />
+                                    <PickerPartTouch
+                                        label='กรุ๊ปเลือด'
+                                        onPress={() => this.setModalpatient_bloodVisible(true)}
+                                        information={patient_blood}
+                                    />
+                                    <InputText
+                                        label = 'จำนวนเลือดที่ต้องการ(ยูนิต)'
+                                        onChangeText={(patient_bloodUnit) => this.setState({patient_bloodUnit})}
+                                        value={this.state.patient_bloodUnit}
+                                        keyboardType='number-pad'
+                                    />
+                                    <InputTextLarge
+                                        label = 'รายละเอียด'
+                                        onChangeText={(patient_detail) => this.setState({patient_detail})}
+                                        value={this.state.patient_detail}
+                                    />
+                                    <InputText
+                                        label = 'สถานพยาบาล'
+                                        onChangeText={(patient_hos) => this.setState({patient_hos})}
+                                        value={this.state.patient_hos}
+                                        onEndEditing={this._findLocation}
+                                    />
+                                    </View>
+                                    <View style={{marginTop:40}}></View>
+                                    <Map
+                                    region={this.state.region}
+                                    onRegionChange={(region) => {this.setState({region})}}
+                                    />
+                                    <View style={{marginTop:40}}></View>
+                                        <Button
+                                            title="ส่งคำร้องขอ"
+                                            onPress={this._goToConfirmRequest}
+                                            buttonColor='#E84A5F'
+                                            sizeFont={25}
+                                            ButtonWidth={300}
+                                            ButtonHeight={50}
+                                            colorFont='white'
+                                        />
+                                    </View>
+                            </ScrollView>
                         </View>
                     </View>
-                    <View style={{flexDirection: 'row', justifyContent: 'space-around' , alignItems:'flex-start', borderColor: 'black', borderWidth: 1}}>
-                        <Button title='Cancel' onPress={() => {
-                        this.setConfrimationModalVisible(!this.state.ConfirmationModalVisible)
-                        }}/>
-                        <Button title='Confirm' onPress={() => {
-                        this.setState({confirm: this.state.bloodTypeTemp});
-                        this.setConfrimationModalVisible(!this.state.ConfirmationModalVisible)
-                        }}/>
-                    </View>
-                    </View>
-                </View>
                 </Modal>
-
+            {/*<ScrollView style={{flex: 1,flexDirection: 'column', backgroundColor: '#FAFAFA'}}>
+                <PickerModalpatient_blood
+                        pickerVisible = {this.state.modalpatient_bloodVisible}
+                        onPressCancel = {() => { this.setModalpatient_bloodVisible(!this.state.modalpatient_bloodVisible)}}
+                        onPressSubmit = {() => {
+                            if(this.state.patient_bloodTemp === ''){
+                            this.setState({patient_blood: 'A'});
+                            }else{
+                            this.setState({patient_blood: this.state.patient_bloodTemp});
+                            }  
+                            if(this.state.patient_blood_typeTemp === ''){
+                            this.setState({patient_blood_type: '+'});
+                            }else{
+                            this.setState({patient_blood_type: this.state.patient_blood_typeTemp});
+                            }          
+                            this.setModalpatient_bloodVisible(!this.state.modalpatient_bloodVisible);
+                        }}
+                        selectOne = {this.state.patient_bloodTemp}
+                        onChangeOne = {(itemValue, itemIndex) => this.setState({patient_bloodTemp: itemValue})}
+                        selectTwo = {this.state.patient_blood_typeTemp}
+                        onChangeTwo = {(itemValue2, itemIndex2) => this.setState({patient_blood_typeTemp: itemValue2})}
+                    />
                 <View style={{alignItems: 'center'}}>
                     <View style={{width: 310,marginTop:15}}>
                     <InputText
                         label = 'ชื่อผู้ป่วย'
-                        onChangeText={(name) => this.setState({name})}
-                        value={this.state.name}
+                        onChangeText={(patient_name) => this.setState({patient_name})}
+                        value={this.state.patient_name}
                     />
                     <InputText
                         label = 'รหัสผู้ป่วย'
-                        onChangeText={(patientID) => this.setState({patientID})}
-                        value={this.state.patientID}
+                        onChangeText={(patient_id) => this.setState({patient_id})}
+                        value={this.state.patient_id}
                     />
                     <PickerPartTouch
                         label='กรุ๊ปเลือด'
-                        onPress={() => this.setModalBloodVisible(true)}
-                        information={blood}
+                        onPress={() => this.setModalpatient_bloodVisible(true)}
+                        information={patient_blood}
                     />
                     <InputText
                         label = 'จำนวนเลือดที่ต้องการ(ยูนิต)'
-                        onChangeText={(bloodUnit) => this.setState({bloodUnit})}
-                        value={this.state.bloodUnit}
+                        onChangeText={(patient_bloodUnit) => this.setState({patient_bloodUnit})}
+                        value={this.state.patient_bloodUnit}
                         keyboardType='number-pad'
                     />
                     <InputTextLarge
                         label = 'รายละเอียด'
-                        onChangeText={(description) => this.setState({description})}
-                        value={this.state.description}
+                        onChangeText={(patient_detail) => this.setState({patient_detail})}
+                        value={this.state.patient_detail}
                     />
                     <InputText
                         label = 'สถานพยาบาล'
-                        onChangeText={(hostpital) => this.setState({hostpital})}
-                        value={this.state.hostpital}
+                        onChangeText={(patient_hos) => this.setState({patient_hos})}
+                        value={this.state.patient_hos}
                         onEndEditing={this._findLocation}
                     />
                     </View>
@@ -174,17 +226,6 @@ export default class RequestBloodScreen extends Component {
                     region={this.state.region}
                     onRegionChange={(region) => {this.setState({region})}}
                     />
-                    {/*<MapView
-                    style={{height: 250, width: 300, alignSelf: 'center' }}
-                    provider={PROVIDER_GOOGLE}
-                    region={{latitude: this.state.lat, longitude: this.state.lng, latitudeDelta: 0.00922, longitudeDelta: 0.00421} }
-                    >
-                    <MapView.Marker
-                        title="TESTTitle"
-                        description="test descriptionp"
-                        coordinate={{latitude: this.state.lat, longitude: this.state.lng, latitudeDelta: 0.00922, longitudeDelta: 0.00421} }
-                    />
-                    </MapView>*/}
                     <View style={styles.request}></View>
                         <Button
                             title="ส่งคำร้องขอ"
@@ -196,19 +237,22 @@ export default class RequestBloodScreen extends Component {
                             colorFont='white'
                         />
                     </View>
-            </ScrollView>
+            </ScrollView>*/}
+            
+            </View>
         );
     }
 
     _goToConfirmRequest = () => {
+        //this.setState({display : false})
         AsyncStorage.setItem('@RequestData:key', JSON.stringify(this.state))
         .then(() => {
             const resetAction = NavigationActions.reset({
                 index: 2,
                 actions: [ 
-                    NavigationActions.navigate({ routeName: 'RequestHistory'}) ,
-                    NavigationActions.navigate({ routeName: 'RequestBlood'}) ,
-                    NavigationActions.navigate({ routeName: 'RequestSubmit'})   
+                    NavigationActions.navigate({ routepatient_name: 'RequestHistory'}) ,
+                    NavigationActions.navigate({ routepatient_name: 'Requestpatient_blood'}) ,
+                    NavigationActions.navigate({ routepatient_name: 'RequestSubmit'})   
                 ]
             })
             this.props.navigation.dispatch(resetAction)
@@ -219,9 +263,9 @@ export default class RequestBloodScreen extends Component {
     }
 
     _findLocation = () => {
-        let nameLocation = this.state.hostpital
+        let patient_nameLocation = this.state.patient_hos
         const API_KEY = 'AIzaSyAuyEycAxVaRvLY5CuQ84d3eFXU0PSf1Jg&libraries=places'
-        let APIGeocodingRequest = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + nameLocation + '&key=' + API_KEY
+        let APIGeocodingRequest = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + patient_nameLocation + '&key=' + API_KEY
         //console.log(APIGeocodingRequest)
         fetch(APIGeocodingRequest)
         .then((response) => response.json())
@@ -240,6 +284,10 @@ export default class RequestBloodScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
     inputStyle: {
         height: 50,
         width:270,
@@ -274,9 +322,6 @@ const styles = StyleSheet.create({
         paddingLeft:10,
         fontSize: 23,
     },
-    container: {
-        alignSelf: 'center',
-    },
     pickerContainer: {
         height: 50,
         marginTop: 10,
@@ -284,11 +329,4 @@ const styles = StyleSheet.create({
         borderColor: '#EEEDEE',
         borderWidth: 1
     },
-    request: {
-        position: 'absolute',
-        //bottom: 0,
-        left: 0,
-        right: 0,
-        top:0
-    }
 });

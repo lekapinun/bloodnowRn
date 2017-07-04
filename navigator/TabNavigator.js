@@ -62,9 +62,9 @@ export default class Tab extends React.Component {
             tabBarIcon: ({ tintColor, focused }) => ( this._renderIconSimpleLineIcons('user', focused, 20)),
         };
 
-        RequestStack.navigationOptions =  {
+/*        RequestStack.navigationOptions = {
             tabBarIcon: ({ tintColor, focused }) => ( this._renderIconSimpleLineIcons('heart', focused, 20)),
-        };
+        };*/
 
         DonorStack.navigationOptions = {
             tabBarIcon: ({ tintColor, focused }) => ( this._renderIconSimpleLineIcons('drop', focused, 25)),

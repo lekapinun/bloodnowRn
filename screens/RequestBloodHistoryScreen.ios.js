@@ -8,13 +8,15 @@ import {
   Text,
   TouchableOpacity,
   View,
-  AsyncStorage
+  AsyncStorage,
+  Modal
 } from 'react-native';
 import { Font } from 'expo'
 import { NavigationActions } from 'react-navigation'
 import { TestButton, NavigatorBackground,ExNavigationState} from '../components/common';
 import { MonoText } from '../components/StyledText';
 import Colors from '../constants/Colors';
+import RequestBloodScreen from './RequestBloodScreen'
 
 class ButtonRequest extends Component {
     _handlePress = () => {
@@ -63,13 +65,29 @@ export default class RequestBloodHistoryScreen extends Component {
             tabBarVisible: false
         };
     };
+    
 
     render() {
         return(
-            <View style={{marginTop:30}}>
+            <View style={{flex:1,marginTop:30,backgroundColor:'transparent'}}>
+                {/*<Modal style={{backgroundColor:'transparent'}}>   
+                   <RequestBloodScreen/>
+                </Modal>*/}
+            </View> 
+            /*<View style={{flex:1,marginTop:30}}>
                 <Text>Re Blood His</Text>
+                <View style={{
+                    width:50,
+                    height:50,
+                    backgroundColor:'black',
+                    position: 'absolute',
+                    right:0,
+                    bottom: 0,
+                    left:0,
+                }}>
 
-            </View>
+                </View>
+            </View>*/
         );
     }
 }

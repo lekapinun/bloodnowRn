@@ -24,7 +24,6 @@ export default class RequestSubmitScreen extends Component {
             gesturesEnabled: false,
             headerTitle:'คำร้องขอรับเลือด',
             headerLeft: <ButtonBack onPress={() => navigation.goBack()} color='white' />,
-    
         };
     };
 
