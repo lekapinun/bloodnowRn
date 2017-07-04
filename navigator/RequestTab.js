@@ -42,7 +42,7 @@ export default class RequestStack extends React.Component {
     },{
         initialRouteName: 'RequestHistory',
         mode: 'modal',
-        headerMode: 'float',
+        //headerMode: 'float',
     });
 
     return(
