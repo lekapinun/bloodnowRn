@@ -28,11 +28,35 @@ export default class ProfileScreen extends Component {
         gesturesEnabled: false,
     };
 
+    state = {
+        test : new Date('2017-07-13T04:13:00.714Z').getTime() - new Date().getTime(),
+        test2 : 10
+    }
+
+    ComponentWillMount() {
+
+    }
+
+    constructor(props) {
+        super(props);
+        console.log(props)
+        setInterval(() => {
+            this.setState({test : this.state.test - 60000})
+            //console.log( (this.state.test/60000).toString() + ' ' + (this.state.test%60000).toString())
+            //console.log(this.state)
+        }, 60000);
+    }
+
+    rendertime = () => {
+        return (
+            <Text>{ (Math.floor(this.state.test/(3600000*24))).toString() + ' ' + (Math.floor(this.state.test/3600000)).toString() + ' ' + (Math.floor(this.state.test/60000)).toString() + ' ' + (this.state.test%60000).toString()}</Text>
+        );
+    }
 
     render() {
         return(
             <View style={{marginTop:30}}>
-                <Text>Profile SCREEN</Text>
+                {this.rendertime()}
             </View>
         );
     }

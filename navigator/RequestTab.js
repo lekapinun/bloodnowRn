@@ -19,7 +19,7 @@ export default class RequestStack extends React.Component {
   }
 
   static navigationOptions = props => {
-    console.log(props)
+    //console.log(props)
     return {
       tabBarIcon: ({ tintColor, focused }) => ( 
         <SimpleLineIcons

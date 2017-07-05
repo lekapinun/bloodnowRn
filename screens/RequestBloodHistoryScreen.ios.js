@@ -40,8 +40,8 @@ class ButtonRequest extends Component {
                 style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginRight: 10, paddingTop: 1,}}
             >
                 <Image
-                    source={require('../assets/icons/exponent-icon.png')}
-                    style={{ width: 21, height: 17 }}
+                    source={require('../assets/images/addRequest.png')}
+                    style={{ width: 30, height: 30 ,marginRight:10,marginBottom:5}}
                 />
             </TouchableOpacity>
         );

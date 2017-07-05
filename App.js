@@ -20,7 +20,6 @@ export default class App extends React.Component{
         require('./assets/images/expo-icon@2x.png'),
         require('./assets/icons/cr.png'),
         require('./assets/icons/ex.png'),
-        require('./assets/icons/exponent-icon.png'),
         require('./node_modules/react-navigation/src/views/assets/back-icon.png'),
       ],
       fonts: [
