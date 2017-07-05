@@ -1,8 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Font } from 'expo';
+import Colors from '../../constants/Colors';
 
-const Countdown = ({recentDonateDate}) => {
+const Countdown = ({recentDonateDate }) => {
   const timeRemaining = (7776000000 -( (new Date()) - (new Date(recentDonateDate))))
     / (24*60*60*1000);
   if( timeRemaining > 0) {
@@ -24,18 +25,18 @@ const Countdown = ({recentDonateDate}) => {
   }
 
   return (
-    <View style={{width: '80%', height: '50%', alignSelf: 'center'}}>
+    <View style={styles.countdownBorder}>
       <Text>
         นับถอยหลัง
       </Text>
         <View style={styles.countdownContainerStyle}>
         <View style={styles.countdownViewStyle}>
-          <Text>เดือน</Text>
           <Text style={[Font.style('CmPrasanmit'),styles.countdownTextStyle]}>{remainMonth}</Text>
+          <Text>เดือน</Text>
         </View>
         <View style={styles.countdownViewStyle}>
-          <Text>วัน</Text>
           <Text style={[Font.style('CmPrasanmit'),styles.countdownTextStyle]}>{remainDate}</Text>
+          <Text>วัน</Text>
         </View>
       </View>
       {countdownStatus}
@@ -44,6 +45,15 @@ const Countdown = ({recentDonateDate}) => {
 }
 
 const styles = StyleSheet.create({
+  countdownBorder: {
+    width: '80%',
+    height: 200,
+    alignSelf: 'center',
+    marginTop: 15,
+    borderWidth: 3,
+    borderRadius: 5,
+    borderColor: Colors.tabBar,
+  },
   countdownContainerStyle: {
     //backgroundColor: 'rgba(255, 77, 77,0.8)',
     flexDirection: 'row',
@@ -58,6 +68,8 @@ const styles = StyleSheet.create({
   countdownTextStyle: {
     alignSelf: 'center',
     fontSize: 55,
+    backgroundColor: Colors.tabBar,
+    color: 'white',
   },
 });
 
