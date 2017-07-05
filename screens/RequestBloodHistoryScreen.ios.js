@@ -13,16 +13,15 @@ import {
 } from 'react-native';
 import { Font } from 'expo'
 import { NavigationActions } from 'react-navigation'
-import { TestButton, NavigatorBackground,ExNavigationState} from '../components/common';
+import { TestButton, NavigatorBackground,ExNavigationState,CardHistoryRequest} from '../components/common';
 import { MonoText } from '../components/StyledText';
 import Colors from '../constants/Colors';
-import RequestBloodScreen from './RequestBloodScreen'
+import Layout from '../constants/Layout';
+import RequestBloodScreen from './RequestBloodScreen';
+import axios from 'axios';
 
 class ButtonRequest extends Component {
     _handlePress = () => {
-        //console.log(this.props);
-        //const { navigate } = this.props.navigation;
-        //navigate('RequestBlood')
         const resetAction = NavigationActions.reset(
             {
                 index: 1,
@@ -66,36 +65,50 @@ export default class RequestBloodHistoryScreen extends Component {
         };
     };
     
+    state = {
+        history: [],
+    }
+
+    componentDidMount() {
+         axios.get('https://rallycoding.herokuapp.com/api/music_albums')
+        .then(response => this.setState({ history: response.data }))
+        .catch(function (error) {
+            console.log(error);
+        });
+    }
+
+    renderHistory() {
+        //console.log(this.state.history)
+        return this.state.history.map(history =>
+            <CardHistoryRequest
+                key={history.title}
+                blood = 'O'
+                bloodType = '-'
+                name = 'อักศร แลดูดี'
+                hospital = {'โรงพยาบาล ' + history.title}
+                status = {1}//'finished'
+            /> 
+        );
+    }
+    
 
     render() {
         return(
-            <View style={{flex:1,marginTop:30,backgroundColor:'transparent'}}>
-                <View style={{height:20,width:20,backgroundColor:'red',position:'absolute'}}>
-
-                </View>
-                <View style={{height:20,width:20,backgroundColor:'black',position:'absolute'}}>
-
-                </View>
-                
-                {/*<Modal style={{backgroundColor:'transparent'}}>   
-                   <RequestBloodScreen/>
-                </Modal>*/}
-            </View> 
-            /*<View style={{flex:1,marginTop:30}}>
-                <Text>Re Blood His</Text>
-                <View style={{
-                    width:50,
-                    height:50,
-                    backgroundColor:'black',
-                    position: 'absolute',
-                    right:0,
-                    bottom: 0,
-                    left:0,
-                }}>
-
-                </View>
-            </View>*/
+            <ScrollView style={{flex: 1}}> 
+                <View style={[styles.center, {height:Layout.window.height,flex:1,paddingTop:16,backgroundColor:'white'}]}>
+                    {this.renderHistory()} 
+                </View> 
+            </ScrollView>
         );
     }
 }
+
+const styles = StyleSheet.create({
+    center: {
+        flexDirection: 'column',
+        //justifyContent: 'center',
+        alignItems: 'center'
+    },
+});
+
 

@@ -27,15 +27,7 @@ export default class ProfileScreen extends Component {
         headerStyle: {marginLeft:-250,backgroundColor: '#E84A5F'},
         gesturesEnabled: false,
     };
-    /*static route = {
-        navigationBar: {
-        title: 'เพื่อน',
-        backgroundColor: Colors.routeColor,
-        titleStyle: [Font.style('CmPrasanmitBold'),{fontSize:25}],
-        tintColor: 'white',
-        renderRight: () => <ExponentButton />,
-        },
-    };*/
+
 
     render() {
         return(
