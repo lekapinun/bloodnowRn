@@ -52,7 +52,7 @@ export default class DonorScreen extends Component {
     render() {
         return(
             <View style={[styles.center, {height:Layout.window.height,flex:1,paddingTop:16,backgroundColor:'white'}]}>
-              <Text>{(Math.floor(this.state.nextReady/(86400000))).toString()}</Text>
+              {/*<Text>{(Math.floor(this.state.nextReady/(86400000))).toString()}</Text>*/}
               {/*<Modal
                 animationType={"slide"}
                 transparent={true}
