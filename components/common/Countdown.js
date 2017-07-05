@@ -6,23 +6,28 @@ import { CmPrasanmitText } from '../CmPrasanmitText'
 import { CmPrasanmitBoldText } from '../CmPrasanmitBoldText'
 
 const Countdown = ({recentDonateDate }) => {
-  const timeRemaining = (7776000000 -( (new Date()) - (new Date(recentDonateDate))))
-    / (24*60*60*1000);
+  const timeRemaining = Math.floor(recentDonateDate/(86400000))
+  let remainMonth = '00';
+  let remainDate = '00';
   if( timeRemaining > 0) {
-    remainMonth = Math.floor(timeRemaining/30);
-    remainDate = Math.floor(timeRemaining%30);
-    nextDonation = new Date(recentDonateDate);
+    remainMonth = Math.floor(timeRemaining/30).toString();
+    (remainMonth.length === 1) ? remainMonth = '0' + remainMonth : null
+    remainDate = Math.floor(timeRemaining%30).toString();
+    (remainDate.length === 1) ? remainDate = '0' + remainDate : null
+    const nextDonation = new Date(new Date().getTime() + (86400000 * timeRemaining));
     countdownStatus =
-      <Text>
-        {'การบริจาคครั้งถัดไป วันที่' + nextDonation.getDate().toString()
+    <View style={{flex:1,alignItems: 'center',justifyContent: 'center'}}>
+      <CmPrasanmitText style={{color: Colors.tabBar,fontSize:25}}>
+        {'การบริจาคครั้งถัดไป วันที่ ' + nextDonation.getDate().toString()
         + '/' + (nextDonation.getMonth() + 1)
         + '/' + nextDonation.getFullYear().toString()}
-      </Text>
+      </CmPrasanmitText>
+    </View>
 
   }
   else {
-    remainDate = 0;
-    remainMonth = 0;
+    remainDate = '00';
+    remainMonth = '00';
     countdownStatus = <View style={{flex:1,alignItems: 'center',justifyContent: 'center'}}>
     <CmPrasanmitText style={{color: Colors.tabBar,fontSize:25}}>ตอนนี้คุณสามารถบริจาคได้แล้ว</CmPrasanmitText>
     </View>
@@ -38,19 +43,19 @@ const Countdown = ({recentDonateDate }) => {
       
       <View style={styles.countdownContainerStyle}>
         <View style={styles.countdownViewStyle}>
-          <View style={[styles.textCenterView,{flex:2,backgroundColor:Colors.tabBar,width: 102,}]}>
+          <View style={[styles.textCenterView,{flex:2,backgroundColor:Colors.tabBar}]}>
             <CmPrasanmitText style={{color: 'white',fontSize:80}}>{remainMonth}</CmPrasanmitText>
           </View>
-          <View style={[styles.textCenterView,{flex:1,width: 102,}]}>
+          <View style={[styles.textCenterView,{flex:1}]}>
             <CmPrasanmitText style={{color: Colors.tabBar,fontSize:30}}>เดือน</CmPrasanmitText>
           </View>
         </View>
 
         <View style={styles.countdownViewStyle}>
-          <View style={[styles.textCenterView,{flex:2,backgroundColor:Colors.tabBar,width: 102,}]}>
+          <View style={[styles.textCenterView,{flex:2,backgroundColor:Colors.tabBar}]}>
             <CmPrasanmitText style={{color: 'white',fontSize:80,}}>{remainDate}</CmPrasanmitText>
           </View>
-          <View style={[styles.textCenterView,{flex:1,width: 102,}]}>
+          <View style={[styles.textCenterView,{flex:1}]}>
             <CmPrasanmitText style={{color: Colors.tabBar,fontSize:30}}>วัน</CmPrasanmitText>
           </View>
         </View>
@@ -78,7 +83,7 @@ const styles = StyleSheet.create({
     height:125
   },
   countdownViewStyle: {
-    width: 102,
+    width: 122,
     height: 125,
     marginRight:5,
     marginLeft:5,

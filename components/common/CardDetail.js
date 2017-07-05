@@ -5,7 +5,7 @@ import Colors from '../../constants/Colors';
 import { CmPrasanmitText } from '../CmPrasanmitText'
 import { CmPrasanmitBoldText } from '../CmPrasanmitBoldText'
 
-const CardDetail = ({ list, onPress, visible }) => {
+const CardDetail = ({ list, onPress, visible, gropBlood }) => {
   if(visible){
   return(
     <TouchableOpacity style={[styles.requestCardContainerStyle,{borderWidth: 1, borderColor: '#DCDCDC',}]} >
@@ -19,6 +19,9 @@ const CardDetail = ({ list, onPress, visible }) => {
             style={styles.imageRequestStyle}
             source={{ uri: list.thumbnail_image }}
           />
+          <View style={{height:15,width:30,position:'absolute',bottom:12,left:18,backgroundColor:Colors.tabBar,borderRadius:15,alignItems: 'center',justifyContent:'center'}}>
+            <CmPrasanmitBoldText style={{fontSize:17,color:'white',backgroundColor:'transparent'}}>{gropBlood}</CmPrasanmitBoldText>
+          </View>
         </View>
         <View style={{flex:35,justifyContent: 'center',}}>
           <CmPrasanmitBoldText style={{fontSize:22,color:'#575757'}}>{list.title}</CmPrasanmitBoldText>
@@ -52,6 +55,7 @@ const styles = StyleSheet.create({
   detailRequestStyle: {
     paddingLeft: 20,
   },
+
 });
 
 export {CardDetail};
