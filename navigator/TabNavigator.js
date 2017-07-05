@@ -44,6 +44,7 @@ export default class Tab extends React.Component {
             Information: {screen: InformationStack},
         },{
            // ...TabNavigator.Presets.AndroidTopTabs,
+           initialRouteName: 'profile',
             tabBarOptions: {
                 //activeTintColor: 'red',
                 showLabel: false,
