@@ -50,7 +50,10 @@ export default class Tab extends React.Component {
                 showLabel: false,
                 showIcon: true,
                 style: {
-                    //backgroundColor: 'black'
+                    backgroundColor: 'white',
+                    shadowColor: 'grey',
+                    shadowOffset: {width: 2, height: -1},
+                    shadowOpacity: 0.5,
                 },
                 //indicatorStyle: { borderBottomColor: Colors.tabIconSelected ,borderBottomWidth: 3},
             },
@@ -68,7 +71,7 @@ export default class Tab extends React.Component {
         };*/
 
         DonorStack.navigationOptions = {
-            tabBarIcon: ({ tintColor, focused }) => ( this._renderIconSimpleLineIcons('drop', focused, 25)),
+            tabBarIcon: ({ tintColor, focused }) => ( this._renderIconSimpleLineIcons('drop', focused, 30)),
         };
 
         FriendStack.navigationOptions = {

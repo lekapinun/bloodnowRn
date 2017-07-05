@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
 import {
-  Text,
-  View,
-  TouchableOpacity,
-  Modal,
-  StyleSheet,
-  Button,
-  Switch,
+    Text,
+    View,
+    TouchableOpacity,
+    Modal,
+    StyleSheet,
+    Button,
+    Switch,
 } from 'react-native';
 import { Font } from 'expo';
 import { CardDetail, Countdown } from '../components/common';
+import Colors from '../constants/Colors';
+import Layout from '../constants/Layout';
+import { CmPrasanmitText } from '../components/CmPrasanmitText'
+import { CmPrasanmitBoldText } from '../components/CmPrasanmitBoldText'
 
 
 export default class DonorScreen extends Component {
@@ -17,32 +21,24 @@ export default class DonorScreen extends Component {
         title: 'ให้เลือด',
         headerTintColor: 'white',
         headerTitleStyle: [Font.style('CmPrasanmitBold'),{fontSize:29}],
-        headerStyle: {marginLeft:-250,backgroundColor: '#E84A5F'},
+        headerStyle: {backgroundColor: '#E84A5F'},
         gesturesEnabled: false,
     };
     state = {
-    countdownEnd: false,
-    onMoreDetail: false,
-    readyDonate: false,
-    list: {
-      title: "test",
-      thumbnail_image: "http://www.japanstyle.info/wordpress/wp-content/images/henohenomoheji.bmp"
-    },
-    }
-    componentWillReceiveProps(nextProps, nextState) {
-      if(nextProps.trigger){
-        this.setState(countdownEnd: true)
-      }
+        countdownEnd: false,
+        onMoreDetail: false,
+        readyDonate: false,
+        list: {
+          title: 'เซเลน่า',
+          thumbnail_image: "http://sim02.in.com/639415d3d6d757648ba28ff9e3929e59_lt.jpg"
+        },
     }
 
-    countdownTrigger = (e) => {
-      this.setState({ countdownEnd: e})
-    }
 
     render() {
         return(
-            <View>
-              <Modal
+            <View style={[styles.center, {height:Layout.window.height,flex:1,paddingTop:16,backgroundColor:'white'}]}>
+              {/*<Modal
                 animationType={"slide"}
                 transparent={true}
                 visible={this.state.onMoreDetail}
@@ -65,19 +61,20 @@ export default class DonorScreen extends Component {
 
                   </View>
 
-              </Modal>
+              </Modal>*/}
 
               <Countdown recentDonateDate='12/2/16' />
 
-              <View style={{alignSelf: 'center', flexDirection: 'row'}}>
-                <Text>คุณพร้อมบริจาคหรือไม่</Text>
-                <Switch value={this.state.readyDonate} onChange={() => { this.setState({readyDonate: !this.state.readyDonate}); }} />
+              <View style={{height:100,alignItems: 'center', flexDirection: 'row'}}>
+              <CmPrasanmitText style={{color: '#575757',fontSize:25}}>คุณพร้อมบริจาคหรือไม่?</CmPrasanmitText>
+                <View style={{marginLeft:20}}></View>
+                <Switch onTintColor={Colors.tabBar} value={this.state.readyDonate} onChange={() => { this.setState({readyDonate: !this.state.readyDonate}); }} />
               </View>
 
               <CardDetail
                 list={this.state.list}
                 onPress={() => this.setState({ onMoreDetail: true }) }
-                visible={this.state.countdownEnd}
+                visible={this.state.readyDonate}
               />
 
             </View>
@@ -87,5 +84,9 @@ export default class DonorScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-
+  center: {
+        flexDirection: 'column',
+        //justifyContent: 'center',
+        alignItems: 'center'
+    },
 });

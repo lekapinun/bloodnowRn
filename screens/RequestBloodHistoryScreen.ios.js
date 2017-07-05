@@ -14,7 +14,6 @@ import {
 import { Font } from 'expo'
 import { NavigationActions } from 'react-navigation'
 import { TestButton, NavigatorBackground,ExNavigationState,CardHistoryRequest} from '../components/common';
-import { MonoText } from '../components/StyledText';
 import Colors from '../constants/Colors';
 import Layout from '../constants/Layout';
 import RequestBloodScreen from './RequestBloodScreen';
@@ -87,6 +86,7 @@ export default class RequestBloodHistoryScreen extends Component {
                 name = 'อักศร แลดูดี'
                 hospital = {'โรงพยาบาล ' + history.title}
                 status = {1}//'finished'
+                onPress={() => {}}
             /> 
         );
     }
@@ -94,9 +94,34 @@ export default class RequestBloodHistoryScreen extends Component {
 
     render() {
         return(
-            <ScrollView style={{flex: 1}}> 
-                <View style={[styles.center, {height:Layout.window.height,flex:1,paddingTop:16,backgroundColor:'white'}]}>
-                    {this.renderHistory()} 
+            <ScrollView style={{flex: 1,backgroundColor:'white'}}> 
+                <View style={[styles.center, {paddingTop:16}]}>
+                    <CardHistoryRequest
+                        blood = 'O'
+                        bloodType = '-'
+                        name = 'คาร่า เดเลวีน'
+                        hospital = {'โรงพยาบาลมหาราช'}
+                        status = {2}
+                        onPress={() => {}}
+                    /> 
+                    <CardHistoryRequest
+                        blood = 'AB'
+                        bloodType = '+'
+                        name = 'เอมม่า สโตน'
+                        hospital = {'โรงพยาบาลมหาราช'}
+                        status = 'finished'
+                        onPress={() => {}}
+                    /> 
+                    <CardHistoryRequest
+                        blood = 'A'
+                        bloodType = '+'
+                        name = 'ทอมฮิดเดิลตัน'
+                        hospital = {'โรงพยาบาลมหาราช'}
+                        status = 'refresh'
+                        onPress={() => {}}
+                    /> 
+                    {/*{this.renderHistory()} */}
+                    <View style={{height:20}}></View>
                 </View> 
             </ScrollView>
         );
