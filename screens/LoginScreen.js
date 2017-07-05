@@ -23,6 +23,7 @@ export default class LoginScreen extends Component {
 
     componentWillMount() {
         console.log(addressServer.IPMac);
+        
         /*this._checkLogin();*/
     }
     
@@ -51,6 +52,8 @@ export default class LoginScreen extends Component {
             return <ActivityIndicator size="large" color='#9FAC9B'/>
         } else {
             return(
+                <View>
+                <View style={{marginTop:10}}></View>
                 <Button
                     title='ลงทะเบียน'
                     buttonColor='#9FAC9B'
@@ -60,6 +63,8 @@ export default class LoginScreen extends Component {
                     ButtonHeight={50}
                     colorFont='white'
                 />
+                <View style={{marginTop:10}}></View>
+                </View>
             );
         }
     }
@@ -96,6 +101,7 @@ export default class LoginScreen extends Component {
                             <Text style={[Font.style('CmPrasanmit'),{ fontSize: 20,color:'#95989A',}]}>ลืมรหัสผ่าน?</Text>
                         </TouchableOpacity>
                     </View>
+                    <View style={{marginTop:10}}></View>
                     <Button
                         title='เข้าสู่ระบบ'
                         buttonColor='#EF685E'
@@ -105,6 +111,7 @@ export default class LoginScreen extends Component {
                         ButtonHeight={50}
                         colorFont='white'
                     />
+                    <View style={{marginTop:10}}></View>
                     <View style={{justifyContent: 'center',alignItems: 'center'}}>
                         <Text style={[Font.style('CmPrasanmit'),{ fontSize: 23,color:'#95989A',marginBottom:5,marginTop:5}]}>หรือ</Text>
                     </View>
