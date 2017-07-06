@@ -26,18 +26,6 @@ export default class DonorScreen extends Component {
         gesturesEnabled: false,
     };
     state = {
-    countdownEnd: false,
-    readyDonate: false,
-    list: {
-      title: "test",
-      thumbnail_image: "http://www.japanstyle.info/wordpress/wp-content/images/henohenomoheji.bmp"
-    },
-    }
-
-    render() {
-        return(
-            <View>
-              <Countdown recentDonateDate='12/2/16' />
         countdownEnd: false,
         onMoreDetail: false,
         readyDonate: false,
@@ -59,37 +47,12 @@ export default class DonorScreen extends Component {
     }
 
     componentWillMount() {
-      this.setState({nextReady: (new Date('6/16/17').getTime() + (86400000*90)) - new Date().getTime() })
+      this.setState({nextReady: (new Date('6/16/16').getTime() + (86400000*90)) - new Date().getTime() })
     }
 
     render() {
         return(
             <View style={[styles.center, {height:Layout.window.height,flex:1,paddingTop:16,backgroundColor:'white'}]}>
-              {/*<Text>{(Math.floor(this.state.nextReady/(86400000))).toString()}</Text>*/}
-              {/*<Modal
-                animationType={"slide"}
-                transparent={true}
-                visible={this.state.onMoreDetail}
-              >
-
-                    <View
-                      style={{ alignSelf: 'center', marginVertical: 150, width: 300, height: 300, backgroundColor: 'white' }}
-                    >
-                      <Text>
-                        Hi there!
-                      </Text>
-                      <Text>{this.state.list.title}</Text>
-                      <TouchableOpacity
-                        style={{ position:'absolute', left: 0, right: 0, bottom: 0}}
-                        title="Back"
-                        onPress={ () => this.setState({ onMoreDetail: false})}
-                      >
-                        <Text style={{fontSize: 23, alignSelf: 'center'}}>Back</Text>
-                      </TouchableOpacity>
-
-                  </View>
-
-              </Modal>*/}
 
               <Countdown recentDonateDate={this.state.nextReady} />
 
@@ -108,7 +71,6 @@ export default class DonorScreen extends Component {
 
               <CardDetail
                 list={this.state.list}
-<<<<<<< HEAD
                 onPress={() => {
                   const resetAction = NavigationActions.reset(
                     {
@@ -121,12 +83,8 @@ export default class DonorScreen extends Component {
                   )
                   this.props.navigation.dispatch(resetAction)
                 }}
-                visible={this.state.readyDonate}
-=======
-                onPress={() => this.setState({ onMoreDetail: true }) }
                 visible={this.state.readyDonate && (this.state.nextReady <= 0)}
                 gropBlood='O-'
->>>>>>> UI_by_Thomas
               />
 
             </View>

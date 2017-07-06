@@ -54,7 +54,7 @@ export default class App extends React.Component{
   render() {
 
     if (this.state.appIsReady) {
-      return <Stack />
+      return <Stack/>
     } else {
       return <Expo.AppLoading />
     }

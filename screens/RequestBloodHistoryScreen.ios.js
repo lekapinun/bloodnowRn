@@ -102,7 +102,18 @@ export default class RequestBloodHistoryScreen extends Component {
                         name = 'คาร่า เดเลวีน'
                         hospital = {'โรงพยาบาลมหาราช'}
                         status = {2}
-                        onPress={() => {}}
+                        onPress={() => {
+                            const resetAction = NavigationActions.reset(
+                                {
+                                index: 1,
+                                actions: [
+                                    NavigationActions.navigate({ routeName: 'RequestHistory'}) ,
+                                    NavigationActions.navigate({ routeName: 'RequestDetail'})
+                                ]
+                                }
+                            )
+                            this.props.navigation.dispatch(resetAction)
+                        }}
                     /> 
                     <CardHistoryRequest
                         blood = 'AB'

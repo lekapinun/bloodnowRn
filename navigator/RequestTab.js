@@ -5,6 +5,7 @@ import { StackNavigator } from 'react-navigation';
 import RequestHistoryScreen from '../screens/RequestBloodHistoryScreen'
 import RequestBloodScreen from '../screens/RequestBloodScreen'
 import RequestSubmitScreen from '../screens/RequestBloodSubmitScreen'
+import RequestBloodDetailScreen from '../screens/RequestBloodDetailScreen'
 import {
   FontAwesome,
   MaterialCommunityIcons,
@@ -39,6 +40,7 @@ export default class RequestStack extends React.Component {
       RequestHistory : {screen: RequestHistoryScreen},
       RequestBlood : {screen: RequestBloodScreen},
       RequestSubmit : {screen: RequestSubmitScreen},
+      RequestDetail : {screen: RequestBloodDetailScreen},
     },{
         initialRouteName: 'RequestHistory',
         mode: 'modal',

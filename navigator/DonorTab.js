@@ -2,12 +2,8 @@ import React from 'react';
 import Expo, { Font } from 'expo';
 import { Text, View, Button } from 'react-native';
 import { StackNavigator } from 'react-navigation';
-<<<<<<< HEAD
-import DonorScreen from '../screens/DonorScreen'
-=======
 import DonorScreen from '../screens/DonorScreen';
 import RequestDetailInDonorScreen from '../screens/RequestDetailInDonorScreen';
->>>>>>> sloth-branch
 
 
 export default class DonorStack extends React.Component {

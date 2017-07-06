@@ -11,7 +11,7 @@ import { Button } from '../components/common';
 export default class LoginScreen extends Component {
 
     state = {
-        name: '',
+        email: '',
         password: '',
         error: false,
         loadRegis: false,
@@ -22,24 +22,46 @@ export default class LoginScreen extends Component {
     };
 
 
-    componentWillMount() {
-        console.log(addressServer.IPMac);
-        
-        /*this._checkLogin();*/
-    }
+/*    componentWillMount() {
+        //this._checkLogin();
+        AsyncStorage.getItem('@loginData:key')
+        .then((loginStatus) => {
+            if(loginStatus !== null){
+                checkLogin = JSON.parse(loginStatus)
+                console.log(addressServer.APIRequest.toString() + '/api/index');
+                const api = addressServer.APIRequest.toString() + '/api/index';
+                axios(api,{ headers: {'Authorization' : 'Bearer ' + checkLogin.token},})
+                .then(response => 
+                {
+                    console.log(response.data)
+                    this.saveUserData(response.data)
+                    this._goToApp()
+                })
+                .catch((error) => console.log(error))
+            }
+        })
+    }*/
     
 
-/*    async _checkLogin() {
+    async _checkLogin() {
       try {
-            const name = await AsyncStorage.getItem('@name:key');
-            if (name !== null) {
-                console.log(name);
-                this.props.navigator.push('rootNavigation'); 
+            const loginStatus = await AsyncStorage.getItem('@loginData:key');
+            if (loginStatus.uesr !== null) {
+                console.log(loginStatus)
+                this._goToApp() 
             }
         } catch ( error ) {
             console.log('error');
         }
-    }*/
+    }
+
+    async saveUserData(userData) {
+        try {
+            await AsyncStorage.setItem('@userData:key', JSON.stringify(userData));
+        } catch ( error ) {
+            console.log('error');
+        }
+    }
 
     renderErrorMessage() {
         if(!this.state.error){
@@ -81,8 +103,8 @@ export default class LoginScreen extends Component {
                         style={[Font.style('CmPrasanmit'),styles.input]}
                         autoCorrect={false}
                         autoCapitalize='none'
-                        onChangeText={(name) => this.setState({name})}
-                        value={this.state.name}
+                        onChangeText={(email) => this.setState({email})}
+                        value={this.state.email}
                         placeholder="ชื่อผู้ใช้หรือเบอร์โทรศัพท์"
                         underlineColorAndroid='rgba(0,0,0,0)'
                     />
@@ -123,10 +145,10 @@ export default class LoginScreen extends Component {
         );
     }
 
-    async _userData(userData){
+    async _loginData(loginData){
         try {
-            console.log(userData);
-            await AsyncStorage.setItem('@userData:key', JSON.stringify(userData));
+            console.log(loginData);
+            await AsyncStorage.setItem('@loginData:key', JSON.stringify(loginData));
         } catch ( error ) {
             console.log('error');
         }
@@ -134,21 +156,6 @@ export default class LoginScreen extends Component {
 
 
     _loginPress = () => {
-        /*const { navigate } = this.props.navigation;
-        navigate('Bloodnow')*/
-        /*console.log(addressServer.APIRequest + '/api/auth/login')
-        const api = addressServer.APIRequest + '/api/auth/login'
-        axios({
-            method: 'post',
-            url: api,
-            data: JSON.stringify(this.state)
-        })
-        .then(function (response) {
-            console.log(response);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });*/
         console.log(addressServer.APIRequest.toString() + '/api/auth/login');
         const api = addressServer.APIRequest.toString() + '/api/auth/login';
         this.setState({error : false});
@@ -162,48 +169,16 @@ export default class LoginScreen extends Component {
                 },
                 body: JSON.stringify(this.state)
             });
-        var userData = '';
-        fetch(myRequest)
-        .then((response) => console.log(response))
-        .catch((error) => {
-            console.warn(error);
-        }); 
-        /*const resetAction = NavigationActions.reset(
-            {
-                index: 1,
-                actions: [ 
-                    NavigationActions.navigate({ routeName: 'Login'}) ,
-                    NavigationActions.navigate({ routeName: 'Bloodnow'})   
-                ]
-            }
-        )
-        this.props.navigation.dispatch(resetAction)*/
-        /*console.log(addressServer.IPMac.toString() + '/login');
-        const api = addressServer.IPMac.toString() + '/login';
-        this.setState({error : false});
-        const myRequest = new Request(
-            api,
-            {
-                method: 'POST',
-                 headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(this.state)
-            });
-        var userData = '';
+        var loginData = '';
         fetch(myRequest)
         .then((response) => response.text())
         .then((responseText) => {
-            console.log(responseText)
-            if( responseText != 'login fail')
-            {
-                userData = JSON.parse(responseText);
+            //console.log(JSON.parse(responseText))
+            loginData = JSON.parse(responseText);
+            if(loginData.status === 'ok'){
                 console.log('login success');
-                this._userData(userData);
-                //this.props.navigator.push(Router.getRoute('test'));
-                const rootNavigator = this.props.navigation.getNavigator('root');
-                rootNavigator.replace('rootNavigationSliding');
+                this._loginData(loginData)
+                this._goToApp()
             }
             else
             {
@@ -214,8 +189,20 @@ export default class LoginScreen extends Component {
         })
         .catch((error) => {
             console.warn(error);
-        });  */
+        }); 
     };
+
+    _goToApp = () => {
+        const resetAction = NavigationActions.reset(
+            {
+                index: 0,
+                actions: [ 
+                    NavigationActions.navigate({ routeName: 'Bloodnow'})   
+                ]
+            }
+        )
+        this.props.navigation.dispatch(resetAction)
+    }
 
 
     _register = () => {

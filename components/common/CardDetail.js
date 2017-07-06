@@ -8,7 +8,7 @@ import { CmPrasanmitBoldText } from '../CmPrasanmitBoldText'
 const CardDetail = ({ list, onPress, visible, gropBlood }) => {
   if(visible){
   return(
-    <TouchableOpacity style={[styles.requestCardContainerStyle,{borderWidth: 1, borderColor: '#DCDCDC',}]} >
+    <TouchableOpacity onPress={onPress} style={[styles.requestCardContainerStyle,{borderWidth: 1, borderColor: '#DCDCDC',}]} >
       <View style={{height:40, justifyContent: 'center',alignItems: 'center',flexDirection:'row',borderBottomWidth: 1, borderColor: '#DCDCDC',}}>
         <Image source={require('../../assets/images/envelope.png')} style={{height:17,width:22}}/>
         <CmPrasanmitBoldText style={{fontSize:25,color:'#575757'}}> คำร้องขอที่ได้รับ</CmPrasanmitBoldText >
