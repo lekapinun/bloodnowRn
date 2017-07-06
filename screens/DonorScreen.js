@@ -46,7 +46,7 @@ export default class DonorScreen extends Component {
     }
 
     componentWillMount() {
-      this.setState({nextReady: (new Date('6/17/17').getTime() + (86400000*90)) - new Date().getTime() })
+      this.setState({nextReady: (new Date('6/16/17').getTime() + (86400000*90)) - new Date().getTime() })
     }
 
     render() {
@@ -87,16 +87,16 @@ export default class DonorScreen extends Component {
                   onTintColor={Colors.tabBar} 
                   value={this.state.readyDonate} 
                   onChange={() => { 
-                    if(this.state.nextReady <= 0){
+                    //if(this.state.nextReady <= 0){
                       this.setState({readyDonate: !this.state.readyDonate})
-                    }
+                    //}
                   }} />
               </View>
 
               <CardDetail
                 list={this.state.list}
                 onPress={() => this.setState({ onMoreDetail: true }) }
-                visible={this.state.readyDonate}
+                visible={this.state.readyDonate && (this.state.nextReady <= 0)}
                 gropBlood='O-'
               />
 
