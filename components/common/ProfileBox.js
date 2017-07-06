@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import Colors from '../../constants/Colors';
 import { Button } from './Button';
 import {  SimpleLineIcons } from '@expo/vector-icons';
+import { NavigationActions } from 'react-navigation';
 
 const ProfileBox = (props) => {
   return (
@@ -20,6 +21,15 @@ const ProfileBox = (props) => {
           sizeFont={23}
           colorFont={Colors.tabBar}
           buttonColor="white"
+          onPress={ () => {
+            /*const backAction = NavigationActions.reset({
+              routName: 'Login'
+              //key: 'Login'
+            })
+            props.navigation.dispatch(backAction)*
+          }*/
+          props.navigation.navigate('Login', {}, NavigationActions.navigate({ 'ScreenOneSettings' }));
+        }
         />
       </View>
       <TouchableOpacity>

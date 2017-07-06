@@ -39,6 +39,7 @@ export default class ProfileScreen extends Component {
                 <Text>Profile SCREEN</Text>
                 <ProfileBox
                   list={this.state.list}
+                  navigation={this.props.navigation}
                 />
             </View>
         );
