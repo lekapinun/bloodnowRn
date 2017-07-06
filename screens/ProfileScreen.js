@@ -11,12 +11,9 @@ import {
   AsyncStorage
 } from 'react-native';
 import { Font } from 'expo'
-
-import { TestButton, NavigatorBackground,ExNavigationState} from '../components/common';
+import { TestButton, NavigatorBackground,ExNavigationState, ProfileBox } from '../components/common';
 import { MonoText } from '../components/StyledText';
 import Colors from '../constants/Colors';
-
-
 
 export default class ProfileScreen extends Component {
     static navigationOptions =  {
@@ -27,20 +24,22 @@ export default class ProfileScreen extends Component {
         headerStyle: {marginLeft:-250,backgroundColor: '#E84A5F'},
         gesturesEnabled: false,
     };
-    /*static route = {
-        navigationBar: {
-        title: 'เพื่อน',
-        backgroundColor: Colors.routeColor,
-        titleStyle: [Font.style('CmPrasanmitBold'),{fontSize:25}],
-        tintColor: 'white',
-        renderRight: () => <ExponentButton />,
-        },
-    };*/
+
+    state = {
+      list: {
+        title: "test",
+        bloodType: "O",
+        thumbnail_image: "http://www.japanstyle.info/wordpress/wp-content/images/henohenomoheji.bmp"
+      },
+    }
 
     render() {
         return(
             <View style={{marginTop:30}}>
                 <Text>Profile SCREEN</Text>
+                <ProfileBox
+                  list={this.state.list}
+                />
             </View>
         );
     }

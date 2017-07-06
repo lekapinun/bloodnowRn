@@ -18,8 +18,6 @@ const Button = ({title,onPress,buttonColor,sizeFont,ButtonHeight,ButtonWidth,tou
 
 const styles = StyleSheet.create({
   buttonStyle: {
-    //marginTop:10,
-    //marginBottom:10,
     justifyContent: 'center',
     alignItems: 'center'
   },
