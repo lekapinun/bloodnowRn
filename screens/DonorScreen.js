@@ -9,6 +9,7 @@ import {
   Switch,
 } from 'react-native';
 import { Font } from 'expo';
+import { NavigationActions } from 'react-navigation';
 import { CardDetail, Countdown } from '../components/common';
 
 
@@ -22,51 +23,16 @@ export default class DonorScreen extends Component {
     };
     state = {
     countdownEnd: false,
-    onMoreDetail: false,
     readyDonate: false,
     list: {
       title: "test",
       thumbnail_image: "http://www.japanstyle.info/wordpress/wp-content/images/henohenomoheji.bmp"
     },
     }
-    componentWillReceiveProps(nextProps, nextState) {
-      if(nextProps.trigger){
-        this.setState(countdownEnd: true)
-      }
-    }
-
-    countdownTrigger = (e) => {
-      this.setState({ countdownEnd: e})
-    }
 
     render() {
         return(
             <View>
-              <Modal
-                animationType={"slide"}
-                transparent={true}
-                visible={this.state.onMoreDetail}
-              >
-
-                    <View
-                      style={{ alignSelf: 'center', marginVertical: 150, width: 300, height: 300, backgroundColor: 'white' }}
-                    >
-                      <Text>
-                        Hi there!
-                      </Text>
-                      <Text>{this.state.list.title}</Text>
-                      <TouchableOpacity
-                        style={{ position:'absolute', left: 0, right: 0, bottom: 0}}
-                        title="Back"
-                        onPress={ () => this.setState({ onMoreDetail: false})}
-                      >
-                        <Text style={{fontSize: 23, alignSelf: 'center'}}>Back</Text>
-                      </TouchableOpacity>
-
-                  </View>
-
-              </Modal>
-
               <Countdown recentDonateDate='12/2/16' />
 
               <View style={{alignSelf: 'center', flexDirection: 'row'}}>
@@ -76,8 +42,19 @@ export default class DonorScreen extends Component {
 
               <CardDetail
                 list={this.state.list}
-                onPress={() => this.setState({ onMoreDetail: true }) }
-                visible={this.state.countdownEnd}
+                onPress={() => {
+                  const resetAction = NavigationActions.reset(
+                    {
+                      index: 1,
+                      actions: [
+                        NavigationActions.navigate({ routeName: 'Donor'}) ,
+                        NavigationActions.navigate({ routeName: 'RequestInDonor'})
+                      ]
+                    }
+                  )
+                  this.props.navigation.dispatch(resetAction)
+                }}
+                visible={this.state.readyDonate}
               />
 
             </View>

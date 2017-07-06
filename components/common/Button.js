@@ -4,8 +4,8 @@ import { Font } from 'expo'
 
 const Button = ({title,onPress,buttonColor,sizeFont,ButtonHeight,ButtonWidth,touchable,colorFont}) => {
   return(
-    <TouchableOpacity 
-      style={[styles.buttonStyle,{backgroundColor: buttonColor,width: ButtonWidth, height: ButtonHeight}]} 
+    <TouchableOpacity
+      style={[styles.buttonStyle,{backgroundColor: buttonColor,width: ButtonWidth, height: ButtonHeight}]}
       onPress={onPress}
       disabled={touchable}
     >
@@ -18,9 +18,9 @@ const Button = ({title,onPress,buttonColor,sizeFont,ButtonHeight,ButtonWidth,tou
 
 const styles = StyleSheet.create({
   buttonStyle: {
-    marginTop:10,
-    marginBottom:10,
-    justifyContent: 'center', 
+    //marginTop:10,
+    //marginBottom:10,
+    justifyContent: 'center',
     alignItems: 'center'
   },
 });

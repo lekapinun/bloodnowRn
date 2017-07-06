@@ -6,8 +6,9 @@ const Map = (props) => {
   //console.log(props)
   return(
     <MapView
-      style={{height: 250, width: 300, alignSelf: 'center' }}
+      style={{height: props.height ||250, width: props.width || 250, alignSelf: 'center' }}
       provider={PROVIDER_GOOGLE}
+      onPress={props.onPress}
       region={props.region}
       onRegionChange={props.onRegionChange}
     >
