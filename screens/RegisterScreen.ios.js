@@ -130,7 +130,9 @@ export default class RegisterScreen extends Component {
             subvalidate = 'เบอร์โทรศัพท์นี้มีอยู่แล้ว'
           />
           <View style={{marginTop: 20}}/>
+          <View style={{marginTop:10}}></View>
           {ButtonSubmit}
+          <View style={{marginTop:10}}></View>
         </View>
         </ScrollView>
       );

@@ -2,6 +2,7 @@ import React, { Component} from 'react';
 import { Text, View, TouchableOpacity, TextInput, Image, StyleSheet, AsyncStorage, ScrollView, ActivityIndicator } from 'react-native';
 import { Font } from 'expo';
 import { NavigationActions } from 'react-navigation'
+import axios from 'axios'
 
 import addressServer from '../utilities/addressServer';
 
@@ -23,6 +24,7 @@ export default class LoginScreen extends Component {
 
     componentWillMount() {
         console.log(addressServer.IPMac);
+        
         /*this._checkLogin();*/
     }
     
@@ -51,6 +53,8 @@ export default class LoginScreen extends Component {
             return <ActivityIndicator size="large" color='#9FAC9B'/>
         } else {
             return(
+                <View>
+                <View style={{marginTop:10}}></View>
                 <Button
                     title='ลงทะเบียน'
                     buttonColor='#9FAC9B'
@@ -60,6 +64,8 @@ export default class LoginScreen extends Component {
                     ButtonHeight={50}
                     colorFont='white'
                 />
+                <View style={{marginTop:10}}></View>
+                </View>
             );
         }
     }
@@ -96,6 +102,7 @@ export default class LoginScreen extends Component {
                             <Text style={[Font.style('CmPrasanmit'),{ fontSize: 20,color:'#95989A',}]}>ลืมรหัสผ่าน?</Text>
                         </TouchableOpacity>
                     </View>
+                    <View style={{marginTop:10}}></View>
                     <Button
                         title='เข้าสู่ระบบ'
                         buttonColor='#EF685E'
@@ -105,6 +112,7 @@ export default class LoginScreen extends Component {
                         ButtonHeight={50}
                         colorFont='white'
                     />
+                    <View style={{marginTop:10}}></View>
                     <View style={{justifyContent: 'center',alignItems: 'center'}}>
                         <Text style={[Font.style('CmPrasanmit'),{ fontSize: 23,color:'#95989A',marginBottom:5,marginTop:5}]}>หรือ</Text>
                     </View>
@@ -128,7 +136,39 @@ export default class LoginScreen extends Component {
     _loginPress = () => {
         /*const { navigate } = this.props.navigation;
         navigate('Bloodnow')*/
-        const resetAction = NavigationActions.reset(
+        /*console.log(addressServer.APIRequest + '/api/auth/login')
+        const api = addressServer.APIRequest + '/api/auth/login'
+        axios({
+            method: 'post',
+            url: api,
+            data: JSON.stringify(this.state)
+        })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });*/
+        console.log(addressServer.APIRequest.toString() + '/api/auth/login');
+        const api = addressServer.APIRequest.toString() + '/api/auth/login';
+        this.setState({error : false});
+        const myRequest = new Request(
+            api,
+            {
+                method: 'POST',
+                 headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(this.state)
+            });
+        var userData = '';
+        fetch(myRequest)
+        .then((response) => console.log(response))
+        .catch((error) => {
+            console.warn(error);
+        }); 
+        /*const resetAction = NavigationActions.reset(
             {
                 index: 1,
                 actions: [ 
@@ -137,7 +177,7 @@ export default class LoginScreen extends Component {
                 ]
             }
         )
-        this.props.navigation.dispatch(resetAction)
+        this.props.navigation.dispatch(resetAction)*/
         /*console.log(addressServer.IPMac.toString() + '/login');
         const api = addressServer.IPMac.toString() + '/login';
         this.setState({error : false});
