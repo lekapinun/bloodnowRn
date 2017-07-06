@@ -21,15 +21,7 @@ const ProfileBox = (props) => {
           sizeFont={23}
           colorFont={Colors.tabBar}
           buttonColor="white"
-          onPress={ () => {
-            /*const backAction = NavigationActions.reset({
-              routName: 'Login'
-              //key: 'Login'
-            })
-            props.navigation.dispatch(backAction)*
-          }*/
-          props.navigation.navigate('Login', {}, NavigationActions.navigate({ 'ScreenOneSettings' }));
-        }
+          onPress={props.logOut} 
         />
       </View>
       <TouchableOpacity>
