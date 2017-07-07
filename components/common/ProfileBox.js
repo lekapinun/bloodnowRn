@@ -21,10 +21,12 @@ const ProfileBox = (props) => {
           sizeFont={23}
           colorFont={Colors.tabBar}
           buttonColor="white"
-          onPress={props.logOut} 
+          onPress={props.logOut}
         />
       </View>
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={props.onPress}
+      >
         <SimpleLineIcons
             name="note"
             size={23}

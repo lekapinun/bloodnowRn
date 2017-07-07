@@ -22,24 +22,27 @@ export default class Stack extends React.Component {
         console.log(addressServer.APIRequest.toString() + '/api/index');
         const api = addressServer.APIRequest.toString() + '/api/index';
         axios(api,{ headers: {'Authorization' : 'Bearer ' + checkLogin.token},})
-        .then(response => 
+        .then(response =>
         {
           console.log(response.data)
           //this.saveUserData(response.data)
           this.setState({home: 'Bloodnow'})
           this.setState({finish: true})
         })
-        .catch((error) => 
+        .catch((error) =>
         {
             console.log(error)
             this.setState({finish: true})
         })
       }
+      else {
+        this.setState({ finish: true })
+      }
     })
   }
 
   state = {
-    home: 'Login',
+    home: 'Bloodnow',
     finish: false
   }
 
@@ -49,7 +52,7 @@ export default class Stack extends React.Component {
       Login : {screen: LoginScreen},
       Register : {screen: RegisterScreen},
       Register2: {screen: RegisterScreen2},
-      Bloodnow : {screen: Tab}, 
+      Bloodnow : {screen: Tab},
     },{
         initialRouteName: this.state.home,
         mode: 'modal',

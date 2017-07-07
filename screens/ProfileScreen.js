@@ -11,6 +11,7 @@ import {
   AsyncStorage
 } from 'react-native';
 import { Font } from 'expo'
+import { NavigationActions } from 'react-navigation';
 import { TestButton, NavigatorBackground,ExNavigationState, ProfileBox } from '../components/common';
 import { MonoText } from '../components/StyledText';
 import Colors from '../constants/Colors';
@@ -40,6 +41,18 @@ export default class ProfileScreen extends Component {
                 <ProfileBox
                   list={this.state.list}
                   navigation={this.props.navigation}
+                  onPress={() => {
+                    const resetAction = NavigationActions.reset(
+                      {
+                        index: 1,
+                        actions: [
+                          NavigationActions.navigate({ routeName: 'Profile'}) ,
+                          NavigationActions.navigate({ routeName: 'EditProfile'})
+                        ]
+                      }
+                    )
+                    this.props.navigation.dispatch(resetAction)
+                  }}
                 />
             </View>
         );

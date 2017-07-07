@@ -1,19 +1,21 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { Font } from 'expo'
-import { CmPrasanmitText } from '../CmPrasanmitText'
+import { View, TextInput, StyleSheet } from 'react-native';
+import { Font } from 'expo';
 import { CmPrasanmitBoldText } from '../CmPrasanmitBoldText'
 
-const RequestDetailInDonor = ({label,information}) => {
+const EditProfileDetail = ({ label, information, onChange, editable}) => {
   return(
     <View style={styles.underline}>
         <CmPrasanmitBoldText style={styles.title}>
             {label}
         </CmPrasanmitBoldText>
         <View style={styles.detail}>
-            <CmPrasanmitText numberOfLines={5} style={styles.informationText}>
-                {information}
-            </CmPrasanmitText>
+          <TextInput
+            style={[Font.style('CmPrasanmitBold'),styles.informationText]}
+            value={information}
+            onChange={onChange}
+            editable={editable}
+          />
         </View>
     </View>
   );
@@ -41,8 +43,9 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     alignSelf: 'flex-end',
     fontSize: 23,
-    color: 'grey'
+    color: 'black',
+    backgroundColor: 'green'
   }
 });
 
-export { RequestDetailInDonor };
+export {EditProfileDetail};
