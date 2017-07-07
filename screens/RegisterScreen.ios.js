@@ -3,7 +3,7 @@ import { Text, ScrollView, StyleSheet, View, Modal, Image, ActivityIndicator,Asy
 import { Font } from 'expo';
 import { NavigatorBackground, Button, RegisterInput, PickerPartTouch, PickerModalDate, PickerModalBlood, PickerModalProvince } from '../components/common';
 import { NavigationActions } from 'react-navigation'
-
+import axios from 'axios'
 import addressServer from '../utilities/addressServer';
 
 export default class RegisterScreen extends Component {
@@ -140,38 +140,25 @@ export default class RegisterScreen extends Component {
     
     _goToRegister2 = () => {
       console.log(this.state);
-/*      console.log(addressServer.IPMac.toString() + '/checkregis');
-      const api = addressServer.IPMac.toString() + '/checkregis';
-      const myRequest = new Request(
-          api,
-          {
-            method: 'POST',
-            headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(this.state)
-          });
-      fetch(myRequest)
-        .then((response) => response.text())
-        .then((responseText) => {
-          console.log(responseText)
-          if(responseText.length > 0){
-            console.log('fail')
-            if(responseText.search('The name has already been taken.') !== -1){
+      console.log(addressServer.APIRequest.toString() + '/api/auth/check');
+      const api = addressServer.APIRequest.toString() + '/api/auth/check';
+      axios(api, { method: 'post', data : this.state })
+        .then(response => {
+          //console.log(response)
+          if( response.status !== 200){
+            if( response.data.name !== undefined){
               this.setState({subValidated: this.state.subValidated.replaceAt(0,'1')})
             }
-            if(responseText.search('The email has already been taken.') !== -1){
+            if( response.data.email !== undefined){
               this.setState({subValidated: this.state.subValidated.replaceAt(4,'1')})
             }
-            if(responseText.search('The phone has already been taken.') !== -1){
+            if( response.data.phone !== undefined){
               this.setState({subValidated: this.state.subValidated.replaceAt(3,'1')})
             }
-          } else {*/
+          } else {
+            console.log('clear')
             AsyncStorage.setItem('@RegisData:key', JSON.stringify(this.state))
             .then(() => {
-              /*const { navigate } = this.props.navigation;
-              navigate('Register2')*/
               const resetAction = NavigationActions.reset(
               {
                 index: 2,
@@ -187,20 +174,13 @@ export default class RegisterScreen extends Component {
             .catch((error) => {
               console.log(error);
             });
-         /* }
+          }
         })
         .catch((error) => {
-          console.log(error);
-        });*/
+            console.log(error)
+        })
     };
 
-    async _register1(){
-      try {
-
-      } catch (error) {
-        
-      }
-    }
 }
 
 const styles = StyleSheet.create({

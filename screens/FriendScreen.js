@@ -18,6 +18,10 @@ export default class FriendScreen extends Component {
         //this.showFirstContactAsync()
     }
 
+    state = {
+        phoneList : []
+    }
+
     async showFirstContactAsync() {
         const permission = await Expo.Permissions.askAsync(Expo.Permissions.CONTACTS);
         if (permission.status !== 'granted') {
