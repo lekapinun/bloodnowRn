@@ -17,11 +17,11 @@ export default class RegisterScreen extends Component {
   };
 
     state = {
-        name: '',
-        password: '',
-        password_confirmation: '',
-        phone: '',
-        email: '',
+        name: 'yuki',
+        password: '123456',
+        password_confirmation: '123456',
+        phone: '08012341',
+        email: 'yuki@gmial.com',
         subValidated: '00000'
     }
 
@@ -130,7 +130,9 @@ export default class RegisterScreen extends Component {
             subvalidate = 'เบอร์โทรศัพท์นี้มีอยู่แล้ว'
           />
           <View style={{marginTop: 20}}/>
+          <View style={{marginTop:10}}></View>
           {ButtonSubmit}
+          <View style={{marginTop:10}}></View>
         </View>
         </ScrollView>
       );
@@ -138,7 +140,7 @@ export default class RegisterScreen extends Component {
     
     _goToRegister2 = () => {
       console.log(this.state);
-      console.log(addressServer.IPMac.toString() + '/checkregis');
+/*      console.log(addressServer.IPMac.toString() + '/checkregis');
       const api = addressServer.IPMac.toString() + '/checkregis';
       const myRequest = new Request(
           api,
@@ -165,7 +167,7 @@ export default class RegisterScreen extends Component {
             if(responseText.search('The phone has already been taken.') !== -1){
               this.setState({subValidated: this.state.subValidated.replaceAt(3,'1')})
             }
-          } else {
+          } else {*/
             AsyncStorage.setItem('@RegisData:key', JSON.stringify(this.state))
             .then(() => {
               /*const { navigate } = this.props.navigation;
@@ -185,11 +187,11 @@ export default class RegisterScreen extends Component {
             .catch((error) => {
               console.log(error);
             });
-          }
+         /* }
         })
         .catch((error) => {
           console.log(error);
-        });
+        });*/
     };
 
     async _register1(){

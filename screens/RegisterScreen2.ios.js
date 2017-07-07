@@ -35,15 +35,15 @@ export default class RegisterScreen extends Component {
 
     state = {
         name: '',
-        real_name: '',
-        real_surname: '',
+        firstname: 'ยูกิ',
+        lastname: 'กิกิ',
         password: '',
-        blood: '',
-        blood_type: '',
+        blood: 'A',
+        blood_type: '+',
         phone: '',
         email: '',
-        province: '',
-        birthyear: '',
+        province: 'เชียงใหม่',
+        birthyear: '2539',
         last_date_donate: '',
         date_donate: '',
         password_confirmation: '',
@@ -95,8 +95,8 @@ export default class RegisterScreen extends Component {
         recentDate = <Text />
       }
       let canSubmit = '000000';
-      (this.state.real_name !== '' && this.state.real_name.search(/[^A-Za-zก-๙]/) === -1) ? canSubmit = canSubmit.replaceAt(0,'1') : canSubmit = canSubmit.replaceAt(0,'0');
-      (this.state.real_surname !== '' && this.state.real_surname.search(/[^A-Za-zก-๙]/) === -1) ? canSubmit = canSubmit.replaceAt(1,'1') : canSubmit = canSubmit.replaceAt(1,'0');
+      (this.state.firstname !== '' && this.state.firstname.search(/[^A-Za-zก-๙]/) === -1) ? canSubmit = canSubmit.replaceAt(0,'1') : canSubmit = canSubmit.replaceAt(0,'0');
+      (this.state.lastname !== '' && this.state.lastname.search(/[^A-Za-zก-๙]/) === -1) ? canSubmit = canSubmit.replaceAt(1,'1') : canSubmit = canSubmit.replaceAt(1,'0');
       (this.state.blood !== '' && this.state.blood_type !== '') ? canSubmit = canSubmit.replaceAt(2,'1') : canSubmit = canSubmit.replaceAt(2,'0');
       let today = new Date();
       ((parseInt(this.state.birthyear.toString()) > parseInt((today.getFullYear()+443).toString())) && (parseInt(this.state.birthyear.toString()) < parseInt((today.getFullYear()+543).toString()))) ? canSubmit = canSubmit.replaceAt(3,'1') : canSubmit = canSubmit.replaceAt(3,'0');
@@ -104,8 +104,8 @@ export default class RegisterScreen extends Component {
       (this.state.province !== '') ? canSubmit = canSubmit.replaceAt(5,'1') : canSubmit = canSubmit.replaceAt(5,'0');
 
       let checkInput = '000000';
-      (this.state.real_name !== '') ? checkInput = checkInput.replaceAt(0,'1') : checkInput = checkInput.replaceAt(0,'0');
-      (this.state.real_surname !== '' ) ? checkInput = checkInput.replaceAt(1,'1') : checkInput = checkInput.replaceAt(1,'0');
+      (this.state.firstname !== '') ? checkInput = checkInput.replaceAt(0,'1') : checkInput = checkInput.replaceAt(0,'0');
+      (this.state.lastname !== '' ) ? checkInput = checkInput.replaceAt(1,'1') : checkInput = checkInput.replaceAt(1,'0');
       (this.state.blood !== '' ) ? checkInput = checkInput.replaceAt(2,'1') : checkInput = checkInput.replaceAt(2,'0');
       (this.state.birthyear !== '') ? checkInput = checkInput.replaceAt(3,'1') : checkInput = checkInput.replaceAt(3,'0');
       (this.state.date_donate !== '') ? checkInput = checkInput.replaceAt(4,'1') : checkInput = checkInput.replaceAt(4,'0');
@@ -191,16 +191,16 @@ export default class RegisterScreen extends Component {
                 <Text style={{color: '#E84A5F'}}>○ ●</Text>
                 <RegisterInput
                     label='ชื่อ'
-                    value={this.state.real_name}
-                    onChangeText={(real_name) => this.setState({real_name})}
+                    value={this.state.firstname}
+                    onChangeText={(firstname) => this.setState({firstname})}
                     maxLength={30}
                     placeholder='เฉพาะตัวอักษร'
                     validate = {canSubmit.charAt(0) + checkInput.charAt(0) + subValidated.charAt(0)}
                 />
                 <RegisterInput
                     label='นามสกุล'
-                    value={this.state.real_surname}
-                    onChangeText={(real_surname) => this.setState({real_surname})}
+                    value={this.state.lastname}
+                    onChangeText={(lastname) => this.setState({lastname})}
                     maxLength={30}
                     placeholder='เฉพาะตัวอักษร'
                     validate = {canSubmit.charAt(1) + checkInput.charAt(1) + subValidated.charAt(1)}
@@ -229,7 +229,9 @@ export default class RegisterScreen extends Component {
                     information={recentDate}
                 />
                 <View style={{marginTop: 20}}/>
+                <View style={{marginTop:10}}></View>
                 {ButtonSubmit}
+                <View style={{marginTop:10}}></View>
             {/*</View>*/}
         </View>
         </ScrollView>
@@ -241,8 +243,8 @@ export default class RegisterScreen extends Component {
       this.state.last_date_donate = recent2.getFullYear().toString() + '-' + (recent2.getMonth()+1).toString() + '-' + recent2.getDate().toString();
       console.log(this.state);
       this.setState({load: true});
-      console.log(addressServer.IPMac.toString() + '/register');
-      const api = addressServer.IPMac.toString() + '/register';
+      console.log(addressServer.APIRequest.toString() + '/api/auth/register');
+      const api = addressServer.APIRequest.toString() + '/api/auth/register';
       if( this.state.password === this.state.password_confirmation){
         const myRequest = new Request(
           api,
@@ -256,12 +258,13 @@ export default class RegisterScreen extends Component {
           });
         var userData = '';
         fetch(myRequest)
-        .then((response) => response.text())
+        .then((response) => console.log(response))
+        /*.then((response) => response.text())
         .then((responseText) => {
           console.log(responseText);
           if(responseText === 'Register Success'){
             userData = this.state
-            userData = '{"name":"' + userData.name + '","real_name":"' + userData.real_name + '","real_surname":"' + userData.real_surname + '","blood":"' + userData.blood + '","blood_type":"' + userData.blood_type + '","phone":"' + userData.phone + '","email":"' + userData.email + '","province":"' + userData.province + '","birthyear":"' + userData.birthyear + '","real_name":"' + userData.last_date_donate +'"}'
+            userData = '{"name":"' + userData.name + '","firstname":"' + userData.firstname + '","lastname":"' + userData.lastname + '","blood":"' + userData.blood + '","blood_type":"' + userData.blood_type + '","phone":"' + userData.phone + '","email":"' + userData.email + '","province":"' + userData.province + '","birthyear":"' + userData.birthyear + '","firstname":"' + userData.last_date_donate +'"}'
             console.log(userData)
             this._setUserData(userData)
             this.setState({modalRegisterVisible: true});
@@ -270,7 +273,7 @@ export default class RegisterScreen extends Component {
             console.log('Register Fail');
             this.setState({load: false});
           }
-        })
+        })*/
         .catch((error) => {
           this.setState({load: false});
           console.log(error);

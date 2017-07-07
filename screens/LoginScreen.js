@@ -2,6 +2,7 @@ import React, { Component} from 'react';
 import { Text, View, TouchableOpacity, TextInput, Image, StyleSheet, AsyncStorage, ScrollView, ActivityIndicator } from 'react-native';
 import { Font } from 'expo';
 import { NavigationActions } from 'react-navigation'
+import axios from 'axios'
 
 import addressServer from '../utilities/addressServer';
 
@@ -10,7 +11,7 @@ import { Button } from '../components/common';
 export default class LoginScreen extends Component {
 
     state = {
-        name: '',
+        email: '',
         password: '',
         error: false,
         loadRegis: false,
@@ -21,23 +22,46 @@ export default class LoginScreen extends Component {
     };
 
 
-    componentWillMount() {
-        console.log(addressServer.IPMac);
-        /*this._checkLogin();*/
-    }
+/*    componentWillMount() {
+        //this._checkLogin();
+        AsyncStorage.getItem('@loginData:key')
+        .then((loginStatus) => {
+            if(loginStatus !== null){
+                checkLogin = JSON.parse(loginStatus)
+                console.log(addressServer.APIRequest.toString() + '/api/index');
+                const api = addressServer.APIRequest.toString() + '/api/index';
+                axios(api,{ headers: {'Authorization' : 'Bearer ' + checkLogin.token},})
+                .then(response => 
+                {
+                    console.log(response.data)
+                    this.saveUserData(response.data)
+                    this._goToApp()
+                })
+                .catch((error) => console.log(error))
+            }
+        })
+    }*/
+    
 
-
-/*    async _checkLogin() {
+    async _checkLogin() {
       try {
-            const name = await AsyncStorage.getItem('@name:key');
-            if (name !== null) {
-                console.log(name);
-                this.props.navigator.push('rootNavigation');
+            const loginStatus = await AsyncStorage.getItem('@loginData:key');
+            if (loginStatus.uesr !== null) {
+                console.log(loginStatus)
+                this._goToApp() 
             }
         } catch ( error ) {
             console.log('error');
         }
-    }*/
+    }
+
+    async saveUserData(userData) {
+        try {
+            await AsyncStorage.setItem('@userData:key', JSON.stringify(userData));
+        } catch ( error ) {
+            console.log('error');
+        }
+    }
 
     renderErrorMessage() {
         if(!this.state.error){
@@ -51,6 +75,8 @@ export default class LoginScreen extends Component {
             return <ActivityIndicator size="large" color='#9FAC9B'/>
         } else {
             return(
+                <View>
+                <View style={{marginTop:10}}></View>
                 <Button
                     title='ลงทะเบียน'
                     buttonColor='#9FAC9B'
@@ -60,13 +86,15 @@ export default class LoginScreen extends Component {
                     ButtonHeight={50}
                     colorFont='white'
                 />
+                <View style={{marginTop:10}}></View>
+                </View>
             );
         }
     }
 
     render() {
         return(
-            <ScrollView style={{flex: 1,flexDirection: 'column', backgroundColor: '#FAFAFA'}}>
+            <ScrollView style={{flex: 1,flexDirection: 'column', backgroundColor: '#FAFAFA'}}> 
             <View style={{flex: 1,marginTop:80,flexDirection: 'column',justifyContent: 'center',alignItems: 'center', backgroundColor: '#FAFAFA'}}>
                 <Image source={require('../assets/icons/logo.png')} style={{width:190,height:90}}/>
                 <View><Text style={[Font.style('CmPrasanmit'),styles.caption]}>ม า ก ก ว่ า ก า ร ใ ห้ เ ลื อ ด</Text></View>
@@ -75,8 +103,8 @@ export default class LoginScreen extends Component {
                         style={[Font.style('CmPrasanmit'),styles.input]}
                         autoCorrect={false}
                         autoCapitalize='none'
-                        onChangeText={(name) => this.setState({name})}
-                        value={this.state.name}
+                        onChangeText={(email) => this.setState({email})}
+                        value={this.state.email}
                         placeholder="ชื่อผู้ใช้หรือเบอร์โทรศัพท์"
                         underlineColorAndroid='rgba(0,0,0,0)'
                     />
@@ -96,6 +124,7 @@ export default class LoginScreen extends Component {
                             <Text style={[Font.style('CmPrasanmit'),{ fontSize: 20,color:'#95989A',}]}>ลืมรหัสผ่าน?</Text>
                         </TouchableOpacity>
                     </View>
+                    <View style={{marginTop:10}}></View>
                     <Button
                         title='เข้าสู่ระบบ'
                         buttonColor='#EF685E'
@@ -105,20 +134,21 @@ export default class LoginScreen extends Component {
                         ButtonHeight={50}
                         colorFont='white'
                     />
+                    <View style={{marginTop:10}}></View>
                     <View style={{justifyContent: 'center',alignItems: 'center'}}>
                         <Text style={[Font.style('CmPrasanmit'),{ fontSize: 23,color:'#95989A',marginBottom:5,marginTop:5}]}>หรือ</Text>
                     </View>
                     {this.renderRegisButton()}
                 </View>
-            </View>
-            </ScrollView>
+            </View> 
+            </ScrollView >
         );
     }
 
-    async _userData(userData){
+    async _loginData(loginData){
         try {
-            console.log(userData);
-            await AsyncStorage.setItem('@userData:key', JSON.stringify(userData));
+            console.log(loginData);
+            await AsyncStorage.setItem('@loginData:key', JSON.stringify(loginData));
         } catch ( error ) {
             console.log('error');
         }
@@ -126,22 +156,8 @@ export default class LoginScreen extends Component {
 
 
     _loginPress = () => {
-        const { navigate } = this.props.navigation;
-        navigate('Home');
-        /*const { navigate } = this.props.navigation;
-        navigate('Bloodnow')*/
-        const resetAction = NavigationActions.reset(
-            {
-                index: 1,
-                actions: [
-                    NavigationActions.navigate({ routeName: 'Login'}) ,
-                    NavigationActions.navigate({ routeName: 'Bloodnow'})
-                ]
-            }
-        )
-        this.props.navigation.dispatch(resetAction)
-        /*console.log(addressServer.IPMac.toString() + '/login');
-        const api = addressServer.IPMac.toString() + '/login';
+        console.log(addressServer.APIRequest.toString() + '/api/auth/login');
+        const api = addressServer.APIRequest.toString() + '/api/auth/login';
         this.setState({error : false});
         const myRequest = new Request(
             api,
@@ -153,19 +169,16 @@ export default class LoginScreen extends Component {
                 },
                 body: JSON.stringify(this.state)
             });
-        var userData = '';
+        var loginData = '';
         fetch(myRequest)
         .then((response) => response.text())
         .then((responseText) => {
-            console.log(responseText)
-            if( responseText != 'login fail')
-            {
-                userData = JSON.parse(responseText);
+            //console.log(JSON.parse(responseText))
+            loginData = JSON.parse(responseText);
+            if(loginData.status === 'ok'){
                 console.log('login success');
-                this._userData(userData);
-                //this.props.navigator.push(Router.getRoute('test'));
-                const rootNavigator = this.props.navigation.getNavigator('root');
-                rootNavigator.replace('rootNavigationSliding');
+                this._loginData(loginData)
+                this._goToApp()
             }
             else
             {
@@ -176,8 +189,20 @@ export default class LoginScreen extends Component {
         })
         .catch((error) => {
             console.warn(error);
-        });  */
+        }); 
     };
+
+    _goToApp = () => {
+        const resetAction = NavigationActions.reset(
+            {
+                index: 0,
+                actions: [ 
+                    NavigationActions.navigate({ routeName: 'Bloodnow'})   
+                ]
+            }
+        )
+        this.props.navigation.dispatch(resetAction)
+    }
 
 
     _register = () => {
@@ -188,9 +213,9 @@ export default class LoginScreen extends Component {
         const resetAction = NavigationActions.reset(
             {
                 index: 1,
-                actions: [
+                actions: [ 
                     NavigationActions.navigate({ routeName: 'Login'}) ,
-                    NavigationActions.navigate({ routeName: 'Register'})
+                    NavigationActions.navigate({ routeName: 'Register'})   
                 ]
             }
         )

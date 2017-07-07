@@ -44,12 +44,16 @@ export default class Tab extends React.Component {
             Information: {screen: InformationStack},
         },{
            // ...TabNavigator.Presets.AndroidTopTabs,
+           initialRouteName: 'profile',
             tabBarOptions: {
                 //activeTintColor: 'red',
                 showLabel: false,
                 showIcon: true,
                 style: {
-                    //backgroundColor: 'black'
+                    backgroundColor: 'white',
+                    shadowColor: 'grey',
+                    shadowOffset: {width: 2, height: -1},
+                    shadowOpacity: 0.5,
                 },
                 //indicatorStyle: { borderBottomColor: Colors.tabIconSelected ,borderBottomWidth: 3},
             },
@@ -62,12 +66,12 @@ export default class Tab extends React.Component {
             tabBarIcon: ({ tintColor, focused }) => ( this._renderIconSimpleLineIcons('user', focused, 20)),
         };
 
-        RequestStack.navigationOptions =  {
+/*        RequestStack.navigationOptions = {
             tabBarIcon: ({ tintColor, focused }) => ( this._renderIconSimpleLineIcons('heart', focused, 20)),
-        };
+        };*/
 
         DonorStack.navigationOptions = {
-            tabBarIcon: ({ tintColor, focused }) => ( this._renderIconSimpleLineIcons('drop', focused, 25)),
+            tabBarIcon: ({ tintColor, focused }) => ( this._renderIconSimpleLineIcons('drop', focused, 30)),
         };
 
         FriendStack.navigationOptions = {

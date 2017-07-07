@@ -4,7 +4,7 @@ import { RequestDetailInDonor, Button, Map } from '../components/common';
 import Colors from '../constants/Colors';
 import { Font } from 'expo';
 
-export default class RequestDetailInDonorScreen extends Component {
+export default class RequestBloodDetailScreen extends Component {
   static navigationOptions = props => {
         const { navigation } = props;
         const { state, setParams } = navigation;
@@ -19,71 +19,42 @@ export default class RequestDetailInDonorScreen extends Component {
     };
 
     state = {
-        patient_name: '',
-        patient_id: '',
-        patient_blood: '',
-        patient_blood_type: '',
-        patient_bloodUnit: '',
-        countblood: 0,
-        patient_detail: '',
-        patient_hos: '',
-        patient_bloodTemp: 'A',
-        patient_blood_Temp: '+',
-        patient_hos_la: '',
-        patient_hos_long: '',
-        patient_province: 'เชียงใหม่',
-        region: {
-            latitude: 18.788488,
-            longitude: 98.971420,
-            latitudeDelta: 0.00922,
-            longitudeDelta: 0.00421
-        },
-        accept: false,
+
     }
 
     render() {
-      const url="http://maps.google.com/maps?daddr=("+ this.state.region.latitude + "," + this.state.region.longitude + ")";
       return(
         <ScrollView style={{flex:1, backgroundColor: 'white' }}>
           <View style={{flex: 1,width:Dimensions.get('window').width,flexDirection: 'column',alignItems: 'center'}}>
-            <View style={{marginTop:15}}></View>
+            <View style={{marginTop:20}}></View>
             <RequestDetailInDonor label='ชื่อผู้ป่วย' information='อักศร แลดูดี'/>
             <RequestDetailInDonor label='รหัสผู้ป่วย' information='14249269'/>
             <RequestDetailInDonor label='กรุ๊ปเลือด' information='O-' />
-            <RequestDetailInDonor label='รายละเอียด' information='อักศรไปทำหน้า หมอจัดหนักไปหน่อยมีดแทงเข้าไปหัวใจ ไม่รู้เหมือนกันว่าไปโดยหัวใจอีศรได้ยังไง'/>
             <RequestDetailInDonor label='จังหวัด' information='เชียงใหม่'/>
             <RequestDetailInDonor label='สถานพยาบาล' information='กรุงเทพ'/>
-            <View style={{marginTop:20}}></View>
-            <Map
-              width={250}
-              height={120}
-              region={this.state.region}
-              onPress={() => Linking.openURL(url)}
-            />
+            <RequestDetailInDonor label='วันที่ขอบริจาค' information='06/06/2560'/>
+            <RequestDetailInDonor label='วันที่สื้นสุด' information='08/06/2560'/>
+            <RequestDetailInDonor label='จำนวนที่บริจาค' information='10 ถุง'/>
             <View style={{marginTop:25,flexDirection:'row'}}>
-              <View style={styles.borderBottom}>
                 <Button
-                  title='ตอบรับ'
+                  title='ส่งคำขออีกครั้ง'
                   onPress={() => {}}
-                  buttonColor='#E84A5F'
+                  buttonColor='#F6B6BF'
                   sizeFont={25}
-                  ButtonWidth={100}
-                  ButtonHeight={40}
+                  ButtonWidth={150}
+                  ButtonHeight={50}
                   colorFont='white'
                 />
-              </View>
               <View style={{marginLeft:15}} ></View>
-              <View style={styles.borderBottom}>
                 <Button
-                  title='ปฏิเสธ'
+                  title='คำขอเสร็จสิ้น'
                   onPress={this._backToHistory}
-                  buttonColor='white'
+                  buttonColor='#E84A5F'
                   sizeFont={25}
-                  ButtonWidth={100}
-                  ButtonHeight={40}
-                  colorFont= {Colors.tabBar}
+                  ButtonWidth={150}
+                  ButtonHeight={50}
+                  colorFont= 'white'
                 />
-              </View>
             </View>
           </View>
         </ScrollView>

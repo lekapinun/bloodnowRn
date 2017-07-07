@@ -20,8 +20,17 @@ export default class App extends React.Component{
         require('./assets/images/expo-icon@2x.png'),
         require('./assets/icons/cr.png'),
         require('./assets/icons/ex.png'),
-        require('./assets/icons/exponent-icon.png'),
         require('./node_modules/react-navigation/src/views/assets/back-icon.png'),
+        require('./assets/images/Ap.png'),
+        require('./assets/images/An.png'),
+        require('./assets/images/ABp.png'),
+        require('./assets/images/ABn.png'),
+        require('./assets/images/On.png'),
+        require('./assets/images/Op.png'),
+        require('./assets/images/Bp.png'),
+        require('./assets/images/Bn.png'),
+        require('./assets/images/refresh.png'),
+        require('./assets/images/envelope.png'),
       ],
       fonts: [
         FontAwesome.font,
@@ -45,7 +54,7 @@ export default class App extends React.Component{
   render() {
 
     if (this.state.appIsReady) {
-      return <Stack />
+      return <Stack/>
     } else {
       return <Expo.AppLoading />
     }

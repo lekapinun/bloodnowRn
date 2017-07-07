@@ -9,7 +9,7 @@ const DetailBox = ({label,information}) => {
             {label}
         </Text>
         <View style={styles.detail}>
-            <Text style={[Font.style('CmPrasanmit'), styles.informationText]}>
+            <Text numberOfLines={5} style={[Font.style('CmPrasanmit'), styles.informationText]}>
                 {information}
             </Text>
         </View>
@@ -21,10 +21,11 @@ const styles = StyleSheet.create({
   underline : {
     borderBottomColor: '#D1D1D1',
     borderBottomWidth: 1,
-    marginTop: 15,
+    paddingTop: 7,
+    paddingBottom: 7,
   },
   detail: {
-    height: 30,
+    //height: 22,
     width: 310,
     backgroundColor: 'transparent',
   },
@@ -35,7 +36,7 @@ const styles = StyleSheet.create({
   },
   informationText: {
     paddingLeft:10,
-    fontSize: 25,
+    fontSize: 23,
     color: 'grey'
   }
 });
