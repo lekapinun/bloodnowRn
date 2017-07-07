@@ -18,6 +18,7 @@ import Colors from '../constants/Colors';
 import Layout from '../constants/Layout';
 import RequestBloodScreen from './RequestBloodScreen';
 import axios from 'axios';
+import addressServer from '../utilities/addressServer';
 
 class ButtonRequest extends Component {
     _handlePress = () => {
@@ -66,25 +67,41 @@ export default class RequestBloodHistoryScreen extends Component {
     
     state = {
         history: [],
+        token: ''
     }
 
-    componentDidMount() {
-         axios.get('https://rallycoding.herokuapp.com/api/music_albums')
-        .then(response => this.setState({ history: response.data }))
-        .catch(function (error) {
-            console.log(error);
-        });
+    componentWillMount() {
+        AsyncStorage.getItem('@loginData:key')
+        .then((loginStatus) => {
+            const temp = JSON.parse(loginStatus)
+            this.state.token = temp.token
+            console.log(addressServer.APIRequest + '/api/req');
+            const api = addressServer.APIRequest + '/api/req';
+            axios(api,{ 
+                method: 'get', 
+                headers: {'Authorization' : 'Bearer ' + this.state.token},
+            })
+                .then(response => {
+                    console.log(response.data)
+                    this.state.history = response.data
+                    this.setState({ history: response.data })
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        })
     }
+    
 
     renderHistory() {
-        //console.log(this.state.history)
+        console.log(this.state)
         return this.state.history.map(history =>
             <CardHistoryRequest
-                key={history.title}
-                blood = 'O'
-                bloodType = '-'
-                name = 'อักศร แลดูดี'
-                hospital = {'โรงพยาบาล ' + history.title}
+                key={history.id}
+                blood = {history.patient_blood}
+                bloodType = {history.patient_blood_type}
+                name = {history.patient_name}
+                hospital = {'โรงพยาบาล' + history.patient_hos}
                 status = {1}//'finished'
                 onPress={() => {}}
             /> 
@@ -96,7 +113,7 @@ export default class RequestBloodHistoryScreen extends Component {
         return(
             <ScrollView style={{flex: 1,backgroundColor:'white'}}> 
                 <View style={[styles.center, {paddingTop:16}]}>
-                    <CardHistoryRequest
+                    {/*<CardHistoryRequest
                         blood = 'O'
                         bloodType = '-'
                         name = 'คาร่า เดเลวีน'
@@ -130,8 +147,8 @@ export default class RequestBloodHistoryScreen extends Component {
                         hospital = {'โรงพยาบาลมหาราช'}
                         status = 'refresh'
                         onPress={() => {}}
-                    /> 
-                    {/*{this.renderHistory()} */}
+                    /> */}
+                    {this.renderHistory()}
                     <View style={{height:20}}></View>
                 </View> 
             </ScrollView>
