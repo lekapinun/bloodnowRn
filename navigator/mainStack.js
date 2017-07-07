@@ -29,7 +29,11 @@ export default class Stack extends React.Component {
           this.setState({home: 'Bloodnow'})
           this.setState({finish: true})
         })
-        .catch((error) => console.log(error))
+        .catch((error) => 
+        {
+            console.log(error)
+            this.setState({finish: true})
+        })
       }
     })
   }
