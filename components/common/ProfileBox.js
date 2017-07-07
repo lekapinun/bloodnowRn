@@ -16,6 +16,7 @@ const ProfileBox = (props) => {
         <Text style={styles.detailTextStyle}>{props.list.title}</Text>
         <Text style={styles.detailTextStyle}>{props.list.bloodType}</Text>
         <Button
+          style={styles.logOutButton}
           title="ออกจากระบบ"
           onPress={() => {}}
           sizeFont={23}
@@ -25,6 +26,7 @@ const ProfileBox = (props) => {
         />
       </View>
       <TouchableOpacity
+        style={styles.editProfileButton}
         onPress={props.onPress}
       >
         <SimpleLineIcons
@@ -40,25 +42,39 @@ const ProfileBox = (props) => {
 const styles = StyleSheet.create({
   profileContainer: {
     alignSelf: 'center',
-    width: 300,
-    height: 200,
+    width: 350,
+    height: 150,
     backgroundColor: Colors.tabBar,
+    borderRadius: 5,
+
     flexDirection: 'row',
-    justifyContent: 'space-around',
     alignItems: 'center',
+
   },
   imageStyle: {
     borderRadius: 50,
     height: 100,
     width: 100,
+    marginVertical: 20,
+    marginLeft: 30,
   },
   detailContainer: {
     flexDirection: 'column',
-
+    marginLeft: 25,
   },
   detailTextStyle: {
-    color: 'white'
-  }
+    color: 'white',
+    fontSize: 20,
+  },
+  logOutButton: {
+    borderRadius: 3,
+
+  },
+  editProfileButton: {
+    position:'absolute',
+    top: 20,
+    right: 20,
+  },
 });
 
 export {ProfileBox};

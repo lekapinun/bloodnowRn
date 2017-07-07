@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { CmPrasanmitText } from '../components/CmPrasanmitText';
 import { CmPrasanmitBoldText } from '../components/CmPrasanmitBoldText';
 import { EditProfileDetail, Button } from '../components/common/';
+import Colors from '../constants/Colors';
 
 export default class EditProfileScreen extends Component{
     state = {
@@ -16,25 +17,73 @@ export default class EditProfileScreen extends Component{
 
     render() {
       return(
-        <View>
-          <View>
-            <Image />
-            <Image />
+        <View style={styles.pageStyle}>
+          <View style={{height: 100,width: 100,}}>
+            <Image
+              style={styles.imageStyle}
+              source={{uri: "http://www.japanstyle.info/wordpress/wp-content/images/henohenomoheji.bmp"}}
+            />
+            <TouchableOpacity
+              onPress={() => {}}>
+            <View
+              style={styles.changeProfileImageContainer}
+            >
+            <Image
+              style={styles.changeProfileImage}
+              source={require('../assets/images/camera.png')}
+            />
+          </View>
+          </TouchableOpacity>
           </View>
 
           <EditProfileDetail label = "ชื่อ-สกุล" information={this.state.name} editable={false}/>
-          <EditProfileDetail label = "กรุ๊ปเลือด" information= {this.state.bloodType}/>
+          <EditProfileDetail label = "กรุ๊ปเลือด" information= {this.state.bloodType} editable={true}/>
           <EditProfileDetail label = "เบอร์โทรศัพท์" information= {this.state.phone} editable={false}/>
           <EditProfileDetail label = "อีเมล์" information= {this.state.email}/>
           <EditProfileDetail label = "จังหวัด" information= {this.state.province}/>
           <EditProfileDetail label = "ปีเกิด" information= {this.state.birthYear}/>
 
-          <Button title="บันทึกการเปลี่ยนแปลง" onPress={() => {}}/>
+          <Button
+            title="บันทึกการเปลี่ยนแปลง"
+            onPress={() => {}}
+            buttonColor={Colors.tabBar}
+            colorFont="white"
+            sizeFont={23}
+            ButtonWidth={300}
+            ButtonHeight={40}
+          />
         </View>
       );
     }
 }
 
 const styles = StyleSheet.create({
-
+  pageStyle: {
+    marginTop: 15,
+    alignSelf: 'center',
+    flexDirection: 'column',
+    alignItems: 'center'
+  },
+  changeProfileImage: {
+    alignSelf: 'center',
+    paddingVertical: 2,
+    height: 25,
+    width: 25,
+  },
+  changeProfileImageContainer: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    height: 40,
+    width: 40,
+    backgroundColor: Colors.tabBar,
+    borderRadius: 20,
+    borderWidth: 2,
+    borderColor: 'white',
+  },
+  imageStyle: {
+    borderRadius: 50,
+    height: 100,
+    width: 100,
+  },
 });

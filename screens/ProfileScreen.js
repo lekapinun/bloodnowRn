@@ -12,9 +12,10 @@ import {
 } from 'react-native';
 import { Font } from 'expo'
 import { NavigationActions } from 'react-navigation';
-import { TestButton, NavigatorBackground,ExNavigationState, ProfileBox } from '../components/common';
+import { TestButton, NavigatorBackground,ExNavigationState, ProfileBox, CardList } from '../components/common';
 import { MonoText } from '../components/StyledText';
 import Colors from '../constants/Colors';
+import { CmPrasanmitBoldText } from '../components/CmPrasanmitBoldText';
 
 export default class ProfileScreen extends Component {
     static navigationOptions =  {
@@ -27,6 +28,7 @@ export default class ProfileScreen extends Component {
     };
 
     state = {
+      donateHistoryURL: "http://rallycoding.herokuapp.com/api/music_albums",
       list: {
         title: "test",
         bloodType: "O",
@@ -35,9 +37,14 @@ export default class ProfileScreen extends Component {
     }
 
     render() {
+      if(this.state.donateHistoryURL !== null){
+        donateHistory = <CardList url={this.state.donateHistoryURL}/>
+      }
+      else{
+        donateHistory = <View />
+      }
         return(
             <View style={{marginTop:30}}>
-                <Text>Profile SCREEN</Text>
                 <ProfileBox
                   list={this.state.list}
                   navigation={this.props.navigation}
@@ -54,8 +61,22 @@ export default class ProfileScreen extends Component {
                     this.props.navigation.dispatch(resetAction)
                   }}
                 />
+
+                <CmPrasanmitBoldText style={styles.donateHisotyHeader}>
+                  ประวัติการให้เลือด
+                </CmPrasanmitBoldText>
+
+                {donateHistory}
             </View>
         );
     }
 
 }
+
+const styles = StyleSheet.create({
+  donateHisotyHeader: {
+    marginTop: 20,
+    marginLeft: 20,
+    fontSize: 23,
+  },
+});

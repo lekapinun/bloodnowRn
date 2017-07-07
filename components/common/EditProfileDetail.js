@@ -9,7 +9,10 @@ const EditProfileDetail = ({ label, information, onChange, editable}) => {
         <CmPrasanmitBoldText style={styles.title}>
             {label}
         </CmPrasanmitBoldText>
-        <View style={styles.detail}>
+        <View style={{
+        borderBottomColor: 'brown',
+        borderBottomWidth: 1,
+        paddingVertical: 3,}}>
           <TextInput
             style={[Font.style('CmPrasanmitBold'),styles.informationText]}
             value={information}
@@ -35,16 +38,15 @@ const styles = StyleSheet.create({
     height:25,
     color: 'black',
   },
-  detail: {
-    width: 200,
-    backgroundColor: 'transparent',
-  },
   informationText: {
-    textAlign: 'right',
-    alignSelf: 'flex-end',
+    width: 200,
+    height: 30,
+    //textAlign: 'right',
+    //alignSelf: 'flex-end',
     fontSize: 23,
     color: 'black',
-    backgroundColor: 'green'
+    borderBottomWidth: 1,
+    borderBottomColor: 'grey',
   }
 });
 
