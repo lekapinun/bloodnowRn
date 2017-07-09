@@ -79,8 +79,9 @@ const styles = StyleSheet.create({
   },
   requestListContainerStyle: {
     marginTop:15,
-    height: 200,
+    height: 250,
     alignSelf: 'center',
     width: 340,
+    backgroundColor:'#E8E8E8'
   },
 });
