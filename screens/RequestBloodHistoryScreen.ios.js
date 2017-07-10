@@ -95,16 +95,35 @@ export default class RequestBloodHistoryScreen extends Component {
 
     renderHistory() {
         console.log(this.state)
-        return this.state.history.map(history =>
-            <CardHistoryRequest
-                key={history.id}
-                blood = {history.patient_blood}
-                bloodType = {history.patient_blood_type}
-                name = {history.patient_name}
-                hospital = {'โรงพยาบาล' + history.patient_hos}
-                status = {1}//'finished'
-                onPress={() => {}}
-            /> 
+        return this.state.history.map((history) => {
+            //console.log(history.created_at)
+            //console.log(history.created_at.split(' ')[0])
+            var date = history.created_at.split(' ')[0]
+            date = date.split('-')
+            var dateTime = new Date(date[1] + '/' + date[2] + '/' + date[0])
+            var status
+            var temp_time = Math.floor((new Date().getTime() - dateTime.getTime())/(86400000)) 
+            //( temp_time < 4 ) ? status = temp_time : status = history.patient_status
+            if( temp_time < 4){
+                status = temp_time
+            } else if ( temp_time > 3 && history.patient_status === 'not complete' ){
+                status = 'refresh'
+            } else {
+                status = history.patient_status
+            }
+            //console.log(date[1] + '/' + date[2] + '/' + date[0])
+            //console.log( Math.floor((new Date().getTime() - dateTime.getTime())/(86400000)))
+            return (
+                <CardHistoryRequest
+                    key={history.id}
+                    blood = {history.patient_blood}
+                    bloodType = {history.patient_blood_type}
+                    name = {history.patient_name}
+                    hospital = {'โรงพยาบาล' + history.patient_hos}
+                    status = { status }
+                    onPress={() => {}}
+                /> 
+            )}
         );
     }
     
