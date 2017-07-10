@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { FlatList, View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import axios from 'axios';
 import Colors from '../../constants/Colors';
 import { CmPrasanmitText } from '../CmPrasanmitText'
@@ -8,32 +8,47 @@ import { CmPrasanmitBoldText } from '../CmPrasanmitBoldText'
 export class CardList extends Component{
 
   state = {
-    list: [],
+    item: [],
   }
 
   componentWillMount() {
     axios.get(this.props.url)
-    .then(response => this.setState({ list: response.data }));
+    .then(response => this.setState({ item : response.data }));
   }
 
-  renderList() {
-      console.log(this.state.list)
+  /*renderList() {
+     //console.log(this.state.list)
      return this.state.list.map(list =>
        <CardDetail key={list.title} list={list} visible={true}/>
      );
-   }
+   }*/
+
+   _keyExtractor = (item, title) => item.title;
+
+   _renderItem = ({ item }) => (
+     <CardDetail
+       key = {item.title}
+       list = {item}
+       visible = {true}
+     />
+   );
 
   render() {
     return(
-      <ScrollView style={styles.requestListContainerStyle}>
-        {this.renderList()}
-      </ScrollView>
+      <FlatList
+        style = {styles.requestListContainerStyle}
+        data = {this.state.item}
+        keyExtractor = {this._keyExtractor.bind(this)}
+        renderItem = {this._renderItem.bind(this)}
+        initialNumToRender = {3}
+      />
   )};
 }
 
 const CardDetail = ({ list, onPress, visible, gropBlood }) => {
   if(visible){
   return(
+    <View style={{flex: 1}}>
     <TouchableOpacity onPress={onPress} style={[styles.requestCardContainerStyle,{borderWidth: 1, borderColor: '#DCDCDC',}]} >
       <View style={{height:78,backgroundColor:'#E8E8E8',flexDirection:'row'}}>
         <View style={{flex:19,alignItems: 'center',justifyContent: 'center',}}>
@@ -53,6 +68,7 @@ const CardDetail = ({ list, onPress, visible, gropBlood }) => {
         </View>
       </View>
     </TouchableOpacity>
+  </View>
   );}
   else {
     return (
@@ -65,6 +81,7 @@ const styles = StyleSheet.create({
     height: 78,
     width: 340,
     flexDirection: 'column',
+
     //alignItems: 'center',
   },
   imageRequestStyle: {
@@ -79,9 +96,10 @@ const styles = StyleSheet.create({
   },
   requestListContainerStyle: {
     marginTop:15,
-    height: 250,
+    height: 300,
     alignSelf: 'center',
     width: 340,
     backgroundColor:'#E8E8E8'
+    flex: 1
   },
 });
