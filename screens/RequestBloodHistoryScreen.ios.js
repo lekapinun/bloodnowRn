@@ -82,7 +82,7 @@ export default class RequestBloodHistoryScreen extends Component {
                 headers: {'Authorization' : 'Bearer ' + this.state.token},
             })
                 .then(response => {
-                    console.log(response.data)
+                    //console.log(response.data)
                     this.state.history = response.data
                     this.setState({ history: response.data })
                 })
@@ -94,11 +94,11 @@ export default class RequestBloodHistoryScreen extends Component {
     
 
     renderHistory() {
-        console.log(this.state)
+        //console.log(this.state)
         return this.state.history.map((history) => {
-            //console.log(history.created_at)
-            //console.log(history.created_at.split(' ')[0])
-            var date = history.created_at.split(' ')[0]
+            //console.log(history.updated_at)
+            //console.log(history.updated_at.split(' ')[0])
+            var date = history.updated_at.split(' ')[0]
             date = date.split('-')
             var dateTime = new Date(date[1] + '/' + date[2] + '/' + date[0])
             var status
@@ -121,10 +121,24 @@ export default class RequestBloodHistoryScreen extends Component {
                     name = {history.patient_name}
                     hospital = {'โรงพยาบาล' + history.patient_hos}
                     status = { status }
-                    onPress={() => {}}
+                    onPress={() => this.goTodetail(history.id) }
                 /> 
             )}
         );
+    }
+
+    goTodetail(detail_id) {
+        //console.log(detail_id)
+        const resetAction = NavigationActions.reset(
+            {
+                index: 1,
+                actions: [ 
+                    NavigationActions.navigate({ routeName: 'RequestHistory'}) ,
+                    NavigationActions.navigate({ routeName: 'RequestDetail', params: detail_id})   
+                ]
+            }
+        )
+        this.props.navigation.dispatch(resetAction)
     }
     
 
