@@ -102,11 +102,11 @@ export default class RequestBloodHistoryScreen extends Component {
             date = date.split('-')
             var dateTime = new Date(date[1] + '/' + date[2] + '/' + date[0])
             var status
-            var temp_time = Math.floor((new Date().getTime() - dateTime.getTime())/(86400000)) 
+            var temp_time = Math.floor( ((dateTime.getTime() + (86400000*4)) - (new Date().getTime()))/(86400000)) 
             //( temp_time < 4 ) ? status = temp_time : status = history.patient_status
-            if( temp_time < 4){
+            if( temp_time > 0){
                 status = temp_time
-            } else if ( temp_time > 3 && history.patient_status === 'not complete' ){
+            } else if ( temp_time < 1 && history.patient_status === 'not complete' ){
                 status = 'refresh'
             } else {
                 status = history.patient_status

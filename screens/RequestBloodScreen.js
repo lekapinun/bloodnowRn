@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Text, TextInput, Modal, TouchableOpacity, Picker, StyleSheet,AsyncStorage,Dimensions, TouchableWithoutFeedback ,Animated} from 'react-native';
+import { ScrollView, View, Text, TextInput, Modal, TouchableOpacity, Picker, StyleSheet,AsyncStorage,Dimensions, TouchableWithoutFeedback ,Animated,Image} from 'react-native';
 import { Font } from 'expo';
 import { Map, InputText, InputTextLarge , PickerPartTouch, PickerModalDate, PickerModalBlood, Button, ButtonBack,DetailBox,PickerModalProvince} from '../components/common';
 import Colors from '../constants/Colors';
@@ -53,8 +53,8 @@ export default class RequestBloodScreen extends Component {
         countblood: '',
         patient_detail: '',
         patient_hos: '',
-        patient_bloodTemp: 'A',
-        patient_blood_typeTemp: '+',
+        patient_bloodTemp: '',
+        patient_blood_typeTemp: '',
         patient_hos_la: '',
         patient_hos_long: '',
         patient_province: '',
@@ -70,6 +70,7 @@ export default class RequestBloodScreen extends Component {
         confirm: false,
         displayRequest: true,
         displayConfirm: false,
+        displayValidate: false,
     }
 
     setModalpatient_bloodVisible(visible) {
@@ -84,6 +85,14 @@ export default class RequestBloodScreen extends Component {
         if( this.state.displayConfirm === true){
             return (
                 <View style={[styles.container,{height:Layout.window.height,backgroundColor:'transparent',position:'absolute'}]}>
+                    <ModalValidate
+                        pickerVisible = {this.state.displayValidate}
+                        onPress = { () => {
+                            this.setState({displayValidate: false})
+                            this._backToRequest()
+                        } }
+                    >
+                    </ModalValidate>
                         <Animated.View style={[this.positon.getLayout(),{flex:1}]}>
                             <View style={{height:20,width:Layout.window.width,backgroundColor: Colors.tabBar}}/>
                             <View style={{height:44,flexDirection:'row',justifyContent: 'space-between',width:Layout.window.width,backgroundColor: Colors.tabBar}}>
@@ -289,15 +298,12 @@ export default class RequestBloodScreen extends Component {
     }
 
     _backToRequest = () => {
-        //this.setState({displayRequest: true})
-        //this.setState({displayConfirm : false})
         var rand_x = 0; 
         var rand_y = 0; 
         this.positon = new Animated.ValueXY({ x: rand_y, y: rand_x});
         Animated.timing(this.positon,{
             toValue: { x: 0, y: Layout.window.height},
         }).start();
-
         this.forceUpdate();
         setTimeout(() => {
             this.setState({displayConfirm: false})
@@ -308,7 +314,6 @@ export default class RequestBloodScreen extends Component {
 
     _goToConfirmRequest = () => {
         this.setState({displayConfirm: true})
-        /*this.setState({displayRequest: false})*/
         var rand_x = Layout.window.height; 
         var rand_y = 0; 
         this.positon = new Animated.ValueXY({ x: rand_y, y: rand_x});
@@ -330,9 +335,8 @@ export default class RequestBloodScreen extends Component {
             data : this.state
         })
             .then(response => {
-                /*console.log(response.status)
-                console.log(this.state)*/
-                if(response.status === 200){
+                console.log(response)
+                if(response.status === 200 && response.data !== 'patient same'){
                     const resetAction = NavigationActions.reset(
                         {
                             index: 0,
@@ -342,7 +346,9 @@ export default class RequestBloodScreen extends Component {
                         }
                     )
                     this.props.navigation.dispatch(resetAction)
-                }  
+                } else {
+                    this.setState({displayValidate: true})
+                }
             })
             .catch((error) => {
                 console.log(error)
@@ -368,6 +374,34 @@ export default class RequestBloodScreen extends Component {
     })
     }
 
+}
+
+const ModalValidate = ({pickerVisible,onPress}) => {
+  return(
+      <Modal
+        animationType={"fade"}
+        transparent={true}
+        visible={pickerVisible}
+      >
+        <View style={[styles.container,{flex:1,backgroundColor:'rgba(52, 52, 52, 0.3)'}]}>
+            <View style={{paddingTop:25,alignItems: 'center',height:180,width:200,backgroundColor:'white',borderRadius:10}}>
+                <Image source={require('../assets/icons/ex.png')} style={{height:70,width:70}}/>
+                <Text style={[Font.style('CmPrasanmit'),{paddingTop:5,fontSize:20}]}>คำร้องขอนี้ถูกสร้างแล้ว</Text>
+                <View style={{borderBottomColor: 'red', width:200, marginTop:20,borderBottomWidth: 1,}}/>
+                <View style={{marginTop: 10}}>
+                <Button
+                    onPress={onPress}
+                    buttonColor='white'
+                    title='ตกลง'
+                    sizeFont={20}
+                    ButtonWidth={200}
+                    colorFont='red'
+                />
+                </View> 
+            </View>
+        </View>
+      </Modal>
+  );
 }
 
 const styles = StyleSheet.create({
