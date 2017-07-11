@@ -34,6 +34,8 @@ export default class Stack extends React.Component {
             console.log(error)
             this.setState({finish: true})
         })
+      } else {
+         this.setState({finish: true})
       }
       else {
         this.setState({ finish: true })
@@ -61,7 +63,7 @@ export default class Stack extends React.Component {
     if(this.state.finish){
       return <Stack/>
     }else {
-      return <Expo.AppLoading />
+      return <Text>adsfadsf</Text> //<Expo.AppLoading />
     }
   }
 }
