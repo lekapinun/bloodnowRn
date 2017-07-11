@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { ScrollView, View , Text ,StyleSheet, Dimensions, AsyncStorage, TouchableOpacity, Image } from 'react-native';
+import { ScrollView, View , Text ,StyleSheet, Dimensions, AsyncStorage, TouchableOpacity, Image, Modal } from 'react-native';
 import { RequestDetailInDonor, Button, Map } from '../components/common';
 import Colors from '../constants/Colors';
 import { Font } from 'expo';
@@ -34,25 +34,31 @@ export default class RequestBloodDetailScreen extends Component {
       complete : true,
       time: '',
       time_exp: '',
+      displayFinish: false,
     }
 
     componentWillMount() {
       this.state.detail_id = this.props.navigation.state.params
+      console.log(this.props.navigation.state.params)
       AsyncStorage.getItem('@loginData:key')
       .then((loginStatus) => {
         const temp = JSON.parse(loginStatus)
         this.state.token = temp.token
         console.log(addressServer.APIRequest + '/api/req/detail');
         const api = addressServer.APIRequest + '/api/req/detail';
+        console.log(this.state.detail_id)
         axios(api,{ 
           method: 'post', 
           headers: {'Authorization' : 'Bearer ' + this.state.token},
-          data: { 'roomreq_id': this.state.detail_id }
+          data: { 'roomreq_id': this.props.navigation.state.params}
         })
           .then(response => {
+            console.log(response.data)
             if( response.data[0].patient_status !== 'complete') { 
               this.setState({complete : false})
-            } 
+            } else {
+              this.setState({complete : true})
+            }
             this.setState({data: response.data[0]})
             var date = response.data[0].updated_at.split(' ')[0]
             date = date.split('-')
@@ -78,7 +84,7 @@ export default class RequestBloodDetailScreen extends Component {
           <View style={[styles.borderBottom,{marginLeft:10,marginRight:10}]}>
             <Button
               title='คำขอเสร็จสิ้น'
-              onPress={this._backToHistory}
+              onPress={ this.setState({displayFinish: true})}
               buttonColor='#E84A5F'
               sizeFont={20}
               ButtonWidth={140}
@@ -135,6 +141,16 @@ export default class RequestBloodDetailScreen extends Component {
       return(
         <ScrollView style={{flex:1, backgroundColor: 'white' }}>
           <View style={{flex: 1,width:Dimensions.get('window').width,flexDirection: 'column',alignItems: 'center'}}>
+            <ModalFinish
+              pickerVisible = {this.state.displayFinish}
+              onPress1 = { () => {
+                this.setState({displayFinish: false})
+              }}
+              onPress2 = { () => {
+                this.setState({displayFinish: false})
+              }}
+            >
+            </ModalFinish>
             {this._renderThankBox()}
             <View style={{marginTop:10}}></View>
             <RequestDetailInDonor label='ชื่อผู้ป่วย' information={this.state.data.patient_name} height={height_detail}/>
@@ -153,6 +169,42 @@ export default class RequestBloodDetailScreen extends Component {
         </ScrollView>
       );
     }
+}
+
+const ModalFinish = ({pickerVisible,onPress1,onPress2}) => {
+  return(
+      <Modal
+        animationType={"fade"}
+        transparent={true}
+        visible={pickerVisible}
+      >
+        <View style={[styles.container,{flex:1,backgroundColor:'rgba(52, 52, 52, 0.3)'}]}>
+            <View style={{paddingTop:25,alignItems: 'center',height:180,width:200,backgroundColor:'white',borderRadius:10}}>
+                <Image source={require('../assets/icons/ex.png')} style={{height:70,width:70}}/>
+                <Text style={[Font.style('CmPrasanmit'),{paddingTop:5,fontSize:20}]}>คำร้องขอนี้ถูกสร้างแล้ว</Text>
+                <View style={{borderBottomColor: 'red', width:200, marginTop:20,borderBottomWidth: 1,}}/>
+                <View style={{marginTop: 10,flexDirection:'row'}}>
+                  <Button
+                      onPress={onPress1}
+                      buttonColor='white'
+                      title='ตกลง'
+                      sizeFont={20}
+                      ButtonWidth={1000}
+                      colorFont='red'
+                  />
+                  <Button
+                      onPress={onPress2}
+                      buttonColor='white'
+                      title='ยกเลิก'
+                      sizeFont={20}
+                      ButtonWidth={1000}
+                      colorFont='red'
+                  />
+                </View> 
+            </View>
+        </View>
+      </Modal>
+  );
 }
 
 const styles = StyleSheet.create({
