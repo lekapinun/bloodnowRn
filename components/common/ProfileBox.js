@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import Colors from '../../constants/Colors';
 import { Button } from './Button';
-import {  SimpleLineIcons } from '@expo/vector-icons';
+import { SimpleLineIcons } from '@expo/vector-icons';
 import { NavigationActions } from 'react-navigation';
 
 const ProfileBox = (props) => {
@@ -14,15 +14,16 @@ const ProfileBox = (props) => {
       />
       <View style={styles.detailContainer}>
         <Text style={styles.detailTextStyle}>{props.list.title}</Text>
-        <Text style={styles.detailTextStyle}>{props.list.bloodType}</Text>
+        <Text style={styles.detailTextStyle}>{'กรุ๊ปเลือด' + props.list.bloodType}</Text>
         <Button
-          style={styles.logOutButton}
           title="ออกจากระบบ"
           onPress={() => {}}
-          sizeFont={23}
+          sizeFont={18}
           colorFont={Colors.tabBar}
           buttonColor="white"
           onPress={props.logOut}
+          ButtonWidth={100}
+          ButtonHeight={40}
         />
       </View>
       <TouchableOpacity
@@ -46,7 +47,6 @@ const styles = StyleSheet.create({
     height: 150,
     backgroundColor: Colors.tabBar,
     borderRadius: 5,
-
     flexDirection: 'row',
     alignItems: 'center',
 
@@ -63,12 +63,9 @@ const styles = StyleSheet.create({
     marginLeft: 25,
   },
   detailTextStyle: {
+    marginVertical: 5,
     color: 'white',
-    fontSize: 20,
-  },
-  logOutButton: {
-    borderRadius: 3,
-
+    fontSize: 18,
   },
   editProfileButton: {
     position:'absolute',

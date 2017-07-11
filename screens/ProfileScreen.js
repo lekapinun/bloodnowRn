@@ -3,7 +3,6 @@ import {
   Image,
   Linking,
   Platform,
-  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -18,58 +17,69 @@ import Colors from '../constants/Colors';
 import { CmPrasanmitBoldText } from '../components/CmPrasanmitBoldText';
 
 export default class ProfileScreen extends Component {
-    static navigationOptions =  {
-        title: 'โปรไฟล์',
-        //headerBackTitle: 'โปรไฟล์',
-        headerTintColor: 'white',
-        headerTitleStyle: [Font.style('CmPrasanmitBold'),{fontSize:29}],
-        headerStyle: {marginLeft:-250,backgroundColor: '#E84A5F'},
-        gesturesEnabled: false,
-    };
+  static navigationOptions =  {
+    title: 'โปรไฟล์',
+    //headerBackTitle: 'โปรไฟล์',
+    headerTintColor: 'white',
+    headerTitleStyle: [Font.style('CmPrasanmitBold'),{fontSize:29}],
+    headerStyle: {marginLeft:-250,backgroundColor: '#E84A5F'},
+    gesturesEnabled: false,
+  };
 
-    state = {
-      donateHistoryURL: "http://rallycoding.herokuapp.com/api/music_albums",
-      list: {
-        title: "test",
-        bloodType: "O",
-        thumbnail_image: "http://www.japanstyle.info/wordpress/wp-content/images/henohenomoheji.bmp"
-      },
+  state = {
+    donateHistoryURL: "http://rallycoding.herokuapp.com/api/music_albums",
+    list: {
+      title: "test",
+      bloodType: "O",
+      thumbnail_image: "http://www.japanstyle.info/wordpress/wp-content/images/henohenomoheji.bmp"
+    },
+  }
+
+  render() {
+    if(this.state.donateHistoryURL !== null){
+      donateHistory = <CardList url={this.state.donateHistoryURL} onPress={() => {
+        const resetAction = NavigationActions.reset(
+          {
+            index: 1,
+            actions: [
+              NavigationActions.navigate({ routeName: 'Profile'}) ,
+              NavigationActions.navigate({ routeName: 'DonateHistory'})
+            ]
+          }
+        )
+        this.props.navigation.dispatch(resetAction)
+      }}/>
     }
-
-    render() {
-      if(this.state.donateHistoryURL !== null){
-        donateHistory = <CardList url={this.state.donateHistoryURL}/>
-      }
-      else{
-        donateHistory = <View />
-      }
-        return(
-            <View style={{marginTop:30}}>
-                <ProfileBox
-                  list={this.state.list}
-                  navigation={this.props.navigation}
-                  onPress={() => {
-                    const resetAction = NavigationActions.reset(
-                      {
-                        index: 1,
-                        actions: [
-                          NavigationActions.navigate({ routeName: 'Profile'}) ,
-                          NavigationActions.navigate({ routeName: 'EditProfile'})
-                        ]
-                      }
-                    )
-                    this.props.navigation.dispatch(resetAction)
-                  }}
-                />
-
-                <CmPrasanmitBoldText style={styles.donateHisotyHeader}>
-                  ประวัติการให้เลือด
-                </CmPrasanmitBoldText>
-
-                {donateHistory}
-            </View>
-        );
+    else{
+      donateHistory = <View />
     }
+    return(
+      <View style={{marginTop:30,}}>
+        <ProfileBox
+          list={this.state.list}
+          navigation={this.props.navigation}
+          onPress={() => {
+            const resetAction = NavigationActions.reset(
+              {
+                index: 1,
+                actions: [
+                  NavigationActions.navigate({ routeName: 'Profile'}) ,
+                  NavigationActions.navigate({ routeName: 'EditProfile'})
+                ]
+              }
+            )
+            this.props.navigation.dispatch(resetAction)
+          }}
+        />
+
+        <CmPrasanmitBoldText style={styles.donateHisotyHeader}>
+          ประวัติการให้เลือด
+        </CmPrasanmitBoldText>
+
+        {donateHistory}
+      </View>
+    );
+  }
 
 }
 

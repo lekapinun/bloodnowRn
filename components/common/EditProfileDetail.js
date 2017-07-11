@@ -11,8 +11,9 @@ const EditProfileDetail = ({ label, information, onChange, editable}) => {
         </CmPrasanmitBoldText>
         <View style={{
         borderBottomColor: 'brown',
-        borderBottomWidth: 1,
-        paddingVertical: 3,}}>
+        borderBottomWidth: (editable!==false) ? 1 : 0,
+        paddingVertical: 3,}}
+        >
           <TextInput
             style={[Font.style('CmPrasanmitBold'),styles.informationText]}
             value={information}
@@ -41,8 +42,6 @@ const styles = StyleSheet.create({
   informationText: {
     width: 200,
     height: 30,
-    //textAlign: 'right',
-    //alignSelf: 'flex-end',
     fontSize: 23,
     color: 'black',
     borderBottomWidth: 1,

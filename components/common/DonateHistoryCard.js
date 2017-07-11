@@ -1,45 +1,10 @@
-import React, { Component } from 'react';
-import { ScrollView, View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
-import axios from 'axios';
+import React from 'react';
+import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import Colors from '../../constants/Colors';
-import { CmPrasanmitText } from '../CmPrasanmitText'
-import { CmPrasanmitBoldText } from '../CmPrasanmitBoldText'
-import { DonateHistoryCard } from './DonateHistoryCard';
+import { CmPrasanmitText } from '../CmPrasanmitText';
+import { CmPrasanmitBoldText } from '../CmPrasanmitBoldText';
 
-export class CardList extends Component{
-
-  state = {
-    list: [],
-  }
-
-  componentWillMount() {
-    axios.get(this.props.url)
-    .then(response => this.setState({ list: response.data }));
-  }
-
-  renderList() {
-    //console.log(this.state.list)
-     return this.state.list.map(list =>
-       <DonateHistoryCard
-         key = {list.title}
-         list = {list}
-         visible = {true}
-         onPress = {this.props.onPress}
-       />
-       //<CardDetail key={list.title} list={list} visible={true}/>
-     );
-   }
-
-  render() {
-    return(
-      <ScrollView style={styles.requestListContainerStyle}>
-        {this.renderList()}
-      </ScrollView>
-  )};
-}
-
-const CardDetail = ({ list, onPress, visible, gropBlood }) => {
-  if(visible){
+const DonateHistoryCard = ({ list, onPress, gropBlood }) => {
   return(
     <TouchableOpacity onPress={onPress} style={[styles.requestCardContainerStyle,{borderWidth: 1, borderColor: '#DCDCDC',}]} >
       <View style={{height:78,backgroundColor:'#E8E8E8',flexDirection:'row'}}>
@@ -60,11 +25,7 @@ const CardDetail = ({ list, onPress, visible, gropBlood }) => {
         </View>
       </View>
     </TouchableOpacity>
-  );}
-  else {
-    return (
-      <View />
-    );}
+  );
 }
 
 const styles = StyleSheet.create({
@@ -72,6 +33,8 @@ const styles = StyleSheet.create({
     height: 78,
     width: 340,
     flexDirection: 'column',
+    borderWidth: 1, borderColor: '#DCDCDC'
+
     //alignItems: 'center',
   },
   imageRequestStyle: {
@@ -84,11 +47,7 @@ const styles = StyleSheet.create({
   detailRequestStyle: {
     paddingLeft: 20,
   },
-  requestListContainerStyle: {
-    marginTop:15,
-    height: 250,
-    alignSelf: 'center',
-    width: 340,
-    backgroundColor:'#E8E8E8'
-  },
 });
+
+
+export { DonateHistoryCard };

@@ -18,26 +18,24 @@ export default class EditProfileScreen extends Component{
     render() {
       return(
         <View style={styles.pageStyle}>
-          <View style={{height: 100,width: 100,}}>
+          <View>
             <Image
               style={styles.imageStyle}
               source={{uri: "http://www.japanstyle.info/wordpress/wp-content/images/henohenomoheji.bmp"}}
             />
             <TouchableOpacity
-              onPress={() => {}}>
-            <View
-              style={styles.changeProfileImageContainer}
-            >
-            <Image
-              style={styles.changeProfileImage}
-              source={require('../assets/images/camera.png')}
-            />
-          </View>
-          </TouchableOpacity>
+              onPress={() => {}}
+              style={styles.changeProfileImageButtonContainer}
+              >
+              <Image
+                style={styles.changeProfileImageButton}
+                source={require('../assets/images/camera.png')}
+              />
+            </TouchableOpacity>
           </View>
 
           <EditProfileDetail label = "ชื่อ-สกุล" information={this.state.name} editable={false}/>
-          <EditProfileDetail label = "กรุ๊ปเลือด" information= {this.state.bloodType} editable={true}/>
+          <EditProfileDetail label = "กรุ๊ปเลือด" information= {this.state.bloodType} />
           <EditProfileDetail label = "เบอร์โทรศัพท์" information= {this.state.phone} editable={false}/>
           <EditProfileDetail label = "อีเมล์" information= {this.state.email}/>
           <EditProfileDetail label = "จังหวัด" information= {this.state.province}/>
@@ -64,13 +62,12 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center'
   },
-  changeProfileImage: {
-    alignSelf: 'center',
-    paddingVertical: 2,
+  changeProfileImageButton: {
+    //paddingVertical: 2,
     height: 25,
     width: 25,
   },
-  changeProfileImageContainer: {
+  changeProfileImageButtonContainer: {
     position: 'absolute',
     bottom: 0,
     right: 0,
@@ -78,11 +75,15 @@ const styles = StyleSheet.create({
     width: 40,
     backgroundColor: Colors.tabBar,
     borderRadius: 20,
-    borderWidth: 2,
+    borderWidth: 1,
     borderColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   imageStyle: {
     borderRadius: 50,
+    borderColor: 'grey',
+    borderWidth: 0.5,
     height: 100,
     width: 100,
   },
