@@ -36,6 +36,7 @@ export default class RequestBloodDetailScreen extends Component {
       displayThankyou: false,
       loading: false,
       thankyou: '',
+      thankyou_temp: '',
     }
 
     componentWillMount() {
@@ -69,7 +70,7 @@ export default class RequestBloodDetailScreen extends Component {
             var dateTime_exp = new Date( dateTime.getTime() + (86400000 * 3) )
             dateTime = dateTime.getDate() + '/' + (dateTime.getMonth() + 1) + '/' + dateTime.getFullYear()
             dateTime_exp = dateTime_exp.getDate() + '/' + (dateTime_exp.getMonth() + 1) + '/' + dateTime_exp.getFullYear()
-            this.setState({time : dateTime, time_exp: dateTime_exp})
+            this.setState({time : dateTime, time_exp: dateTime_exp,thankyou_temp : response.data[0].patient_thankyou})
             this.setState({loading : true})
             //console.log(dateTime)
             //console.log(dateTime_exp)
@@ -119,7 +120,7 @@ export default class RequestBloodDetailScreen extends Component {
     }
 
     _renderThankBox() {
-      if(this.state.complete === true){
+      if(this.state.complete === true && this.state.thankyou_temp === ''){
         return (
           <View style={[styles.borderBottom,{width:300, height:85, marginTop:20,marginBottom:20,flexDirection: 'column',justifyContent: 'center',alignItems: 'center'}]}>
               <CmPrasanmitText style={{fontSize:22,marginBottom:10}}>ส่งคำขอบคุณให้กับผู้ตอบรับคำขอของคุณ</CmPrasanmitText>
@@ -220,12 +221,8 @@ export default class RequestBloodDetailScreen extends Component {
         headers: {'Authorization' : 'Bearer ' + this.state.token},
         data : { 'roomreq_id' : this.props.navigation.state.params}
       })
-        .then(() => {
-          this._backHistory()
-        })
-        .catch((error) => {
-          console.log(error)
-        })
+        .then(() => this._backHistory())
+        .catch((error) => console.log(error))
     }
 
     _refresh = () => {
@@ -236,12 +233,8 @@ export default class RequestBloodDetailScreen extends Component {
         headers: {'Authorization' : 'Bearer ' + this.state.token},
         data : { 'roomreq_id' : this.props.navigation.state.params}
       })
-        .then(() => {
-          this._backHistory()
-        })
-        .catch((error) => {
-          console.log(error)
-        })
+        .then(() => this._backHistory())
+        .catch((error) => console.log(error))
     }
     
     _thankyou = () => {
@@ -255,13 +248,8 @@ export default class RequestBloodDetailScreen extends Component {
           'thankyou' : this.state.thankyou,
         }
       })
-        .then((response) => {
-          console.log(response)
-          this._backHistory()
-        })
-        .catch((error) => {
-          console.log(error)
-        })
+        .then((response) => this._backHistory())
+        .catch((error) => console.log(error))
     }
 }
 
@@ -352,31 +340,31 @@ const ModalThankyou = ({pickerVisible,onPress1,onPress2,value,onChangeText}) => 
         visible={pickerVisible}
       >
         <View style={[styles.container,{flex:1,backgroundColor:'rgba(52, 52, 52, 0.3)'}]}>
-            <View style={{height:160,width:250,backgroundColor:'white',borderRadius:10}}>
-                <View style={{height:30,width:250,flexDirection:'row',borderBottomColor: '#DCDCDC',borderBottomWidth: 1,backgroundColor:'transparent'}}>
+            <View style={{height:200,width:300,backgroundColor:'white',borderRadius:10}}>
+                <View style={{height:40,width:300,flexDirection:'row',borderBottomColor: '#DCDCDC',borderBottomWidth: 1,backgroundColor:'transparent'}}>
                   <View style={{flex:1}}/>
                   <View style={[styles.container,{flex:9}]}>
-                    <Text style={[Font.style('CmPrasanmit'),{fontSize:20}]}>คำขอบคุณ</Text>
+                    <Text style={[Font.style('CmPrasanmit'),{fontSize:23}]}>คำขอบคุณ</Text>
                   </View>
                   <TouchableOpacity onPress={onPress1} style={[styles.container,{flex:1}]}>
-                    <Text style={[Font.style('CmPrasanmitBold'),{fontSize:22,color:'#DCDCDC'}]}>x</Text>
+                    <Text style={[Font.style('CmPrasanmitBold'),{fontSize:25,color:'#DCDCDC'}]}>x</Text>
                   </TouchableOpacity>
                 </View> 
-                <View style={{height:70,width:225,marginTop:15,borderColor: 'red',borderWidth: 0.5,backgroundColor:'transparent',borderRadius:5,alignSelf:'center'}}>
+                <View style={{height:90,width:265,marginTop:15,borderColor: 'red',borderWidth: 0.5,backgroundColor:'transparent',borderRadius:5,alignSelf:'center'}}>
                   <TextInput
                     multiline
-                    style={[Font.style('CmPrasanmit'),{alignSelf:'center',height:60,width:200,fontSize: 18}]}
+                    style={[Font.style('CmPrasanmit'),{alignSelf:'center',height:60,width:250,fontSize: 20}]}
                     placeholder='พิมพ์ข้อความของคุณที่นี่'
                     value={value}
                     onChangeText={onChangeText}
                     maxLength={120}
                   />
                 </View>
-                <View style={{height:30,width:225,marginTop:10,backgroundColor:'transparent',borderRadius:5,alignSelf:'center'}}>
-                  <View style={{height:30,width:225,flexDirection:'row',justifyContent:'flex-end',alignItems:'center'}}>
-                    <Text style={[Font.style('CmPrasanmitBold'),{alignSelf:'center',fontSize:15,color:'#DCDCDC',marginRight:10}]}>{ 120 - value.length}</Text>
-                    <TouchableOpacity onPress={onPress2} style={{height:25,width:42,backgroundColor:Colors.tabBar,alignItems:'center',borderRadius:3,justifyContent:'center'}}>
-                      <Text style={[Font.style('CmPrasanmitBold'),{fontSize:15,color:'white'}]}>ส่ง</Text>
+                <View style={{height:40,width:265,marginTop:10,backgroundColor:'transparent',borderRadius:5,alignSelf:'center'}}>
+                  <View style={{height:40,width:265,flexDirection:'row',justifyContent:'flex-end',alignItems:'center'}}>
+                    <Text style={[Font.style('CmPrasanmitBold'),{alignSelf:'center',fontSize:20,color:'#DCDCDC',marginRight:10}]}>{ 120 - value.length}</Text>
+                    <TouchableOpacity onPress={onPress2} style={{height:35,width:52,backgroundColor:Colors.tabBar,alignItems:'center',borderRadius:3,justifyContent:'center'}}>
+                      <Text style={[Font.style('CmPrasanmitBold'),{fontSize:20,color:'white'}]}>ส่ง</Text>
                     </TouchableOpacity>
                   </View>
                 </View>

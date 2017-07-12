@@ -5,7 +5,7 @@ import Colors from '../../constants/Colors';
 import { CmPrasanmitText } from '../CmPrasanmitText'
 import { CmPrasanmitBoldText } from '../CmPrasanmitBoldText'
 
-const Countdown = ({recentDonateDate }) => {
+const Countdown = ({recentDonateDate,last_donate }) => {
   const timeRemaining = Math.floor(recentDonateDate/(86400000))
   let remainMonth = '00';
   let remainDate = '00';
@@ -17,19 +17,22 @@ const Countdown = ({recentDonateDate }) => {
     const nextDonation = new Date(new Date().getTime() + (86400000 * timeRemaining));
     countdownStatus =
     <View style={{flex:1,alignItems: 'center',justifyContent: 'center'}}>
+    <CmPrasanmitText style={{color: Colors.tabBar,fontSize:25}}>{last_donate}</CmPrasanmitText>
+    </View>
+    {/* <View style={{flex:1,alignItems: 'center',justifyContent: 'center'}}>
       <CmPrasanmitText style={{color: Colors.tabBar,fontSize:25}}>
         {'การบริจาคครั้งถัดไป วันที่ ' + nextDonation.getDate().toString()
         + '/' + (nextDonation.getMonth() + 1)
         + '/' + nextDonation.getFullYear().toString()}
       </CmPrasanmitText>
-    </View>
+    </View> */}
 
   }
   else {
     remainDate = '00';
     remainMonth = '00';
     countdownStatus = <View style={{flex:1,alignItems: 'center',justifyContent: 'center'}}>
-    <CmPrasanmitText style={{color: Colors.tabBar,fontSize:25}}>ตอนนี้คุณสามารถบริจาคได้แล้ว</CmPrasanmitText>
+    <CmPrasanmitText style={{color: Colors.tabBar,fontSize:25}}>{last_donate}</CmPrasanmitText>
     </View>
   }
 

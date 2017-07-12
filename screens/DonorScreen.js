@@ -1,13 +1,5 @@
 import React, { Component } from 'react';
-import {
-    Text,
-    View,
-    TouchableOpacity,
-    Modal,
-    StyleSheet,
-    Button,
-    Switch,
-} from 'react-native';
+import { Text, View, TouchableOpacity, Modal, StyleSheet, Button, Switch, AsyncStorage} from 'react-native';
 import { Font } from 'expo';
 import { NavigationActions } from 'react-navigation';
 import { CardDetail, Countdown } from '../components/common';
@@ -15,6 +7,8 @@ import Colors from '../constants/Colors';
 import Layout from '../constants/Layout';
 import { CmPrasanmitText } from '../components/CmPrasanmitText'
 import { CmPrasanmitBoldText } from '../components/CmPrasanmitBoldText'
+import axios from 'axios'
+import addressServer from '../utilities/addressServer';
 
 
 export default class DonorScreen extends Component {
@@ -25,15 +19,16 @@ export default class DonorScreen extends Component {
         headerStyle: {backgroundColor: '#E84A5F'},
         gesturesEnabled: false,
     };
+
     state = {
         countdownEnd: false,
         onMoreDetail: false,
         readyDonate: false,
-        list: {
-          title: 'เซเลน่า',
-          thumbnail_image: "http://sim02.in.com/639415d3d6d757648ba28ff9e3929e59_lt.jpg"
-        },
         nextReady: 0,
+        token: '',
+        req: '',
+        last_donate: '',
+        next_donate: '',
     }
 
     constructor(props) {
@@ -42,61 +37,131 @@ export default class DonorScreen extends Component {
         setInterval(() => {
           if(this.state.nextReady > 0){
             this.setState({test : this.state.nextReady - 86400000})
-          }
+          } 
         }, 86400000);
     }
 
     componentWillMount() {
-      this.setState({nextReady: (new Date('6/16/16').getTime() + (86400000*90)) - new Date().getTime() })
+      console.log('asdfadsfdsafasdfdsafadsf')
+      AsyncStorage.getItem('@loginData:key')
+      .then((loginStatus) => {
+        const temp = JSON.parse(loginStatus)
+        this.state.token = temp.token
+        console.log(addressServer.APIRequest + '/api/donate');
+        const api = addressServer.APIRequest + '/api/donate';
+        axios(api,{ 
+          method: 'get', 
+          headers: {'Authorization' : 'Bearer ' + this.state.token},
+        })
+        .then((response) => {
+          console.log(response.data)
+          if(response.data.user !== null){
+            this.setState({req: response.data.user[0]})
+          }  
+          console.log(response.data)
+          var date = response.data.last_date_donate.split(' ')[0]
+          date = date.split('-')
+          var dateTime = new Date(date[1] + '/' + date[2] + '/' + date[0])
+          var nextTime = new Date((dateTime).getTime() + (86400000*91))
+          nextTime = nextTime.getDate() + '/' + (nextTime.getMonth() + 1) + '/' + nextTime.getFullYear()
+          this.setState({last_donate: date[2] + '/' + date[1] + '/' + date[0]})
+          this.setState({next_donate: nextTime})
+          this.setState({nextReady: (new Date(dateTime).getTime() + (86400000*91)) - new Date().getTime() })
+          if(response.data.status === 'ready'){
+            this.setState({readyDonate: true})
+          }
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
     }
 
     render() {
+      let status_donate
+      if(this.state.nextReady > 0){
+        status_donate = 'การบริจาคครั้งถัดไป วันที่ ' + this.state.next_donate
+      } else {
+        status_donate = 'ตอนนี้คุณสามารถบริจาคได้แล้ว'
+      }
         return(
             <View style={[styles.center, {height:Layout.window.height,flex:1,paddingTop:16,backgroundColor:'white'}]}>
 
-              <Countdown recentDonateDate={this.state.nextReady} />
+              <Countdown recentDonateDate={this.state.nextReady} last_donate={'บริจาคครั้งล่าสุด '+this.state.last_donate}/>
 
-              <View style={{height:100,alignItems: 'center', flexDirection: 'row'}}>
-              <CmPrasanmitText style={{color: '#575757',fontSize:25}}>คุณพร้อมบริจาคหรือไม่?</CmPrasanmitText>
-                <View style={{marginLeft:20}}></View>
-                <Switch 
-                  onTintColor={Colors.tabBar} 
-                  value={this.state.readyDonate} 
-                  onChange={() => { 
-                    //if(this.state.nextReady <= 0){
-                      this.setState({readyDonate: !this.state.readyDonate})
-                    //}
-                  }} />
+              <View style={[styles.Border,{alignItems: 'center', flexDirection: 'column',justifyContent:'space-around'}]}>
+                <View />
+                <CmPrasanmitText style={{color: Colors.tabBar,fontSize:28}}>{status_donate}</CmPrasanmitText>
+                <View style={{flexDirection: 'row'}}>
+                  <CmPrasanmitText style={{color: '#575757',fontSize:25}}>คุณพร้อมบริจาคหรือไม่?</CmPrasanmitText>
+                  <View style={{marginLeft:20}}></View>
+                  <Switch 
+                    onTintColor={Colors.tabBar} 
+                    value={this.state.readyDonate} 
+                    onChange={() => { 
+                      //if(this.state.nextReady <= 0){
+                        this.setState({readyDonate: !this.state.readyDonate})
+                        this._updateReady()
+                      //}
+                    }} />
+                </View>
+                <View />
               </View>
 
               <CardDetail
-                list={this.state.list}
-                onPress={() => {
-                  const resetAction = NavigationActions.reset(
-                    {
-                      index: 1,
-                      actions: [
-                        NavigationActions.navigate({ routeName: 'Donor'}) ,
-                        NavigationActions.navigate({ routeName: 'RequestInDonor'})
-                      ]
-                    }
-                  )
-                  this.props.navigation.dispatch(resetAction)
-                }}
-                visible={this.state.readyDonate && (this.state.nextReady <= 0)}
-                gropBlood='O-'
+                list={this.state.req}
+                onPress={this._goToDetail}
+                visible={this.state.readyDonate}
+                gropBlood={this.state.req.patient_blood + this.state.req.patient_blood_type}
               />
 
             </View>
         );
     }
 
+    _updateReady = () => {
+      console.log(addressServer.APIRequest + '/api/swap');
+      const api = addressServer.APIRequest + '/api/swap';
+      axios(api,{ 
+        method: 'get', 
+        headers: {'Authorization' : 'Bearer ' + this.state.token},
+      })
+      /* .then(() => {
+
+      }) */
+      .catch((error) => {
+        console.log(error)
+      })
+    }
+
+    _goToDetail = () => {
+      const resetAction = NavigationActions.reset({
+        index: 1,
+        actions: [
+          NavigationActions.navigate({ routeName: 'Donor'}) ,
+          NavigationActions.navigate({ routeName: 'RequestInDonor', params: this.state.req})
+        ]
+      })
+      this.props.navigation.dispatch(resetAction)
+    }
 }
 
 const styles = StyleSheet.create({
   center: {
-        flexDirection: 'column',
-        //justifyContent: 'center',
-        alignItems: 'center'
-    },
+    flexDirection: 'column',
+    //justifyContent: 'center',
+    alignItems: 'center'
+  },
+  Border: {
+    width: 340,
+    height: 120,
+    marginTop: 10,
+    marginBottom: 10,
+    borderWidth: 2,
+    borderRadius: 5,
+    borderColor: Colors.tabBar,
+  },
 });
