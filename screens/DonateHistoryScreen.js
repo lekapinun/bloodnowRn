@@ -8,16 +8,15 @@ import { CmPrasanmitBoldText } from '../components/CmPrasanmitBoldText';
 export default class DonateHistoryScreen extends Component {
   static navigationOptions =  {
     title: 'รายละเอียด',
-    //headerBackTitle: 'โปรไฟล์',
     headerTintColor: 'white',
     headerTitleStyle: [Font.style('CmPrasanmitBold'),{fontSize:29}],
-    headerStyle: {marginLeft:-250,backgroundColor: '#E84A5F'},
+    headerStyle: {backgroundColor: '#E84A5F'},
     gesturesEnabled: false,
   };
 
   state = {
     donateDate: '5/5/55',
-    receiverDetail: {
+    receiver: {
       name: 'เคที',
       blood: 'B',
       blood_type: '+'
@@ -34,6 +33,8 @@ export default class DonateHistoryScreen extends Component {
       //patient_hos_la: '',
       //patient_hos_long: '',
       patient_province: 'เชียงใหม่',
+      patient_thankyou: 'ขอบคุณ',
+      patient_timestamp: '19/09/69, 12:30',
     }
   }
 
@@ -41,19 +42,31 @@ export default class DonateHistoryScreen extends Component {
     return (
       <View style={{ flex: 1,backgroundColor: 'white'}}>
         <View style={styles.receiverProfileContainer}>
-          <Image
-            style={styles.profileImageStyle}
-            source={{uri: "http://www.japanstyle.info/wordpress/wp-content/images/henohenomoheji.bmp"}}
-          />
-          <View style={styles.requestInformationStyle}>
-            <CmPrasanmitBoldText style={{marginLeft: 20, fontSize: 25, height:25, color: 'black',}}>
-              จาก
-            </CmPrasanmitBoldText>
-            <CmPrasanmitText  style={{marginLeft: 15, fontSize: 23, height:25, color: 'black',}}>
-              {this.state.receiverDetail.name}
+          <View style={{ height: 70, width: 70,
+          marginLeft: 25,}}>
+            <Image
+              style={styles.profileImageStyle}
+              source={{uri: "http://www.japanstyle.info/wordpress/wp-content/images/henohenomoheji.bmp"}}
+            />
+            <View style={styles.bloodTypeContainer}>
+              <CmPrasanmitText style={{ color: 'white'}}>
+                {this.state.receiver.blood + this.state.receiver.blood_type}
+              </CmPrasanmitText>
+            </View>
+          </View>
+          <View style={styles.requestInfotmationContainer}>
+            <View style={styles.requestInformationStyle}>
+              <CmPrasanmitBoldText style={{marginLeft: 20, fontSize: 25, height:25, color: 'black',}}>
+                จาก
+              </CmPrasanmitBoldText>
+              <CmPrasanmitText  style={{marginLeft: 15, fontSize: 23, height:25, color: 'black',}}>
+                {this.state.receiver.name}
+              </CmPrasanmitText>
+            </View>
+            <CmPrasanmitText style={{ marginLeft: 15, fontSize: 18, color: 'grey' }}>
+              {this.state.patient.patient_timestamp}
             </CmPrasanmitText>
           </View>
-
         </View>
 
         <View style={styles.patientInfoContainer}>
@@ -110,6 +123,16 @@ export default class DonateHistoryScreen extends Component {
               {this.state.donateDate}
             </CmPrasanmitText>
           </View>
+
+          <View style={styles.underline}>
+            <CmPrasanmitBoldText style={styles.title}>
+              คำขอบคุณ*
+            </CmPrasanmitBoldText>
+            <CmPrasanmitText style={styles.informationText}
+            numberOfLines={5} >
+              {this.state.patient.patient_thankyou}
+            </CmPrasanmitText>
+          </View>
         </View>
       </View>
     );
@@ -123,7 +146,7 @@ const styles = StyleSheet.create({
     height: 90,
     width: 320,
     borderColor: Colors.tabBar,
-    borderWidth: 1,
+    borderWidth: 2,
     alignSelf: 'center',
     alignItems: 'center',
   },
@@ -131,7 +154,16 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     borderRadius: 35,
-    marginLeft: 25,
+    alignSelf: 'center',
+  },
+  bloodTypeContainer: {
+    position: 'absolute',
+    left: 0,
+    bottom: 0,
+    backgroundColor: Colors.tabBar,
+    width: 30,
+    alignItems: 'center',
+    borderRadius: 5,
   },
   requestInformationStyle: {
     flexDirection: 'row',
@@ -142,24 +174,26 @@ const styles = StyleSheet.create({
   },
   underline : {
     flexDirection: 'row',
-    height: 35,
     width: 310,
-    marginVerticle: 7,
     borderBottomColor: '#D1D1D1',
     borderBottomWidth: 1,
     justifyContent: 'space-between'
   },
   title:{
+    marginVertical: 7,
     fontSize: 23,
+    width: 100,
     //height:25,
-    fontColor: '#575757',
+    color: '#575757',
   },
   informationText: {
+  marginVertical: 7,
     textAlign: 'right',
+    width: 200,
     //alignSelf: 'flex-end',
     //height: 25,
     fontSize: 23,
-    fontColor: 'grey'
+    color: 'grey',
   }
 });
 

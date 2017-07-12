@@ -9,7 +9,7 @@ const Button = ({title,onPress,buttonColor,sizeFont,ButtonHeight,ButtonWidth,tou
       onPress={onPress}
       disabled={touchable}
     >
-      <Text style={[Font.style('CmPrasanmit'),{fontSize: sizeFont,color: colorFont}]}>
+      <Text style={[Font.style('CmPrasanmitBold'),{fontSize: sizeFont,color: colorFont}]}>
         {title}
       </Text>
     </TouchableOpacity>

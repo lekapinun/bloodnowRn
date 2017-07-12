@@ -4,13 +4,10 @@ import { Font } from 'expo'
 import { CmPrasanmitText } from '../CmPrasanmitText'
 import { CmPrasanmitBoldText } from '../CmPrasanmitBoldText'
 
-const RequestDetailInDonor = ({label,information,height}) => {
+const RequestDetailInDonor = ({label,information}) => {
   return(
     <View style={styles.underline}>
         <CmPrasanmitBoldText style={styles.title}>
-    <View style={{flexDirection: 'column',justifyContent: 'center'}}>
-      <View style={[styles.underline,{height:height}]}>
-        <Text style={[Font.style('CmPrasanmitBold'),styles.title]}>
             {label}
         </CmPrasanmitBoldText>
         <View style={styles.detail}>
@@ -18,7 +15,6 @@ const RequestDetailInDonor = ({label,information,height}) => {
                 {information}
             </CmPrasanmitText>
         </View>
-      </View>
     </View>
   );
 }
@@ -30,8 +26,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#D1D1D1',
     borderBottomWidth: 1,
     paddingVertical: 7,
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    justifyContent: 'space-between'
   },
   title:{
     fontSize: 23,

@@ -30,7 +30,7 @@ const CardHistoryRequest = ({blood,bloodType,name,hospital,status,onPress}) => {
   }
   
   renderStatus = () => {
-    if(status === 'complete'){
+    if(status === 'finished'){
       return <CmPrasanmitText style={{fontSize:18,color:Colors.tabBar}}>เสร็จสิ้น</CmPrasanmitText>
     } else if(status === 'refresh') {
       return <Image source={require('../../assets/images/refresh.png')} style={{height:30,width:30}} />
