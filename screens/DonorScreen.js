@@ -42,7 +42,7 @@ export default class DonorScreen extends Component {
     }
 
     componentWillMount() {
-      console.log('asdfadsfdsafasdfdsafadsf')
+      console.log('NEWNEWNEWNEWNEWNNEWENNEWNENWENEN')
       AsyncStorage.getItem('@loginData:key')
       .then((loginStatus) => {
         const temp = JSON.parse(loginStatus)
@@ -59,17 +59,21 @@ export default class DonorScreen extends Component {
             this.setState({req: response.data.user[0]})
           }  
           console.log(response.data)
-          var date = response.data.last_date_donate.split(' ')[0]
-          date = date.split('-')
-          var dateTime = new Date(date[1] + '/' + date[2] + '/' + date[0])
-          var nextTime = new Date((dateTime).getTime() + (86400000*91))
-          nextTime = nextTime.getDate() + '/' + (nextTime.getMonth() + 1) + '/' + nextTime.getFullYear()
-          this.setState({last_donate: date[2] + '/' + date[1] + '/' + date[0]})
-          this.setState({next_donate: nextTime})
-          this.setState({nextReady: (new Date(dateTime).getTime() + (86400000*91)) - new Date().getTime() })
-          if(response.data.status === 'ready'){
-            this.setState({readyDonate: true})
-          }
+          if(response.data.last_date_donate !== null){
+            var date = response.data.last_date_donate.split(' ')[0]
+            date = date.split('-')
+            var dateTime = new Date(date[1] + '/' + date[2] + '/' + date[0])
+            var nextTime = new Date((dateTime).getTime() + (86400000*91))
+            nextTime = nextTime.getDate() + '/' + (nextTime.getMonth() + 1) + '/' + nextTime.getFullYear()
+            this.setState({last_donate: date[2] + '/' + date[1] + '/' + date[0]})
+            this.setState({next_donate: nextTime})
+            this.setState({nextReady: (new Date(dateTime).getTime() + (86400000*91)) - new Date().getTime() }) 
+            if(response.data.status === 'ready'){
+              this.setState({readyDonate: true})
+            }
+          } else {
+            this.setState({last_donate : '', nextReady : 0})
+          }  
         })
         .catch((error) => {
           console.log(error)
@@ -90,7 +94,7 @@ export default class DonorScreen extends Component {
         return(
             <View style={[styles.center, {height:Layout.window.height,flex:1,paddingTop:16,backgroundColor:'white'}]}>
 
-              <Countdown recentDonateDate={this.state.nextReady} last_donate={'บริจาคครั้งล่าสุด '+this.state.last_donate}/>
+              <Countdown recentDonateDate={this.state.nextReady} last_donate={this.state.last_donate}/>
 
               <View style={[styles.Border,{alignItems: 'center', flexDirection: 'column',justifyContent:'space-around'}]}>
                 <View />

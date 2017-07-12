@@ -16,8 +16,8 @@ const Countdown = ({recentDonateDate,last_donate }) => {
     (remainDate.length === 1) ? remainDate = '0' + remainDate : null
     const nextDonation = new Date(new Date().getTime() + (86400000 * timeRemaining));
     countdownStatus =
-    <View style={{flex:1,alignItems: 'center',justifyContent: 'center'}}>
-    <CmPrasanmitText style={{color: Colors.tabBar,fontSize:25}}>{last_donate}</CmPrasanmitText>
+    <View style={{height:30,marginBottom:15,alignItems: 'center',justifyContent: 'center'}}>
+    <CmPrasanmitText style={{color: Colors.tabBar,fontSize:25}}>{'บริจาคครั้งล่าสุด ' + last_donate}</CmPrasanmitText>
     </View>
     {/* <View style={{flex:1,alignItems: 'center',justifyContent: 'center'}}>
       <CmPrasanmitText style={{color: Colors.tabBar,fontSize:25}}>
@@ -31,8 +31,8 @@ const Countdown = ({recentDonateDate,last_donate }) => {
   else {
     remainDate = '00';
     remainMonth = '00';
-    countdownStatus = <View style={{flex:1,alignItems: 'center',justifyContent: 'center'}}>
-    <CmPrasanmitText style={{color: Colors.tabBar,fontSize:25}}>{last_donate}</CmPrasanmitText>
+    countdownStatus = <View style={{height:30,marginBottom:15,alignItems: 'center',justifyContent: 'center'}}>
+    <CmPrasanmitText style={{color: Colors.tabBar,fontSize:25}}>{'บริจาคครั้งล่าสุด ' + last_donate}</CmPrasanmitText>
     </View>
   }
 
@@ -64,7 +64,7 @@ const Countdown = ({recentDonateDate,last_donate }) => {
         </View>
       </View>
 
-      {countdownStatus}
+      {last_donate !== null && countdownStatus}
     </View>
   );
 }
@@ -72,7 +72,7 @@ const Countdown = ({recentDonateDate,last_donate }) => {
 const styles = StyleSheet.create({
   countdownBorder: {
     width: 340,
-    height: 250,
+    //height: 250,
     marginTop: 10,
     borderWidth: 2,
     borderRadius: 5,
@@ -83,7 +83,8 @@ const styles = StyleSheet.create({
   countdownContainerStyle: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    height:125
+    height:125,
+    marginBottom:15,
   },
   countdownViewStyle: {
     width: 122,
