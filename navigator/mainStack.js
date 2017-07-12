@@ -41,7 +41,7 @@ export default class Stack extends React.Component {
   }
 
   state = {
-    home: 'Bloodnow',
+    home: 'Login',
     finish: false
   }
 
@@ -60,7 +60,7 @@ export default class Stack extends React.Component {
     if(this.state.finish){
       return <Stack/>
     }else {
-      return <Text>adsfadsf</Text> //<Expo.AppLoading />
+      return <Expo.AppLoading />
     }
   }
 }

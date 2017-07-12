@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { ScrollView, View, Text, TouchableOpacity, Image, StyleSheet,ActivityIndicator } from 'react-native';
 import axios from 'axios';
 import Colors from '../../constants/Colors';
+import { NavigationActions } from 'react-navigation'
 import { CmPrasanmitText } from '../CmPrasanmitText'
 import { CmPrasanmitBoldText } from '../CmPrasanmitBoldText'
 import { DonateHistoryCard } from './DonateHistoryCard';
@@ -10,56 +11,78 @@ export class CardList extends Component{
 
   state = {
     list: [],
+    loading: false
   }
 
   componentWillMount() {
     axios.get(this.props.url)
-    .then(response => this.setState({ list: response.data }));
+    .then(response => this.setState({ list: response.data,loading: true }));
   }
 
   renderList() {
     //console.log(this.state.list)
      return this.state.list.map(list =>
-       <DonateHistoryCard
+       <CardDetail
          key = {list.title}
          list = {list}
          visible = {true}
-         onPress = {this.props.onPress}
+         onPress = {this._Test}
        />
        //<CardDetail key={list.title} list={list} visible={true}/>
      );
    }
 
+   _Test = () => {
+    const resetAction = NavigationActions.reset({
+      index: 1,
+      actions: [
+        NavigationActions.navigate({ routeName: 'Profile'}) ,
+        NavigationActions.navigate({ routeName: 'DonateHistory'})
+      ]
+    })
+    this.props.navi.dispatch(resetAction)
+   }
+
   render() {
-    return(
+    if(this.state.loading) {
+      return(
+        <ScrollView style={styles.requestListContainerStyle}>
+          {this.renderList()}
+        </ScrollView>
+      )
+    }
+    return (
       <ScrollView style={styles.requestListContainerStyle}>
-        {this.renderList()}
+        <ActivityIndicator style={{alignSelf:'center'}} size="large" />
       </ScrollView>
-  )};
+    )
+  }
 }
 
 const CardDetail = ({ list, onPress, visible, gropBlood }) => {
   if(visible){
   return(
-    <TouchableOpacity onPress={onPress} style={[styles.requestCardContainerStyle,{borderWidth: 1, borderColor: '#DCDCDC',}]} >
-      <View style={{height:78,backgroundColor:'#E8E8E8',flexDirection:'row'}}>
+    <View style={{borderBottomWidth: 1, borderBottomColor: '#DCDCDC',}}>
+    <TouchableOpacity onPress={onPress} style={styles.requestCardContainerStyle} >
+      <View style={{height:78,backgroundColor:'white',flexDirection:'row'}}>
         <View style={{flex:19,alignItems: 'center',justifyContent: 'center',}}>
           <Image
             style={styles.imageRequestStyle}
-            source={{ uri: list.thumbnail_image }}
+            source={{ uri: 'http://images.boomsbeat.com/data/images/full/6954/tayl-png.png' }}
           />
           <View style={{height:15,width:30,position:'absolute',bottom:12,left:18,backgroundColor:Colors.tabBar,borderRadius:15,alignItems: 'center',justifyContent:'center'}}>
-            <CmPrasanmitBoldText style={{fontSize:17,color:'white',backgroundColor:'transparent'}}>{gropBlood}</CmPrasanmitBoldText>
+            <CmPrasanmitBoldText style={{fontSize:14,color:'white',backgroundColor:'transparent'}}>A+</CmPrasanmitBoldText>
           </View>
         </View>
         <View style={{flex:35,justifyContent: 'center',}}>
-          <CmPrasanmitBoldText style={{fontSize:22,color:'#575757'}}>{list.title}</CmPrasanmitBoldText>
+          <CmPrasanmitBoldText style={{fontSize:22,color:'#575757'}}>Lautner</CmPrasanmitBoldText>
         </View>
-        <View style={{flex:14,alignItems: 'center',justifyContent: 'center'}}>
+        <View style={{flex:14,marginRight:10,alignItems: 'center',justifyContent: 'center'}}>
           <CmPrasanmitText style={{fontSize:18,color:'#575757'}}>รายละเอียด</CmPrasanmitText>
         </View>
       </View>
     </TouchableOpacity>
+    </View>
   );}
   else {
     return (
@@ -72,6 +95,7 @@ const styles = StyleSheet.create({
     height: 78,
     width: 340,
     flexDirection: 'column',
+    flex:1
     //alignItems: 'center',
   },
   imageRequestStyle: {
@@ -89,6 +113,6 @@ const styles = StyleSheet.create({
     height: 250,
     alignSelf: 'center',
     width: 340,
-    backgroundColor:'#E8E8E8'
+    backgroundColor:'white'
   },
 });

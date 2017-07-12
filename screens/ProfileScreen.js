@@ -31,19 +31,19 @@ export default class ProfileScreen extends Component {
     list: {
       title: "test",
       bloodType: "O",
-      thumbnail_image: "http://www.japanstyle.info/wordpress/wp-content/images/henohenomoheji.bmp"
+      thumbnail_image: "https://cache.gmo2.sistacafe.com/images/uploads/summary/image/1484/1437134731-taylor-swift-009.jpg"
     },
   }
 
   render() {
     if(this.state.donateHistoryURL !== null){
-      donateHistory = <CardList url={this.state.donateHistoryURL} onPress={this._goToDetailDonate}/>
+      donateHistory = <CardList url={this.state.donateHistoryURL} onPress={this._goToDetailDonate} navi={this.props.navigation}/>
     }
     else{
       donateHistory = <View />
     }
     return(
-      <View style={{marginTop:15,}}>
+      <View style={{paddingTop:15,flex:1,backgroundColor:'white'}}>
         <ProfileBox
           list={this.state.list}
           navigation={this.props.navigation}
@@ -52,8 +52,7 @@ export default class ProfileScreen extends Component {
         <CmPrasanmitBoldText style={styles.donateHisotyHeader}>
           ประวัติการให้เลือด
         </CmPrasanmitBoldText>
-
-        {donateHistory}
+          {donateHistory}
       </View>
     );
   }

@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   title:{
     fontSize: 23,
     height:25,
-    color: 'black',
+    color: '#575757',
   },
   detail: {
     width: 200,

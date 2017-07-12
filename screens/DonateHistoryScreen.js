@@ -4,6 +4,7 @@ import { Font } from 'expo';
 import Colors from '../constants/Colors';
 import { CmPrasanmitText } from '../components/CmPrasanmitText';
 import { CmPrasanmitBoldText } from '../components/CmPrasanmitBoldText';
+import { RequestDetailInDonor  } from '../components/common';
 
 export default class DonateHistoryScreen extends Component {
   static navigationOptions =  {
@@ -17,12 +18,12 @@ export default class DonateHistoryScreen extends Component {
   state = {
     donateDate: '5/5/55',
     receiver: {
-      name: 'เคที',
-      blood: 'B',
+      name: 'Lautner',
+      blood: 'A',
       blood_type: '+'
     },
     patient: {
-      patient_name: 'จอห์น เมเยอร์',
+      patient_name: 'เทย์เลอร์ เลาต์เนอร์',
       patient_id: '231313',
       patient_blood: 'A',
       patient_blood_type: '+',
@@ -34,19 +35,19 @@ export default class DonateHistoryScreen extends Component {
       //patient_hos_long: '',
       patient_province: 'เชียงใหม่',
       patient_thankyou: 'ขอบคุณ',
-      patient_timestamp: '19/09/69, 12:30',
+      patient_timestamp: '19/02/2017',
     }
   }
 
   render() {
+    var height_detail = 51
     return (
       <View style={{ flex: 1,backgroundColor: 'white'}}>
         <View style={styles.receiverProfileContainer}>
-          <View style={{ height: 70, width: 70,
-          marginLeft: 25,}}>
+          <View style={{ height: 70, width: 70,marginLeft: 25,}}>
             <Image
               style={styles.profileImageStyle}
-              source={{uri: "http://www.japanstyle.info/wordpress/wp-content/images/henohenomoheji.bmp"}}
+              source={{uri: 'http://images.boomsbeat.com/data/images/full/6954/tayl-png.png'}}
             />
             <View style={styles.bloodTypeContainer}>
               <CmPrasanmitText style={{ color: 'white'}}>
@@ -56,83 +57,23 @@ export default class DonateHistoryScreen extends Component {
           </View>
           <View style={styles.requestInfotmationContainer}>
             <View style={styles.requestInformationStyle}>
-              <CmPrasanmitBoldText style={{marginLeft: 20, fontSize: 25, height:25, color: 'black',}}>
-                จาก
-              </CmPrasanmitBoldText>
-              <CmPrasanmitText  style={{marginLeft: 15, fontSize: 23, height:25, color: 'black',}}>
-                {this.state.receiver.name}
-              </CmPrasanmitText>
+              <CmPrasanmitBoldText style={{marginLeft: 20, fontSize: 25, height:25, color: Colors.tabBar,}}>ตอบรับ</CmPrasanmitBoldText>
+              <CmPrasanmitText  style={{marginLeft: 10, fontSize: 25, height:25, color: 'black',}}>{this.state.receiver.name}</CmPrasanmitText>
             </View>
-            <CmPrasanmitText style={{ marginLeft: 15, fontSize: 18, color: 'grey' }}>
+            <CmPrasanmitText style={{ marginLeft: 20, fontSize: 18, color: 'grey' }}>
               {this.state.patient.patient_timestamp}
             </CmPrasanmitText>
           </View>
         </View>
 
         <View style={styles.patientInfoContainer}>
-          <View style={styles.underline}>
-            <CmPrasanmitBoldText style={styles.title}>
-              ชื่อผู้ป่วย
-            </CmPrasanmitBoldText>
-            <CmPrasanmitText style={styles.informationText}>
-              {this.state.patient.patient_name}
-            </CmPrasanmitText>
-          </View>
-
-          <View style={styles.underline}>
-            <CmPrasanmitBoldText style={styles.title}>
-              รหัสผู้ป่วย
-            </CmPrasanmitBoldText>
-            <CmPrasanmitText style={styles.informationText}>
-              {this.state.patient.patient_id}
-            </CmPrasanmitText>
-          </View>
-
-          <View style={styles.underline}>
-            <CmPrasanmitBoldText style={styles.title}>
-              กรุ๊ปเลือด
-            </CmPrasanmitBoldText>
-            <CmPrasanmitText style={styles.informationText}>
-              {this.state.patient.patient_blood + this.state.patient.patient_blood_type}
-            </CmPrasanmitText>
-          </View>
-
-          <View style={styles.underline}>
-            <CmPrasanmitBoldText style={styles.title}>
-              จังหวัด
-            </CmPrasanmitBoldText>
-            <CmPrasanmitText style={styles.informationText}>
-              {this.state.patient.patient_province}
-            </CmPrasanmitText>
-          </View>
-
-          <View style={styles.underline}>
-            <CmPrasanmitBoldText style={styles.title}>
-              สถานพยาบาล
-            </CmPrasanmitBoldText>
-            <CmPrasanmitText style={styles.informationText}>
-              {this.state.patient.patient_hos}
-            </CmPrasanmitText>
-          </View>
-
-          <View style={styles.underline}>
-            <CmPrasanmitBoldText style={styles.title}>
-              วันที่บริจาค
-            </CmPrasanmitBoldText>
-            <CmPrasanmitText style={styles.informationText}>
-              {this.state.donateDate}
-            </CmPrasanmitText>
-          </View>
-
-          <View style={styles.underline}>
-            <CmPrasanmitBoldText style={styles.title}>
-              คำขอบคุณ*
-            </CmPrasanmitBoldText>
-            <CmPrasanmitText style={styles.informationText}
-            numberOfLines={5} >
-              {this.state.patient.patient_thankyou}
-            </CmPrasanmitText>
-          </View>
+          <RequestDetailInDonor label='ชื่อผู้ป่วย' information={this.state.patient.patient_name} height={height_detail}/>
+          <RequestDetailInDonor label='รหัสผู้ป่วย' information={this.state.patient.patient_id} height={height_detail}/>
+          <RequestDetailInDonor label='กรุ๊ปเลือด' information={this.state.patient.patient_blood + this.state.patient.patient_blood_type} height={height_detail}/>
+          <RequestDetailInDonor label='จังหวัด' information={this.state.patient.patient_province} height={height_detail}/>
+          <RequestDetailInDonor label='สถานพยาบาล' information={this.state.patient.patient_hos} height={height_detail}/>
+          <RequestDetailInDonor label='วันที่บริจาค' information={this.state.donateDate} height={height_detail}/>
+          <RequestDetailInDonor label='คำขอบคุณ' information={this.state.patient.patient_thankyou} height={height_detail}/>
         </View>
       </View>
     );
