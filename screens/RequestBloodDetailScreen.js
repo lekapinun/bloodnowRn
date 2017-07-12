@@ -261,27 +261,27 @@ const ModalFinish = ({pickerVisible,onPress1,onPress2}) => {
         visible={pickerVisible}
       >
         <View style={[styles.container,{flex:1,backgroundColor:'rgba(52, 52, 52, 0.3)'}]}>
-            <View style={{paddingTop:25,alignItems: 'center',height:180,width:200,backgroundColor:'white',borderRadius:10}}>
+            <View style={{paddingTop:25,alignItems: 'center',height:180,width:260,backgroundColor:'white',borderRadius:10}}>
                 <Image source={require('../assets/icons/ex.png')} style={{height:70,width:70}}/>
                 <Text style={[Font.style('CmPrasanmit'),{paddingTop:5,fontSize:20}]}>คำร้องขอของคุณเสร็จสิ้นแล้ว?</Text>
-                <View style={{borderBottomColor: 'red', width:200, marginTop:20,borderBottomWidth: 1,}}/>
+                <View style={{borderBottomColor: 'red', width:260, marginTop:20,borderBottomWidth: 1,}}/>
                 <View style={{marginTop: 10,flexDirection:'row'}}>
                   <Button
                         onPress={onPress1}
                         buttonColor='white'
                         title='ตกลง'
                         sizeFont={20}
-                        ButtonWidth={100}
+                        ButtonWidth={130}
                         colorFont='red'
                     />
-                  <View style={{borderColor: 'red',width:1,height:38.5,borderRightWidth: 1,position:'absolute',right:100,top:-10}}> 
+                  <View style={{borderColor: 'red',width:1,height:38.5,borderRightWidth: 1,position:'absolute',right:130,top:-10}}> 
                   </View>
                   <Button
                       onPress={onPress2}
                       buttonColor='white'
                       title='ยกเลิก'
                       sizeFont={20}
-                      ButtonWidth={100}
+                      ButtonWidth={130}
                       colorFont='red'
                   />
                 </View> 
@@ -300,29 +300,29 @@ const ModalRe = ({pickerVisible,onPress1,onPress2}) => {
         visible={pickerVisible}
       >
         <View style={[styles.container,{flex:1,backgroundColor:'rgba(52, 52, 52, 0.3)'}]}>
-            <View style={{paddingTop:25,alignItems: 'center',height:153,width:200,backgroundColor:'white',borderRadius:10}}>
+            <View style={{paddingTop:25,alignItems: 'center',height:153,width:260,backgroundColor:'white',borderRadius:10}}>
                 <View style={{height:67,justifyContent:'space-around',alignItems:'center'}}>
                   <Text style={[Font.style('CmPrasanmitBold'),{paddingTop:5,fontSize:20}]}>คุณต้องการส่งคำขออีกครั้ง?</Text>
                   <Text style={[Font.style('CmPrasanmit'),{paddingTop:5,fontSize:20}]}>ต้องการเลือดอีก __ ถุง</Text>
                 </View>
-                <View style={{borderBottomColor: 'red', width:200, marginTop:20,borderBottomWidth: 1,}}/>
+                <View style={{borderBottomColor: 'red', width:260, marginTop:20,borderBottomWidth: 1,}}/>
                 <View style={{marginTop: 10,flexDirection:'row'}}>
                   <Button
                         onPress={onPress1}
                         buttonColor='white'
                         title='ตกลง'
                         sizeFont={20}
-                        ButtonWidth={100}
+                        ButtonWidth={130}
                         colorFont='red'
                     />
-                  <View style={{borderColor: 'red',width:1,height:39.5,borderRightWidth: 1,position:'absolute',right:100,top:-10}}> 
+                  <View style={{borderColor: 'red',width:1,height:39.5,borderRightWidth: 1,position:'absolute',right:130,top:-10}}> 
                   </View>
                   <Button
                       onPress={onPress2}
                       buttonColor='white'
                       title='ยกเลิก'
                       sizeFont={20}
-                      ButtonWidth={100}
+                      ButtonWidth={130}
                       colorFont='red'
                   />
                 </View> 
