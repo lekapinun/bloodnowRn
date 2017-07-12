@@ -5,7 +5,7 @@ import Colors from '../../constants/Colors';
 import { CmPrasanmitText } from '../CmPrasanmitText'
 import { CmPrasanmitBoldText } from '../CmPrasanmitBoldText'
 
-const Countdown = ({recentDonateDate }) => {
+const Countdown = ({recentDonateDate,last_donate }) => {
   const timeRemaining = Math.floor(recentDonateDate/(86400000))
   let remainMonth = '00';
   let remainDate = '00';
@@ -16,20 +16,23 @@ const Countdown = ({recentDonateDate }) => {
     (remainDate.length === 1) ? remainDate = '0' + remainDate : null
     const nextDonation = new Date(new Date().getTime() + (86400000 * timeRemaining));
     countdownStatus =
-    <View style={{flex:1,alignItems: 'center',justifyContent: 'center'}}>
+    <View style={{height:30,marginBottom:15,alignItems: 'center',justifyContent: 'center'}}>
+    <CmPrasanmitText style={{color: Colors.tabBar,fontSize:25}}>{'บริจาคครั้งล่าสุด ' + last_donate}</CmPrasanmitText>
+    </View>
+    {/* <View style={{flex:1,alignItems: 'center',justifyContent: 'center'}}>
       <CmPrasanmitText style={{color: Colors.tabBar,fontSize:25}}>
         {'การบริจาคครั้งถัดไป วันที่ ' + nextDonation.getDate().toString()
         + '/' + (nextDonation.getMonth() + 1)
         + '/' + nextDonation.getFullYear().toString()}
       </CmPrasanmitText>
-    </View>
+    </View> */}
 
   }
   else {
     remainDate = '00';
     remainMonth = '00';
-    countdownStatus = <View style={{flex:1,alignItems: 'center',justifyContent: 'center'}}>
-    <CmPrasanmitText style={{color: Colors.tabBar,fontSize:25}}>ตอนนี้คุณสามารถบริจาคได้แล้ว</CmPrasanmitText>
+    countdownStatus = <View style={{height:30,marginBottom:15,alignItems: 'center',justifyContent: 'center'}}>
+    <CmPrasanmitText style={{color: Colors.tabBar,fontSize:25}}>{'บริจาคครั้งล่าสุด ' + last_donate}</CmPrasanmitText>
     </View>
   }
 
@@ -61,7 +64,7 @@ const Countdown = ({recentDonateDate }) => {
         </View>
       </View>
 
-      {countdownStatus}
+      {last_donate !== null && countdownStatus}
     </View>
   );
 }
@@ -69,7 +72,7 @@ const Countdown = ({recentDonateDate }) => {
 const styles = StyleSheet.create({
   countdownBorder: {
     width: 340,
-    height: 250,
+    //height: 250,
     marginTop: 10,
     borderWidth: 2,
     borderRadius: 5,
@@ -80,7 +83,8 @@ const styles = StyleSheet.create({
   countdownContainerStyle: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    height:125
+    height:125,
+    marginBottom:15,
   },
   countdownViewStyle: {
     width: 122,
