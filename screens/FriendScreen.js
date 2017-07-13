@@ -3,19 +3,19 @@ import {
   Image,
   Linking,
   Platform,
-  FlatList,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
   AsyncStorage
 } from 'react-native';
+import { TabNavigator } from 'react-navigation';
 import { Font } from 'expo'
 import { TestButton, NavigatorBackground,ExNavigationState} from '../components/common';
 import { MonoText } from '../components/StyledText';
 import Colors from '../constants/Colors';
-
-
+import HomeScreen from './HomeScreen';
 
 export default class FriendScreen extends Component {
     static navigationOptions =  {
@@ -27,14 +27,30 @@ export default class FriendScreen extends Component {
     };
 
     render() {
+      const FriendTab = TabNavigator(
+        {
+          ABBB: {screen: HomeScreen},
+          BAAA: {screen: HomeScreen},
+        },{
+          initialRouteName: 'ABBB',
+          tabBarOptions: {
+            showLabel: true,
+            style: {
+              backgroundColor: 'white',
+              shadowColor: 'grey',
+              shadowOffset: {width: 2, height: -1},
+              shadowOpacity: 0.5,
+            },
+          },
+          tabBarPosition: 'top',
+          swipeEnabled: true,
+          animationEnabled: true,
+        });
+
         return(
-            <View style={{marginTop:30}}>
-                <FlatList
-
-                />
-
-            </View>
+          <FriendTab screenProps="A"/>
         );
-    }
+
+      }
 
 }

@@ -19,22 +19,27 @@ import Colors from '../constants/Colors';
 
 
 export default class HomeScreen extends Component {
+    static navigationOptions = props => {
+      return {
+        tabBarLabel: props.screenProps
+      }
+    }
 
-    /*static route = {
-        navigationBar: {
-        title: 'เพื่อน',
-        backgroundColor: Colors.routeColor,
-        titleStyle: [Font.style('CmPrasanmitBold'),{fontSize:25}],
-        tintColor: 'white',
-        renderRight: () => <ExponentButton />,
-        },
-    };*/
+    state= {
+      test: '',
+    }
+    componentWillMount() {
+      console.log(this.props.navigation.state.params);
+      this.setState({test: this.props.navigation.state.params});
+    }
 
     render() {
         return(
-            <View style={{marginTop:30}}>
-                <Text>HOME</Text>
-            </View>
+            <View style={{marginTop:30, height: 100}}>
+              <TouchableOpacity onPress={() => console.log(this.props)}>
+                <Text style={{fontSize: 23}}>{this.props.screenProps+ "Group"}</Text>
+              </TouchableOpacity>
+              </View>
         );
     }
 
