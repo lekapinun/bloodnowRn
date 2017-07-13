@@ -4,7 +4,7 @@ import { Font } from 'expo'
 import { CmPrasanmitText } from '../CmPrasanmitText'
 import { CmPrasanmitBoldText } from '../CmPrasanmitBoldText'
 
-const RequestDetailInDonor = ({label,information}) => {
+const RequestDetailInDonor = ({label,information, height}) => {
   return(
     <View style={{flexDirection: 'column',justifyContent: 'center'}}>
       <View style={[styles.underline,{height:height}]}>
