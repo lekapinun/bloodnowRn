@@ -19,6 +19,8 @@ import Layout from '../constants/Layout';
 import RequestBloodScreen from './RequestBloodScreen';
 import axios from 'axios';
 import addressServer from '../utilities/addressServer';
+import { CmPrasanmitText } from '../components/CmPrasanmitText'
+import { CmPrasanmitBoldText } from '../components/CmPrasanmitBoldText'
 
 class ButtonRequest extends Component {
     _handlePress = () => {
@@ -94,38 +96,53 @@ export default class RequestBloodHistoryScreen extends Component {
     
 
     renderHistory() {
-        //console.log(this.state)
-        return this.state.history.map((history) => {
-            //console.log(history.updated_at)
-            //console.log(history.updated_at.split(' ')[0])
-            var date = history.updated_at.split(' ')[0]
-            date = date.split('-')
-            var dateTime = new Date(date[1] + '/' + date[2] + '/' + date[0])
-            var status
-            var temp_time = Math.floor( ((dateTime.getTime() + (86400000*4)) - (new Date().getTime()))/(86400000)) 
-            //( temp_time < 4 ) ? status = temp_time : status = history.patient_status
-            //console.log(history.patient_status)
-            if( temp_time > 0 && history.patient_status === 'not complete'){
-                status = temp_time
-            } else if ( temp_time < 1 && history.patient_status === 'not complete' ){
-                status = 'refresh'
-            } else {
-                status = history.patient_status
-            }
-            //console.log(date[1] + '/' + date[2] + '/' + date[0])
-            //console.log( Math.floor((new Date().getTime() - dateTime.getTime())/(86400000)))
+        //console.log(this.state.history.length )
+        if(this.state.history.length === 0){
             return (
-                <CardHistoryRequest
-                    key={history.id}
-                    blood = {history.patient_blood}
-                    bloodType = {history.patient_blood_type}
-                    name = {history.patient_name}
-                    hospital = {'โรงพยาบาล' + history.patient_hos}
-                    status = { status }
-                    onPress={() => this.goTodetail(history.id) }
-                /> 
-            )}
-        );
+                <View style={{justifyContent:'center',marginTop:10,width:310,height:80,borderWidth:1,borderColor:Colors.tabBar,borderRadius:5}}>
+                    <CmPrasanmitText style={{marginLeft:15,fontSize:22,color:'#575757'}}>ไม่มีรายการการขอเลือดของคุณ หากต้อง</CmPrasanmitText>
+                    <View style = {{flexDirection:'row'}}>
+                        <CmPrasanmitText style={{marginLeft:15,fontSize:22,color:'#575757'}}>การจะชอเลือด กดปุ่ม </CmPrasanmitText>
+                        <Image
+                            source={require('../assets/images/addRequest.png')}
+                            style={{marginTop:6,width: 15, height: 15 ,marginRight:10,marginBottom:5}}
+                        />
+                    </View>
+                </View>
+            )
+        } else {
+            return this.state.history.map((history) => {
+                //console.log(history.updated_at)
+                //console.log(history.updated_at.split(' ')[0])
+                var date = history.updated_at.split(' ')[0]
+                date = date.split('-')
+                var dateTime = new Date(date[1] + '/' + date[2] + '/' + date[0])
+                var status
+                var temp_time = Math.floor( ((dateTime.getTime() + (86400000*4)) - (new Date().getTime()))/(86400000)) 
+                //( temp_time < 4 ) ? status = temp_time : status = history.patient_status
+                //console.log(history.patient_status)
+                if( temp_time > 0 && history.patient_status === 'not complete'){
+                    status = temp_time
+                } else if ( temp_time < 1 && history.patient_status === 'not complete' ){
+                    status = 'refresh'
+                } else {
+                    status = history.patient_status
+                }
+                //console.log(date[1] + '/' + date[2] + '/' + date[0])
+                //console.log( Math.floor((new Date().getTime() - dateTime.getTime())/(86400000)))
+                return (
+                    <CardHistoryRequest
+                        key={history.id}
+                        blood = {history.patient_blood}
+                        bloodType = {history.patient_blood_type}
+                        name = {history.patient_name}
+                        hospital = {'โรงพยาบาล' + history.patient_hos}
+                        status = { status }
+                        onPress={() => this.goTodetail(history.id) }
+                    /> 
+                )}
+            )
+        }
     }
 
     goTodetail(detail_id) {
@@ -147,41 +164,6 @@ export default class RequestBloodHistoryScreen extends Component {
         return(
             <ScrollView style={{flex: 1,backgroundColor:'white'}}> 
                 <View style={[styles.center, {paddingTop:16}]}>
-                    {/*<CardHistoryRequest
-                        blood = 'O'
-                        bloodType = '-'
-                        name = 'คาร่า เดเลวีน'
-                        hospital = {'โรงพยาบาลมหาราช'}
-                        status = {2}
-                        onPress={() => {
-                            const resetAction = NavigationActions.reset(
-                                {
-                                index: 1,
-                                actions: [
-                                    NavigationActions.navigate({ routeName: 'RequestHistory'}) ,
-                                    NavigationActions.navigate({ routeName: 'RequestDetail'})
-                                ]
-                                }
-                            )
-                            this.props.navigation.dispatch(resetAction)
-                        }}
-                    /> 
-                    <CardHistoryRequest
-                        blood = 'AB'
-                        bloodType = '+'
-                        name = 'เอมม่า สโตน'
-                        hospital = {'โรงพยาบาลมหาราช'}
-                        status = 'finished'
-                        onPress={() => {}}
-                    /> 
-                    <CardHistoryRequest
-                        blood = 'A'
-                        bloodType = '+'
-                        name = 'ทอมฮิดเดิลตัน'
-                        hospital = {'โรงพยาบาลมหาราช'}
-                        status = 'refresh'
-                        onPress={() => {}}
-                    /> */}
                     {this.renderHistory()}
                     <View style={{height:20}}></View>
                 </View> 
