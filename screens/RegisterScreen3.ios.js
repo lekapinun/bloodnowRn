@@ -23,13 +23,47 @@ export default class RegisterScreen3 extends Component {
         }
     };
 
+    componentWillMount() {
+        console.log('Register3')
+        AsyncStorage.getItem('@RegisData:key')
+        .then((result) => {
+          //console.log(result);
+          const dataRegis2 = JSON.parse(result)
+          this.setState({name : dataRegis2.name})
+          this.setState({password : dataRegis2.password})
+          this.setState({password_confirmation : dataRegis2.password_confirmation})
+          this.setState({phone : dataRegis2.phone})
+          this.setState({email : dataRegis2.email})
+          this.setState({firstname : dataRegis2.firstname})
+          this.setState({lastname : dataRegis2.lastname})
+          this.setState({blood : dataRegis2.blood})
+          this.setState({blood_type : dataRegis2.blood_type})
+          this.setState({province : dataRegis2.province})
+          this.setState({birthyear : dataRegis2.birthyear})
+          //console.log(this.state)
+          AsyncStorage.removeItem('@RegisData:key')
+        })
+    }
+
     state = {
+        name: '',
+        firstname: '',
+        lastname: '',
+        password: '',
+        password_confirmation: '',
+        blood: '',
+        blood_type: '',
+        phone: '',
+        email: '',
+        province: '',
+        birthyear: '',
+        last_date_donate: '',
+
         isSelected1: false,
         isSelected2: false,
         modalDateVisible: false,
         date_donate: '',
         date_donateTemp: new Date(),
-        last_date_donate: '',
         last_date_donateTemp: '',
         modalRegisterVisible: false,
     }
@@ -65,7 +99,10 @@ export default class RegisterScreen3 extends Component {
                 <ModalRegister
                     pickerVisible = {this.state.modalRegisterVisible}
                     //onPress = { () => this.clickOkay() }
-                    onPress = { () => this.setState({modalRegisterVisible: false}) }
+                    onPress = { () => {
+                        this.setState({modalRegisterVisible: false}) 
+                        this._register()
+                    }}
                 >
                 </ModalRegister> 
                 <PickerModalDate
@@ -116,7 +153,49 @@ export default class RegisterScreen3 extends Component {
             </ScrollView>
         );
     }
+
+    async _loginData(loginData){
+        try {
+            console.log(loginData);
+            await AsyncStorage.setItem('@loginData:key', JSON.stringify(loginData));
+        } catch ( error ) {
+            console.log('error');
+        }
+    }
     
+    _register = () => {
+        if(this.state.isSelected1){
+            this.state.last_date_donate = null
+        } else {
+            recent2 = new Date(this.state.date_donate);
+            this.state.last_date_donate = recent2.getFullYear().toString() + '-' + (recent2.getMonth()+1).toString() + '-' + recent2.getDate().toString();
+        }
+        console.log(this.state);
+        console.log(addressServer.APIRequest.toString() + '/api/auth/register');
+        const api = addressServer.APIRequest.toString() + '/api/auth/register';
+        axios(api, { method: 'post', data : this.state })
+        .then((response) => {
+            console.log(response.data)
+            if( response.data.status === 'ok') {
+                this._loginData(response.data)
+                .then(() => {
+                    const resetAction = NavigationActions.reset({
+                        index: 0,
+                        actions: [ NavigationActions.navigate({ routeName: 'Bloodnow'}) ]
+                    })
+                    this.props.navigation.dispatch(resetAction)
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+            } else {
+                console.log('Register Fail');
+            }
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+    }
 }
 
 const Checklist = ({label,isSelected,onPress}) => {

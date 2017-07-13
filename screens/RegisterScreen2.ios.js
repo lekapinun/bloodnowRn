@@ -22,14 +22,14 @@ export default class RegisterScreen2 extends Component {
         console.log('Register2')
         AsyncStorage.getItem('@RegisData:key')
         .then((result) => {
-          console.log(result);
+          //console.log(result);
           const dataRegis1 = JSON.parse(result)
           this.setState({name : dataRegis1.name})
           this.setState({password : dataRegis1.password})
           this.setState({password_confirmation : dataRegis1.password_confirmation})
           this.setState({phone : dataRegis1.phone})
           this.setState({email : dataRegis1.email})
-          console.log(this.state)
+          //console.log(this.state)
           AsyncStorage.removeItem('@RegisData:key')
         })
     }
@@ -38,15 +38,15 @@ export default class RegisterScreen2 extends Component {
 
     state = {
         name: '',
-        firstname: 'โทมัส',
-        lastname: 'ฟาวโก้',
+        firstname: '',
+        lastname: '',
         password: '',
-        blood: 'A',
-        blood_type: '+',
+        blood: '',
+        blood_type: '',
         phone: '',
         email: '',
-        province: 'เชียงใหม่',
-        birthyear: '2539',
+        province: '',
+        birthyear: '',
         last_date_donate: '',
         date_donate: '',
         password_confirmation: '',
@@ -55,8 +55,6 @@ export default class RegisterScreen2 extends Component {
         provinceTemp: 'กรุงเทพมหานคร',
         date_donateTemp: new Date(),
         modalVisible: false,
-        modalDateVisible: false,
-        modalRegisterVisible: false,
         modalProvinceVisible: false,
         load: false,
         pressGoToRegis3: false,
@@ -65,7 +63,6 @@ export default class RegisterScreen2 extends Component {
     setModalVisible(visible) {
       this.setState({modalVisible: visible});
     }
-
 
     setModalProvinceVisible(visible) {
       this.setState({modalProvinceVisible: visible});
@@ -106,11 +103,6 @@ export default class RegisterScreen2 extends Component {
       return(
         <ScrollView style={{flex: 1,flexDirection: 'column', backgroundColor: '#FAFAFA'}}> 
         <View style={{flex: 1,flexDirection: 'column',alignItems: 'center', backgroundColor: '#FAFAFA'}}>
-            <ModalRegister
-                  pickerVisible = {this.state.modalRegisterVisible}
-                  onPress = { () => this.clickOkay() }
-            >
-            </ModalRegister>
             <PickerModalProvince
                 pickerVisible = {this.state.modalProvinceVisible}
                 onPressCancel = {() => { this.setModalProvinceVisible(!this.state.modalProvinceVisible) }}
@@ -199,55 +191,17 @@ export default class RegisterScreen2 extends Component {
 
     _goToRegis3 = () => {
       this.setState({pressGoToRegis3: true})
-      const { navigate } = this.props.navigation;
-      navigate('Register3')
+      AsyncStorage.setItem('@RegisData:key', JSON.stringify(this.state))
+      .then(() => {
+        const { navigate } = this.props.navigation;
+        navigate('Register3')
+        this.setState({pressGoToRegis3: false})
+      })
+      .catch((error) => {
+        console.log(error)
+      })
     }
 
-    _register = () => {
-      recent2 = new Date(this.state.date_donate);
-      this.state.last_date_donate = recent2.getFullYear().toString() + '-' + (recent2.getMonth()+1).toString() + '-' + recent2.getDate().toString();
-      console.log(this.state);
-      this.setState({load: true});
-      console.log(addressServer.APIRequest.toString() + '/api/auth/register');
-      const api = addressServer.APIRequest.toString() + '/api/auth/register';
-      if( this.state.password === this.state.password_confirmation){
-        const myRequest = new Request(
-          api,
-          {
-            method: 'POST',
-            headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(this.state)
-          });
-        var userData = '';
-        fetch(myRequest)
-        .then((response) => console.log(response))
-        /*.then((response) => response.text())
-        .then((responseText) => {
-          console.log(responseText);
-          if(responseText === 'Register Success'){
-            userData = this.state
-            userData = '{"name":"' + userData.name + '","firstname":"' + userData.firstname + '","lastname":"' + userData.lastname + '","blood":"' + userData.blood + '","blood_type":"' + userData.blood_type + '","phone":"' + userData.phone + '","email":"' + userData.email + '","province":"' + userData.province + '","birthyear":"' + userData.birthyear + '","firstname":"' + userData.last_date_donate +'"}'
-            console.log(userData)
-            this._setUserData(userData)
-            this.setState({modalRegisterVisible: true});
-            this.setState({load: false});
-          }else{
-            console.log('Register Fail');
-            this.setState({load: false});
-          }
-        })*/
-        .catch((error) => {
-          this.setState({load: false});
-          console.log(error);
-        });
-      }
-      else {
-        console.log('fail resgister');
-      }
-    }
 }
 
 const styles = StyleSheet.create({
