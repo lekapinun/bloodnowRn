@@ -1,18 +1,21 @@
 import React, { Component, PropTypes } from 'react';
 import { Text, ScrollView, StyleSheet, View, Modal, Image, ActivityIndicator, AsyncStorage } from 'react-native';
 import { Font } from 'expo';
-import { NavigatorBackground, Button, RegisterInput, PickerPartTouch, PickerModalDate, PickerModalBlood, PickerModalProvince } from '../components/common';
-
+import { NavigatorBackground, Button, RegisterInput, PickerPartTouch, PickerModalDate, PickerModalBlood, PickerModalProvince, ButtonBack } from '../components/common';
+import Colors from '../constants/Colors'
 import addressServer from '../utilities/addressServer';
 
-export default class RegisterScreen extends Component {
+export default class RegisterScreen2 extends Component {
 
-  static navigationOptions = {
-    title: 'ลงทะเบียน',
-    headerTintColor: 'white',
-    headerTitleStyle: [Font.style('CmPrasanmitBold'),{fontSize:29}],
-    headerStyle: {backgroundColor: '#E84A5F'},
-    gesturesEnabled: false,
+  static navigationOptions = props => {
+    return {
+      title: 'ลงทะเบียน',
+      headerTintColor: 'white',
+      headerTitleStyle: [Font.style('CmPrasanmitBold'),{fontSize:29}],
+      headerStyle: {backgroundColor: '#E84A5F'},
+      headerLeft: <ButtonBack onPress={() => props.navigation.goBack()} color='white' />,
+      gesturesEnabled: false,
+    }
   };
 
     componentWillMount() {
@@ -56,23 +59,24 @@ export default class RegisterScreen extends Component {
         modalRegisterVisible: false,
         modalProvinceVisible: false,
         load: false,
+        pressGoToRegis3: false,
     }
 
     setModalVisible(visible) {
       this.setState({modalVisible: visible});
     }
 
-    setModalDateVisible(visible) {
+/*     setModalDateVisible(visible) {
       this.setState({modalDateVisible: visible});
-    }
+    } */
 
     setModalProvinceVisible(visible) {
       this.setState({modalProvinceVisible: visible});
     }
 
-    setModalRegisterVisible(visible){
+/*     setModalRegisterVisible(visible){
       this.setState({modalProvinceVisible: visible});
-    }
+    } */
 
     clickOkay(){
       this.setState({modalRegisterVisible: false});
@@ -94,49 +98,22 @@ export default class RegisterScreen extends Component {
       }else{
         recentDate = <Text />
       }
-      let canSubmit = '000000';
+      let canSubmit = '00000';
       (this.state.firstname !== '' && this.state.firstname.search(/[^A-Za-zก-๙]/) === -1) ? canSubmit = canSubmit.replaceAt(0,'1') : canSubmit = canSubmit.replaceAt(0,'0');
       (this.state.lastname !== '' && this.state.lastname.search(/[^A-Za-zก-๙]/) === -1) ? canSubmit = canSubmit.replaceAt(1,'1') : canSubmit = canSubmit.replaceAt(1,'0');
       (this.state.blood !== '' && this.state.blood_type !== '') ? canSubmit = canSubmit.replaceAt(2,'1') : canSubmit = canSubmit.replaceAt(2,'0');
       let today = new Date();
       ((parseInt(this.state.birthyear.toString()) > parseInt((today.getFullYear()+443).toString())) && (parseInt(this.state.birthyear.toString()) < parseInt((today.getFullYear()+543).toString()))) ? canSubmit = canSubmit.replaceAt(3,'1') : canSubmit = canSubmit.replaceAt(3,'0');
-      (this.state.date_donate !== '') ? canSubmit = canSubmit.replaceAt(4,'1') : canSubmit = canSubmit.replaceAt(4,'0');
-      (this.state.province !== '') ? canSubmit = canSubmit.replaceAt(5,'1') : canSubmit = canSubmit.replaceAt(5,'0');
+      (this.state.province !== '') ? canSubmit = canSubmit.replaceAt(4,'1') : canSubmit = canSubmit.replaceAt(4,'0');
 
-      let checkInput = '000000';
+      let checkInput = '00000';
       (this.state.firstname !== '') ? checkInput = checkInput.replaceAt(0,'1') : checkInput = checkInput.replaceAt(0,'0');
       (this.state.lastname !== '' ) ? checkInput = checkInput.replaceAt(1,'1') : checkInput = checkInput.replaceAt(1,'0');
       (this.state.blood !== '' ) ? checkInput = checkInput.replaceAt(2,'1') : checkInput = checkInput.replaceAt(2,'0');
       (this.state.birthyear !== '') ? checkInput = checkInput.replaceAt(3,'1') : checkInput = checkInput.replaceAt(3,'0');
-      (this.state.date_donate !== '') ? checkInput = checkInput.replaceAt(4,'1') : checkInput = checkInput.replaceAt(4,'0');
-      (this.state.province !== '') ? checkInput = checkInput.replaceAt(5,'1') : checkInput = checkInput.replaceAt(5,'0');
+      (this.state.province !== '') ? checkInput = checkInput.replaceAt(4,'1') : checkInput = checkInput.replaceAt(4,'0');
 
-      let subValidated = '000000';
-
-      if(canSubmit === '111111'){
-        ButtonSubmit = 
-          <Button
-            title='เสร็จสิ้น'
-            buttonColor='#E84A5F'
-            sizeFont={25}
-            onPress={this._register}
-            ButtonWidth={300}
-            ButtonHeight={50}
-            colorFont='white'
-          />
-      }else{
-        ButtonSubmit = 
-          <Button
-            touchable={true}
-            title='เสร็จสิ้น'
-            buttonColor='#F6B6BF'
-            sizeFont={25}
-            onPress={() => {}}
-            ButtonWidth={300}
-            ButtonHeight={50}
-            colorFont='white'
-          />;
-      }
+      let subValidated = '00000';
 
       return(
         <ScrollView style={{flex: 1,flexDirection: 'column', backgroundColor: '#FAFAFA'}}> 
@@ -176,8 +153,8 @@ export default class RegisterScreen extends Component {
                 onChangeOne = {(itemValue, itemIndex) => this.setState({bloodTemp: itemValue})}
                 selectTwo = {this.state.blood_typeTemp}
                 onChangeTwo = {(itemValue2, itemIndex2) => this.setState({blood_typeTemp: itemValue2})}
-            />
-            <PickerModalDate
+            /> 
+            {/* <PickerModalDate
                 pickerVisible = {this.state.modalDateVisible}
                 onPressCancel = {() => { this.setModalDateVisible(!this.state.modalDateVisible) }}
                 onPressSubmit = {() => {
@@ -186,9 +163,9 @@ export default class RegisterScreen extends Component {
                 }}
                 selectOne = {this.state.date_donateTemp}
                 onChangeOne = {date => this.setState({ date_donateTemp: date })}
-            />
+            /> */}
                 <View style={{marginTop: 20}}/>
-                <Text style={{color: '#E84A5F'}}>○ ●</Text>
+                <Text style={{color: '#E84A5F'}}>○ ● ○</Text>
                 <RegisterInput
                     label='ชื่อ'
                     value={this.state.firstname}
@@ -223,19 +200,34 @@ export default class RegisterScreen extends Component {
                     maxLength={4}
                     validate = {canSubmit.charAt(3) + checkInput.charAt(3) + + subValidated.charAt(3)}
                 />
-                <PickerPartTouch
+                {/* <PickerPartTouch
                     label='บริจาคครั้งล่าสุด'
                     onPress={() => { this.setModalDateVisible(true) }}
                     information={recentDate}
-                />
+                /> */}
                 <View style={{marginTop: 20}}/>
-                <View style={{marginTop:10}}></View>
-                {ButtonSubmit}
-                <View style={{marginTop:10}}></View>
+                <View style={{marginVertical:10}}>
+                  <Button
+                    title='ถัดไป'
+                    buttonColor={canSubmit === '11111' ? Colors.tabBar : '#F6B6BF'}
+                    sizeFont={25}
+                    onPress={canSubmit === '11111' ? this._goToRegis3: null}
+                    ButtonWidth={300}
+                    ButtonHeight={50}
+                    colorFont='white'
+                    touchable={canSubmit === '11111' ? this.pressGoToRegis3 : true}
+                  />
+                </View>
             {/*</View>*/}
         </View>
         </ScrollView>
       );
+    }
+
+    _goToRegis3 = () => {
+      this.setState({pressGoToRegis3: true})
+      const { navigate } = this.props.navigation;
+      navigate('Register3')
     }
 
     _register = () => {
