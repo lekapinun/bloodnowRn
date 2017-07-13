@@ -24,9 +24,9 @@ class ButtonRequest extends Component {
         const resetAction = NavigationActions.reset(
             {
                 index: 1,
-                actions: [ 
+                actions: [
                     NavigationActions.navigate({ routeName: 'RequestHistory'}) ,
-                    NavigationActions.navigate({ routeName: 'RequestBlood'})   
+                    NavigationActions.navigate({ routeName: 'RequestBlood'})
                 ]
             }
         )
@@ -34,7 +34,7 @@ class ButtonRequest extends Component {
     };
     render(){
         return(
-            <TouchableOpacity 
+            <TouchableOpacity
                 onPress={this._handlePress}
                 style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginRight: 10, paddingTop: 1,}}
             >
@@ -63,7 +63,7 @@ export default class RequestBloodHistoryScreen extends Component {
             tabBarVisible: false
         };
     };
-    
+
     state = {
         history: [],
     }
@@ -77,17 +77,6 @@ export default class RequestBloodHistoryScreen extends Component {
     }
 
     renderHistory() {
-        //console.log(this.state.history)
-        return this.state.history.map(history =>
-            <CardHistoryRequest
-                key={history.title}
-                blood = 'O'
-                bloodType = '-'
-                name = 'อักศร แลดูดี'
-                hospital = {'โรงพยาบาล ' + history.title}
-                status = {1}//'finished'
-                onPress={() => {}}
-            /> 
         //console.log(this.state)
         return this.state.history.map((history) => {
             //console.log(history.updated_at)
@@ -96,7 +85,7 @@ export default class RequestBloodHistoryScreen extends Component {
             date = date.split('-')
             var dateTime = new Date(date[1] + '/' + date[2] + '/' + date[0])
             var status
-            var temp_time = Math.floor( ((dateTime.getTime() + (86400000*4)) - (new Date().getTime()))/(86400000)) 
+            var temp_time = Math.floor( ((dateTime.getTime() + (86400000*4)) - (new Date().getTime()))/(86400000))
             //( temp_time < 4 ) ? status = temp_time : status = history.patient_status
             //console.log(history.patient_status)
             if( temp_time > 0 && history.patient_status === 'not complete'){
@@ -117,15 +106,15 @@ export default class RequestBloodHistoryScreen extends Component {
                     hospital = {'โรงพยาบาล' + history.patient_hos}
                     status = { status }
                     onPress={() => this.goTodetail(history.id) }
-                /> 
+                />
             )}
         );
     }
-    
+
 
     render() {
         return(
-            <ScrollView style={{flex: 1,backgroundColor:'white'}}> 
+            <ScrollView style={{flex: 1,backgroundColor:'white'}}>
                 <View style={[styles.center, {paddingTop:16}]}>
                     <CardHistoryRequest
                         blood = 'O'
@@ -145,7 +134,7 @@ export default class RequestBloodHistoryScreen extends Component {
                             )
                             this.props.navigation.dispatch(resetAction)
                         }}
-                    /> 
+                    />
                     <CardHistoryRequest
                         blood = 'AB'
                         bloodType = '+'
@@ -153,7 +142,7 @@ export default class RequestBloodHistoryScreen extends Component {
                         hospital = {'โรงพยาบาลมหาราช'}
                         status = 'finished'
                         onPress={() => {}}
-                    /> 
+                    />
                     <CardHistoryRequest
                         blood = 'A'
                         bloodType = '+'
@@ -161,10 +150,10 @@ export default class RequestBloodHistoryScreen extends Component {
                         hospital = {'โรงพยาบาลมหาราช'}
                         status = 'refresh'
                         onPress={() => {}}
-                    /> 
+                    />
                     {/*{this.renderHistory()} */}
                     <View style={{height:20}}></View>
-                </View> 
+                </View>
             </ScrollView>
         );
     }
@@ -177,5 +166,3 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
 });
-
-

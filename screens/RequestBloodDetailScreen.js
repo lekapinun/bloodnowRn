@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
-import { ScrollView, View , Text ,StyleSheet, Dimensions, Linking } from 'react-native';
+import { ScrollView, View , TextInput, Text ,StyleSheet, Dimensions, AsyncStorage, TouchableOpacity, Image, Modal } from 'react-native';
 import { RequestDetailInDonor, Button, Map } from '../components/common';
 import Colors from '../constants/Colors';
 import { Font } from 'expo';
-import { ScrollView, View , TextInput, Text ,StyleSheet, Dimensions, AsyncStorage, TouchableOpacity, Image, Modal } from 'react-native';
 import { NavigationActions } from 'react-navigation'
 import addressServer from '../utilities/addressServer';
 import axios from 'axios'
@@ -25,46 +24,6 @@ export default class RequestBloodDetailScreen extends Component {
     };
 
     state = {
-
-    }
-
-    render() {
-      return(
-        <ScrollView style={{flex:1, backgroundColor: 'white' }}>
-          <View style={{flex: 1,width:Dimensions.get('window').width,flexDirection: 'column',alignItems: 'center'}}>
-            <View style={{marginTop:20}}></View>
-            <RequestDetailInDonor label='ชื่อผู้ป่วย' information='อักศร แลดูดี'/>
-            <RequestDetailInDonor label='รหัสผู้ป่วย' information='14249269'/>
-            <RequestDetailInDonor label='กรุ๊ปเลือด' information='O-' />
-            <RequestDetailInDonor label='จังหวัด' information='เชียงใหม่'/>
-            <RequestDetailInDonor label='สถานพยาบาล' information='กรุงเทพ'/>
-            <RequestDetailInDonor label='วันที่ขอบริจาค' information='06/06/2560'/>
-            <RequestDetailInDonor label='วันที่สื้นสุด' information='08/06/2560'/>
-            <RequestDetailInDonor label='จำนวนที่บริจาค' information='10 ถุง'/>
-            <View style={{marginTop:25,flexDirection:'row'}}>
-                <Button
-                  title='ส่งคำขออีกครั้ง'
-                  onPress={() => {}}
-                  buttonColor='#F6B6BF'
-                  sizeFont={25}
-                  ButtonWidth={150}
-                  ButtonHeight={50}
-                  colorFont='white'
-                />
-              <View style={{marginLeft:15}} ></View>
-                <Button
-                  title='คำขอเสร็จสิ้น'
-                  onPress={this._backToHistory}
-                  buttonColor='#E84A5F'
-                  sizeFont={25}
-                  ButtonWidth={150}
-                  ButtonHeight={50}
-                  colorFont= 'white'
-                />
-            </View>
-          </View>
-        </ScrollView>
-      );}
       detail_id : 0,
       token : '',
       data : '',
@@ -90,14 +49,14 @@ export default class RequestBloodDetailScreen extends Component {
         console.log(addressServer.APIRequest + '/api/req/detail');
         const api = addressServer.APIRequest + '/api/req/detail';
         console.log(this.state.detail_id)
-        axios(api,{ 
-          method: 'post', 
+        axios(api,{
+          method: 'post',
           headers: {'Authorization' : 'Bearer ' + this.state.token},
           data: { 'roomreq_id': this.props.navigation.state.params}
         })
           .then(response => {
             //console.log(response.data)
-            if( response.data[0].patient_status !== 'complete') { 
+            if( response.data[0].patient_status !== 'complete') {
               this.setState({complete : false})
             } else {
               this.setState({complete : true})
@@ -106,7 +65,7 @@ export default class RequestBloodDetailScreen extends Component {
             var date = response.data[0].updated_at.split(' ')[0]
             date = date.split('-')
             var dateTime = new Date(date[1] + '/' + date[2] + '/' + date[0])
-            var temp_time = Math.floor((new Date().getTime() - dateTime.getTime())/(86400000)) 
+            var temp_time = Math.floor((new Date().getTime() - dateTime.getTime())/(86400000))
             this.setState({date_rem: temp_time})
             var dateTime_exp = new Date( dateTime.getTime() + (86400000 * 3) )
             dateTime = dateTime.getDate() + '/' + (dateTime.getMonth() + 1) + '/' + dateTime.getFullYear()
@@ -145,8 +104,8 @@ export default class RequestBloodDetailScreen extends Component {
       if(this.state.date_rem > 3 && this.state.complete === false){
         return (
           <View style={[styles.borderBottom,{marginLeft:10,marginRight:10}]}>
-            <TouchableOpacity 
-              style={[styles.buttonStyle,{backgroundColor: 'white',width: 140, height: 35}]} 
+            <TouchableOpacity
+              style={[styles.buttonStyle,{backgroundColor: 'white',width: 140, height: 35}]}
               onPress={() => this.setState({displayRe: true})}
             >
               <Image
@@ -173,7 +132,7 @@ export default class RequestBloodDetailScreen extends Component {
                 ButtonWidth={80}
                 ButtonHeight={30}
                 colorFont= 'white'
-              />  
+              />
           </View>
         );
       }
@@ -247,7 +206,7 @@ export default class RequestBloodDetailScreen extends Component {
       const resetAction = NavigationActions.reset(
       {
         index: 0,
-        actions: [ 
+        actions: [
           NavigationActions.navigate({ routeName: 'RequestHistory'}) ,
         ]
       })
@@ -257,8 +216,8 @@ export default class RequestBloodDetailScreen extends Component {
     _success = () => {
       console.log(addressServer.APIRequest + '/api/req/success');
       const api = addressServer.APIRequest + '/api/req/success';
-      axios(api,{ 
-        method: 'post', 
+      axios(api,{
+        method: 'post',
         headers: {'Authorization' : 'Bearer ' + this.state.token},
         data : { 'roomreq_id' : this.props.navigation.state.params}
       })
@@ -269,22 +228,22 @@ export default class RequestBloodDetailScreen extends Component {
     _refresh = () => {
       console.log(addressServer.APIRequest + '/api/req/refresh');
       const api = addressServer.APIRequest + '/api/req/refresh';
-      axios(api,{ 
-        method: 'post', 
+      axios(api,{
+        method: 'post',
         headers: {'Authorization' : 'Bearer ' + this.state.token},
         data : { 'roomreq_id' : this.props.navigation.state.params}
       })
         .then(() => this._backHistory())
         .catch((error) => console.log(error))
     }
-    
+
     _thankyou = () => {
       console.log(addressServer.APIRequest + '/api/req/thankyou');
       const api = addressServer.APIRequest + '/api/req/thankyou';
-      axios(api,{ 
-        method: 'post', 
+      axios(api,{
+        method: 'post',
         headers: {'Authorization' : 'Bearer ' + this.state.token},
-        data : { 
+        data : {
           'roomreq_id' : this.props.navigation.state.params,
           'thankyou' : this.state.thankyou,
         }
@@ -315,7 +274,7 @@ const ModalFinish = ({pickerVisible,onPress1,onPress2}) => {
                         ButtonWidth={130}
                         colorFont='red'
                     />
-                  <View style={{borderColor: 'red',width:1,height:38.5,borderRightWidth: 1,position:'absolute',right:130,top:-10}}> 
+                  <View style={{borderColor: 'red',width:1,height:38.5,borderRightWidth: 1,position:'absolute',right:130,top:-10}}>
                   </View>
                   <Button
                       onPress={onPress2}
@@ -325,7 +284,7 @@ const ModalFinish = ({pickerVisible,onPress1,onPress2}) => {
                       ButtonWidth={130}
                       colorFont='red'
                   />
-                </View> 
+                </View>
             </View>
         </View>
       </Modal>
@@ -356,7 +315,7 @@ const ModalRe = ({pickerVisible,onPress1,onPress2}) => {
                         ButtonWidth={130}
                         colorFont='red'
                     />
-                  <View style={{borderColor: 'red',width:1,height:39.5,borderRightWidth: 1,position:'absolute',right:130,top:-10}}> 
+                  <View style={{borderColor: 'red',width:1,height:39.5,borderRightWidth: 1,position:'absolute',right:130,top:-10}}>
                   </View>
                   <Button
                       onPress={onPress2}
@@ -366,12 +325,11 @@ const ModalRe = ({pickerVisible,onPress1,onPress2}) => {
                       ButtonWidth={130}
                       colorFont='red'
                   />
-                </View> 
+                </View>
             </View>
         </View>
       </Modal>
   );
->>>>>>> master
 }
 
 const ModalThankyou = ({pickerVisible,onPress1,onPress2,value,onChangeText}) => {
@@ -391,7 +349,7 @@ const ModalThankyou = ({pickerVisible,onPress1,onPress2,value,onChangeText}) => 
                   <TouchableOpacity onPress={onPress1} style={[styles.container,{flex:1}]}>
                     <Text style={[Font.style('CmPrasanmitBold'),{fontSize:25,color:'#DCDCDC'}]}>x</Text>
                   </TouchableOpacity>
-                </View> 
+                </View>
                 <View style={{height:90,width:265,marginTop:15,borderColor: 'red',borderWidth: 0.5,backgroundColor:'transparent',borderRadius:5,alignSelf:'center'}}>
                   <TextInput
                     multiline

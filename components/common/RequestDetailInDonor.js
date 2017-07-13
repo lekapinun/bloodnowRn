@@ -6,18 +6,17 @@ import { CmPrasanmitBoldText } from '../CmPrasanmitBoldText'
 
 const RequestDetailInDonor = ({label,information}) => {
   return(
-    <View style={styles.underline}>
-        <CmPrasanmitBoldText style={styles.title}>
     <View style={{flexDirection: 'column',justifyContent: 'center'}}>
       <View style={[styles.underline,{height:height}]}>
         <Text style={[Font.style('CmPrasanmitBold'),styles.title]}>
-            {label}
+          {label}
         </Text>
         <View style={styles.detail}>
-            <Text numberOfLines={5} style={[Font.style('CmPrasanmit'), styles.informationText]}>
-                {information}
-            </Text>
+          <Text numberOfLines={5} style={[Font.style('CmPrasanmit'), styles.informationText]}>
+            {information}
+          </Text>
         </View>
+      </View>
     </View>
   );
 }
