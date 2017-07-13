@@ -29,14 +29,16 @@ export default class Stack extends React.Component {
           this.setState({home: 'Bloodnow'})
           this.setState({finish: true})
         })
-        .catch((error) =>
-        {
+        .catch((error) => {
             console.log(error)
             this.setState({finish: true})
         })
       } else {
-         this.setState({finish: true})
+        this.setState({finish: true})
       }
+    })
+    .catch((error) => {
+      console.log(error)
     })
   }
 
@@ -60,7 +62,7 @@ export default class Stack extends React.Component {
     if(this.state.finish){
       return <Stack/>
     }else {
-      return <Expo.AppLoading />
+      return <Text>asdfadsfsad</Text>//<Expo.AppLoading />
     }
   }
 }

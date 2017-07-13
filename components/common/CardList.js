@@ -49,6 +49,13 @@ export class CardList extends Component{
         <ScrollView style={styles.requestListContainerStyle}>
           {this.renderList()}
         </ScrollView>
+        /* <ScrollView style={styles.requestListContainerStyle}>
+        <View style={{borderBottomWidth: 1, borderBottomColor: '#DCDCDC',}}>
+          <View style={[styles.requestCardContainerStyle,{marginLeft:28,justifyContent: 'center'}]}>
+            <CmPrasanmitText style={{fontSize:22,color:'#575757'}}> ไม่มีรายการการให้เลือด</CmPrasanmitText>
+          </View>
+        </View>
+        </ScrollView> */
       )
     }
     return (
@@ -61,33 +68,32 @@ export class CardList extends Component{
 
 const CardDetail = ({ list, onPress, visible, gropBlood }) => {
   if(visible){
-  return(
-    <View style={{borderBottomWidth: 1, borderBottomColor: '#DCDCDC',}}>
-    <TouchableOpacity onPress={onPress} style={styles.requestCardContainerStyle} >
-      <View style={{height:78,backgroundColor:'white',flexDirection:'row'}}>
-        <View style={{flex:19,alignItems: 'center',justifyContent: 'center',}}>
-          <Image
-            style={styles.imageRequestStyle}
-            source={{ uri: 'http://images.boomsbeat.com/data/images/full/6954/tayl-png.png' }}
-          />
-          <View style={{height:15,width:30,position:'absolute',bottom:12,left:18,backgroundColor:Colors.tabBar,borderRadius:15,alignItems: 'center',justifyContent:'center'}}>
-            <CmPrasanmitBoldText style={{fontSize:14,color:'white',backgroundColor:'transparent'}}>A+</CmPrasanmitBoldText>
+    return(
+      <View style={{borderBottomWidth: 1, borderBottomColor: '#DCDCDC',}}>
+      <TouchableOpacity onPress={onPress} style={styles.requestCardContainerStyle} >
+        <View style={{height:78,backgroundColor:'white',flexDirection:'row'}}>
+          <View style={{flex:19,alignItems: 'center',justifyContent: 'center',}}>
+            <Image
+              style={styles.imageRequestStyle}
+              source={{ uri: 'http://images.boomsbeat.com/data/images/full/6954/tayl-png.png' }}
+            />
+            <View style={{height:15,width:30,position:'absolute',bottom:12,left:18,backgroundColor:Colors.tabBar,borderRadius:15,alignItems: 'center',justifyContent:'center'}}>
+              <CmPrasanmitBoldText style={{fontSize:14,color:'white',backgroundColor:'transparent'}}>A+</CmPrasanmitBoldText>
+            </View>
+          </View>
+          <View style={{flex:35,justifyContent: 'center',}}>
+            <CmPrasanmitBoldText style={{fontSize:22,color:'#575757'}}>Lautner</CmPrasanmitBoldText>
+          </View>
+          <View style={{flex:14,marginRight:10,alignItems: 'center',justifyContent: 'center'}}>
+            <CmPrasanmitText style={{fontSize:18,color:'#575757'}}>รายละเอียด</CmPrasanmitText>
           </View>
         </View>
-        <View style={{flex:35,justifyContent: 'center',}}>
-          <CmPrasanmitBoldText style={{fontSize:22,color:'#575757'}}>Lautner</CmPrasanmitBoldText>
-        </View>
-        <View style={{flex:14,marginRight:10,alignItems: 'center',justifyContent: 'center'}}>
-          <CmPrasanmitText style={{fontSize:18,color:'#575757'}}>รายละเอียด</CmPrasanmitText>
-        </View>
+      </TouchableOpacity>
       </View>
-    </TouchableOpacity>
-    </View>
-  );}
-  else {
-    return (
-      <View />
-    );}
+    );
+  } else {
+    return <View />
+  }
 }
 
 const styles = StyleSheet.create({

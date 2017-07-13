@@ -31,6 +31,7 @@ export default class App extends React.Component{
         require('./assets/images/Bn.png'),
         require('./assets/images/refresh.png'),
         require('./assets/images/envelope.png'),
+        require('./assets/images/camera.png'),
       ],
       fonts: [
         FontAwesome.font,
