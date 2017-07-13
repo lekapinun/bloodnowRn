@@ -35,9 +35,6 @@ export default class Stack extends React.Component {
             this.setState({finish: true})
         })
       }
-      else {
-        this.setState({ finish: true })
-      }
     })
   }
 

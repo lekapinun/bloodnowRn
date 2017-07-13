@@ -4,6 +4,8 @@ import Colors from '../../constants/Colors';
 import { Button } from './Button';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { NavigationActions } from 'react-navigation';
+import { CmPrasanmitText } from '../CmPrasanmitText'
+import { CmPrasanmitBoldText } from '../CmPrasanmitBoldText'
 
 const ProfileBox = (props) => {
   return (
@@ -13,19 +15,22 @@ const ProfileBox = (props) => {
         source={{ uri: props.list.thumbnail_image }}
       />
       <View style={styles.detailContainer}>
-        <Text style={styles.detailTextStyle}>{props.list.title}</Text>
-        <Text style={styles.detailTextStyle}>{'กรุ๊ปเลือด' + props.list.bloodType}</Text>
-        <Button
-          title="ออกจากระบบ"
-          onPress={() => {}}
-          sizeFont={18}
-          colorFont={Colors.tabBar}
-          buttonColor="white"
-          onPress={props.logOut}
-          ButtonWidth={100}
-          ButtonHeight={40}
-        />
+        <CmPrasanmitBoldText style={styles.nameTextStyle}>Taylor</CmPrasanmitBoldText>
+        <CmPrasanmitText style={styles.detailTextStyle}>{'กรุ๊ปเลือด ' + 'A+'}</CmPrasanmitText>
+        <TouchableOpacity onPress={() => {}} style={{marginTop:15,backgroundColor:'white',borderRadius:5}}>
+          <Button
+            title="ออกจากระบบ"
+            onPress={() => {}}
+            sizeFont={24}
+            colorFont={Colors.tabBar}
+            buttonColor="transparent"
+            onPress={props.logOut}
+            ButtonWidth={120}
+            ButtonHeight={40}
+          />
+        </TouchableOpacity>
       </View>
+
       <TouchableOpacity
         style={styles.editProfileButton}
         onPress={props.onPress}
@@ -44,7 +49,7 @@ const styles = StyleSheet.create({
   profileContainer: {
     alignSelf: 'center',
     width: 350,
-    height: 150,
+    height: 175,
     backgroundColor: Colors.tabBar,
     borderRadius: 5,
     flexDirection: 'row',
@@ -52,20 +57,23 @@ const styles = StyleSheet.create({
 
   },
   imageStyle: {
-    borderRadius: 50,
-    height: 100,
-    width: 100,
+    borderRadius: 60,
+    height: 120,
+    width: 120,
     marginVertical: 20,
-    marginLeft: 30,
+    marginLeft: 25,
   },
   detailContainer: {
     flexDirection: 'column',
     marginLeft: 25,
   },
-  detailTextStyle: {
-    marginVertical: 5,
+  nameTextStyle: {
     color: 'white',
-    fontSize: 18,
+    fontSize: 40,
+  },
+  detailTextStyle: {
+    color: 'white',
+    fontSize: 22,
   },
   editProfileButton: {
     position:'absolute',

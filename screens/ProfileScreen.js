@@ -22,7 +22,7 @@ export default class ProfileScreen extends Component {
     //headerBackTitle: 'โปรไฟล์',
     headerTintColor: 'white',
     headerTitleStyle: [Font.style('CmPrasanmitBold'),{fontSize:29}],
-    headerStyle: {marginLeft:-250,backgroundColor: '#E84A5F'},
+    headerStyle: {backgroundColor: '#E84A5F'},
     gesturesEnabled: false,
   };
 
@@ -37,41 +37,18 @@ export default class ProfileScreen extends Component {
 
   render() {
     if(this.state.donateHistoryURL !== null){
-      donateHistory = <CardList url={this.state.donateHistoryURL} onPress={() => {
-        const resetAction = NavigationActions.reset(
-          {
-            index: 1,
-            actions: [
-              NavigationActions.navigate({ routeName: 'Profile'}) ,
-              NavigationActions.navigate({ routeName: 'DonateHistory'})
-            ]
-          }
-        )
-        this.props.navigation.dispatch(resetAction)
-      }}/>
+      donateHistory = <CardList url={this.state.donateHistoryURL} onPress={this._goToDetailDonate}/>
     }
     else{
       donateHistory = <View />
     }
     return(
-      <View style={{marginTop:30,}}>
+      <View style={{marginTop:15,}}>
         <ProfileBox
           list={this.state.list}
           navigation={this.props.navigation}
-          onPress={() => {
-            const resetAction = NavigationActions.reset(
-              {
-                index: 1,
-                actions: [
-                  NavigationActions.navigate({ routeName: 'Profile'}) ,
-                  NavigationActions.navigate({ routeName: 'EditProfile'})
-                ]
-              }
-            )
-            this.props.navigation.dispatch(resetAction)
-          }}
+          onPress={this._goToEditProfile}
         />
-
         <CmPrasanmitBoldText style={styles.donateHisotyHeader}>
           ประวัติการให้เลือด
         </CmPrasanmitBoldText>
@@ -79,6 +56,28 @@ export default class ProfileScreen extends Component {
         {donateHistory}
       </View>
     );
+  }
+
+  _goToEditProfile = () => {
+    const resetAction = NavigationActions.reset({
+      index: 1,
+      actions: [
+        NavigationActions.navigate({ routeName: 'Profile'}) ,
+        NavigationActions.navigate({ routeName: 'EditProfile'})
+      ]
+    })
+    this.props.navigation.dispatch(resetAction)
+  }
+
+  _goToDetailDonate = () => {
+    const resetAction = NavigationActions.reset({
+      index: 1,
+      actions: [
+        NavigationActions.navigate({ routeName: 'Profile'}) ,
+        NavigationActions.navigate({ routeName: 'DonateHistory'})
+      ]
+    })
+    this.props.navigation.dispatch(resetAction)
   }
 
 }
