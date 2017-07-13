@@ -38,6 +38,11 @@ export default class RegisterScreen3 extends Component {
       this.setState({modalDateVisible: visible});
     }
 
+    clickOkay(){
+      this.setState({modalRegisterVisible: false});
+      //this.props.navigator.push('rootNavigation');
+    }
+
 
     render() {
         let recentDate;

@@ -48,6 +48,7 @@ export default class ProfileScreen extends Component {
           list={this.state.list}
           navigation={this.props.navigation}
           onPress={this._goToEditProfile}
+          logOut={this._logout}
         />
         <CmPrasanmitBoldText style={styles.donateHisotyHeader}>
           ประวัติการให้เลือด
@@ -55,6 +56,13 @@ export default class ProfileScreen extends Component {
           {donateHistory}
       </View>
     );
+  }
+
+  _logout = () => {
+    AsyncStorage.removeItem('@loginData:key')
+    .then(() => {
+      console.log('logout')
+    })
   }
 
   _goToEditProfile = () => {

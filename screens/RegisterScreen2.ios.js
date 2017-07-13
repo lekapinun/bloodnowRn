@@ -38,8 +38,8 @@ export default class RegisterScreen2 extends Component {
 
     state = {
         name: '',
-        firstname: 'ยูกิ',
-        lastname: 'กิกิ',
+        firstname: 'โทมัส',
+        lastname: 'ฟาวโก้',
         password: '',
         blood: 'A',
         blood_type: '+',
@@ -66,21 +66,9 @@ export default class RegisterScreen2 extends Component {
       this.setState({modalVisible: visible});
     }
 
-/*     setModalDateVisible(visible) {
-      this.setState({modalDateVisible: visible});
-    } */
 
     setModalProvinceVisible(visible) {
       this.setState({modalProvinceVisible: visible});
-    }
-
-/*     setModalRegisterVisible(visible){
-      this.setState({modalProvinceVisible: visible});
-    } */
-
-    clickOkay(){
-      this.setState({modalRegisterVisible: false});
-      this.props.navigator.push('rootNavigation');
     }
 
     render() {
@@ -154,16 +142,6 @@ export default class RegisterScreen2 extends Component {
                 selectTwo = {this.state.blood_typeTemp}
                 onChangeTwo = {(itemValue2, itemIndex2) => this.setState({blood_typeTemp: itemValue2})}
             /> 
-            {/* <PickerModalDate
-                pickerVisible = {this.state.modalDateVisible}
-                onPressCancel = {() => { this.setModalDateVisible(!this.state.modalDateVisible) }}
-                onPressSubmit = {() => {
-                    this.setState({date_donate: this.state.date_donateTemp});
-                    this.setModalDateVisible(!this.state.modalDateVisible);
-                }}
-                selectOne = {this.state.date_donateTemp}
-                onChangeOne = {date => this.setState({ date_donateTemp: date })}
-            /> */}
                 <View style={{marginTop: 20}}/>
                 <Text style={{color: '#E84A5F'}}>○ ● ○</Text>
                 <RegisterInput
@@ -200,11 +178,6 @@ export default class RegisterScreen2 extends Component {
                     maxLength={4}
                     validate = {canSubmit.charAt(3) + checkInput.charAt(3) + + subValidated.charAt(3)}
                 />
-                {/* <PickerPartTouch
-                    label='บริจาคครั้งล่าสุด'
-                    onPress={() => { this.setModalDateVisible(true) }}
-                    information={recentDate}
-                /> */}
                 <View style={{marginTop: 20}}/>
                 <View style={{marginVertical:10}}>
                   <Button
@@ -275,14 +248,6 @@ export default class RegisterScreen2 extends Component {
         console.log('fail resgister');
       }
     }
-
-    async _setUserData(userData) {
-      try {
-        await AsyncStorage.setItem('@userData:key', userData);
-      }catch ( error ) {
-        console.log(error);
-      }
-    }
 }
 
 const styles = StyleSheet.create({
@@ -295,34 +260,6 @@ const styles = StyleSheet.create({
     fontSize: 25,
   }
 });
-
-const ModalRegister = ({pickerVisible,onPress}) => {
-  return(
-      <Modal
-        animationType={"fade"}
-        transparent={true}
-        visible={pickerVisible}
-      >
-        <View style={[styles.container,{flex:1,backgroundColor:'rgba(52, 52, 52, 0.3)'}]}>
-          <View style={{paddingTop:25,alignItems: 'center',height:190,width:220,backgroundColor:'white'}}>
-            <Image source={require('../assets/icons/cr.png')} style={{height:70,width:70}}/>
-            <Text style={[Font.style('CmPrasanmitBold'),{paddingTop:5,fontSize:27,color: '#4ED239'}]}>ลงทะเบียนสำเร็จ</Text>
-            <View style={{borderBottomColor: '#B2ECA9', width:200, marginTop:20,borderBottomWidth: 1,}}/>
-            <View>
-              <Button
-                onPress={onPress}
-                buttonColor='white'
-                title='ตกลง'
-                sizeFont={20}
-                ButtonWidth={200}
-                colorFont='#898989'
-              />
-            </View> 
-          </View>
-        </View>
-      </Modal>
-  );
-}
 
 String.prototype.replaceAt=function(index, replacement) {
   return this.substr(0, index) + replacement+ this.substr(index + replacement.length);

@@ -101,7 +101,7 @@ export default class RequestBloodDetailScreen extends Component {
     }
 
     _renderButtonRe() {
-      if(this.state.date_rem > 3 && this.state.complete === false){
+      if(this.state.date_rem >= 3 && this.state.complete === false){
         return (
           <View style={[styles.borderBottom,{marginLeft:10,marginRight:10}]}>
             <TouchableOpacity 

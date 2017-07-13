@@ -18,11 +18,11 @@ export default class RegisterScreen extends Component {
   };
 
     state = {
-        name: 'yuki',
+        name: 'Thomas',
         password: '123456',
         password_confirmation: '123456',
-        phone: '08012341',
-        email: 'yuki@gmial.com',
+        phone: '0801239340',
+        email: 'thomas@gmial.com',
         subValidated: '00000',
         pressGotoRegis2: false,
     }
@@ -132,8 +132,7 @@ export default class RegisterScreen extends Component {
       const api = addressServer.APIRequest.toString() + '/api/auth/check';
       axios(api, { method: 'post', data : this.state })
         .then(response => {
-          //console.log(response)
-          if( response.status !== 200){
+          if( response.data !== 'ok'){
             if( response.data.name !== undefined){
               this.setState({subValidated: this.state.subValidated.replaceAt(0,'1')})
             }
@@ -143,23 +142,14 @@ export default class RegisterScreen extends Component {
             if( response.data.phone !== undefined){
               this.setState({subValidated: this.state.subValidated.replaceAt(3,'1')})
             }
+            this.setState({pressGotoRegis2 : false})
           } else {
             console.log('clear')
             AsyncStorage.setItem('@RegisData:key', JSON.stringify(this.state))
             .then(() => {
               const { navigate } = this.props.navigation;
               navigate('Register2')
-              /* const resetAction = NavigationActions.reset(
-              {
-                index: 2,
-                actions: [ 
-                    NavigationActions.navigate({ routeName: 'Login'}) ,
-                    NavigationActions.navigate({ routeName: 'Register'}), 
-                    NavigationActions.navigate({ routeName: 'Register2'})
-                  ]
-                }
-              )
-              this.props.navigation.dispatch(resetAction) */
+              this.setState({pressGotoRegis2 : false})
             })
             .catch((error) => {
               console.log(error);

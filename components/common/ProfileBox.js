@@ -20,7 +20,6 @@ const ProfileBox = (props) => {
         <TouchableOpacity onPress={() => {}} style={{marginTop:15,backgroundColor:'white',borderRadius:5}}>
           <Button
             title="ออกจากระบบ"
-            onPress={() => {}}
             sizeFont={24}
             colorFont={Colors.tabBar}
             buttonColor="transparent"

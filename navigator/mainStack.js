@@ -27,7 +27,7 @@ export default class Stack extends React.Component {
         {
           console.log(response.data)
           //this.saveUserData(response.data)
-          this.setState({home: 'Login'})
+          this.setState({home: 'Bloodnow'})
           this.setState({finish: true})
         })
         .catch((error) => {

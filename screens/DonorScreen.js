@@ -42,7 +42,6 @@ export default class DonorScreen extends Component {
     }
 
     componentWillMount() {
-      console.log('NEWNEWNEWNEWNEWNNEWENNEWNENWENEN')
       AsyncStorage.getItem('@loginData:key')
       .then((loginStatus) => {
         const temp = JSON.parse(loginStatus)
@@ -54,7 +53,9 @@ export default class DonorScreen extends Component {
           headers: {'Authorization' : 'Bearer ' + this.state.token},
         })
         .then((response) => {
+          console.log('adsfdsafsdafdsafdasf')
           console.log(response.data)
+          console.log('adsfdsafsdafdsafdasf')
           if(response.data.user !== null){
             this.setState({req: response.data.user[0]})
           }  
@@ -120,6 +121,7 @@ export default class DonorScreen extends Component {
                 onPress={this._goToDetail}
                 visible={this.state.readyDonate}
                 gropBlood={this.state.req.patient_blood + this.state.req.patient_blood_type}
+                ready={this.state.nextReady <= 0}
               />
 
             </View>
