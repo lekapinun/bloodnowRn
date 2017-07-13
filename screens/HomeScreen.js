@@ -21,7 +21,7 @@ import Colors from '../constants/Colors';
 export default class HomeScreen extends Component {
     static navigationOptions = props => {
       return {
-        tabBarLabel: props.screenProps
+        tabBarLabel: props.navigation.state.key
       }
     }
 
@@ -29,15 +29,13 @@ export default class HomeScreen extends Component {
       test: '',
     }
     componentWillMount() {
-      console.log(this.props.navigation.state.params);
-      this.setState({test: this.props.navigation.state.params});
     }
 
     render() {
         return(
             <View style={{marginTop:30, height: 100}}>
               <TouchableOpacity onPress={() => console.log(this.props)}>
-                <Text style={{fontSize: 23}}>{this.props.screenProps+ "Group"}</Text>
+                <Text style={{fontSize: 23}}>{this.props.navigation.state.key+ "Group"}</Text>
               </TouchableOpacity>
               </View>
         );

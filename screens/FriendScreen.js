@@ -29,22 +29,16 @@ export default class FriendScreen extends Component {
     render() {
       const FriendTab = TabNavigator(
         {
-          ABBB: {screen: HomeScreen},
-          BAAA: {screen: HomeScreen},
+          ALL: {screen: HomeScreen},
+          A: {screen: HomeScreen},
+          B: {screen: HomeScreen},
+          AB: {screen: HomeScreen},
+          O: {screen: HomeScreen},
         },{
-          initialRouteName: 'ABBB',
-          tabBarOptions: {
-            showLabel: true,
-            style: {
-              backgroundColor: 'white',
-              shadowColor: 'grey',
-              shadowOffset: {width: 2, height: -1},
-              shadowOpacity: 0.5,
-            },
-          },
-          tabBarPosition: 'top',
-          swipeEnabled: true,
-          animationEnabled: true,
+          ...TabNavigator.Presets.AndroidTopTabs,
+          //tabBarPosition: 'top',
+          //swipeEnabled: true,
+          //animationEnabled: true,
         });
 
         return(
