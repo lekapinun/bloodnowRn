@@ -33,6 +33,7 @@ const ProfileBox = (props) => {
       <TouchableOpacity
         style={styles.editProfileButton}
         onPress={props.onPress}
+        disabled={props.disableEdit}
       >
         <SimpleLineIcons
             name="note"

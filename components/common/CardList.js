@@ -16,10 +16,10 @@ export class CardList extends Component{
   }
 
   componentWillMount() {
-     axios.get(this.props.url)
-    .then(response => this.setState({ list: response.data,loading: true })); 
-    /* console.log(addressServer.APIRequest.toString() + '/api/donate');
-    const api = addressServer.APIRequest.toString() + '/api/donate';
+     /* axios.get(this.props.url)
+    .then(response => this.setState({ list: response.data,loading: true }));  */
+     console.log(addressServer.APIRequest.toString() + '/api/showdonate');
+    const api = addressServer.APIRequest.toString() + '/api/showdonate';
     axios(api,{ method: 'get', headers: {'Authorization' : 'Bearer ' + this.props.token} })
     .then(response =>
     {
@@ -30,7 +30,7 @@ export class CardList extends Component{
     .catch((error) =>  {
       console.log(error + ' @CardList')
       this.setState({ loading: false })
-    }) */
+    }) 
     
   }
 
@@ -38,8 +38,8 @@ export class CardList extends Component{
     //console.log(this.state.list)
       return this.state.list.map(list =>
        <CardDetail
-         key = {list.title}
-         list = {list}
+         key = {list.roomreq_id}
+         name = {list.name}
          visible = {true}
          onPress = {this._Test}
        />
@@ -81,7 +81,7 @@ export class CardList extends Component{
   }
 }
 
-const CardDetail = ({ list, onPress, visible, gropBlood }) => {
+const CardDetail = ({ name, onPress, visible, gropBlood }) => {
   if(visible){
     return(
       <View style={{borderBottomWidth: 1, borderBottomColor: '#DCDCDC',}}>
@@ -92,12 +92,12 @@ const CardDetail = ({ list, onPress, visible, gropBlood }) => {
               style={styles.imageRequestStyle}
               source={{ uri: 'http://images.boomsbeat.com/data/images/full/6954/tayl-png.png' }}
             />
-            <View style={{height:15,width:30,position:'absolute',bottom:12,left:18,backgroundColor:Colors.tabBar,borderRadius:15,alignItems: 'center',justifyContent:'center'}}>
+            {/* <View style={{height:15,width:30,position:'absolute',bottom:12,left:18,backgroundColor:Colors.tabBar,borderRadius:15,alignItems: 'center',justifyContent:'center'}}>
               <CmPrasanmitBoldText style={{fontSize:14,color:'white',backgroundColor:'transparent'}}>A+</CmPrasanmitBoldText>
-            </View>
+            </View> */}
           </View>
           <View style={{flex:35,justifyContent: 'center',}}>
-            <CmPrasanmitBoldText style={{fontSize:22,color:'#575757'}}>Lautner</CmPrasanmitBoldText>
+            <CmPrasanmitBoldText style={{fontSize:22,color:'#575757'}}>{name}</CmPrasanmitBoldText>
           </View>
           <View style={{flex:14,marginRight:10,alignItems: 'center',justifyContent: 'center'}}>
             <CmPrasanmitText style={{fontSize:18,color:'#575757'}}>รายละเอียด</CmPrasanmitText>

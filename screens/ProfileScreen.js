@@ -57,7 +57,8 @@ export default class ProfileScreen extends Component {
     user: '',
     donateHistoryURL: "http://rallycoding.herokuapp.com/api/music_albums",
     token: '',
-    loading: true
+    loading: true,
+    pressEdit: false,
   }
 
   render() {
@@ -77,6 +78,7 @@ export default class ProfileScreen extends Component {
             navigation={this.props.navigation}
             onPress={this._goToEditProfile}
             logOut={this._logout}
+            disableEdit={this.state.pressEdit}
           />
           <CmPrasanmitBoldText style={styles.donateHisotyHeader}>
             ประวัติการให้เลือด
@@ -95,14 +97,20 @@ export default class ProfileScreen extends Component {
   }
 
   _goToEditProfile = () => {
-    const resetAction = NavigationActions.reset({
+    this.setState({pressEdit: true})
+    const { navigate } = this.props.navigation;
+    navigate('EditProfile')
+    setTimeout(() => {
+       this.setState({pressEdit: false})
+    },1000)
+    /* const resetAction = NavigationActions.reset({
       index: 1,
       actions: [
         NavigationActions.navigate({ routeName: 'Profile'}) ,
         NavigationActions.navigate({ routeName: 'EditProfile'})
       ]
     })
-    this.props.navigation.dispatch(resetAction)
+    this.props.navigation.dispatch(resetAction) */
   }
 
   _goToDetailDonate = () => {
