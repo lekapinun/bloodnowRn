@@ -5,7 +5,6 @@ import Colors from '../../constants/Colors';
 import { NavigationActions } from 'react-navigation'
 import { CmPrasanmitText } from '../CmPrasanmitText'
 import { CmPrasanmitBoldText } from '../CmPrasanmitBoldText'
-import { DonateHistoryCard } from './DonateHistoryCard';
 import addressServer from '../../utilities/addressServer';
 
 export class CardList extends Component{
@@ -30,8 +29,8 @@ export class CardList extends Component{
     .catch((error) =>  {
       console.log(error + ' @CardList')
       this.setState({ loading: false })
-    }) 
-    
+    })
+
   }
 
   renderList() {
@@ -44,7 +43,7 @@ export class CardList extends Component{
          onPress = {this._Test}
        />
        //<CardDetail key={list.title} list={list} visible={true}/>
-     ); 
+     );
    }
 
    _Test = () => {
