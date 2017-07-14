@@ -56,12 +56,6 @@ export default class ProfileScreen extends Component {
   state = {
     user: '',
     donateHistoryURL: "http://rallycoding.herokuapp.com/api/music_albums",
-    list: {
-      title: "test",
-      bloodType: "O",
-      thumbnail_image: "https://cache.gmo2.sistacafe.com/images/uploads/summary/image/1484/1437134731-taylor-swift-009.jpg"
-    },
-=======
     token: '',
     loading: true,
     pressEdit: false,
@@ -69,25 +63,11 @@ export default class ProfileScreen extends Component {
 
   render() {
     if(this.state.donateHistoryURL !== null){
-      donateHistory = <CardList url={this.state.donateHistoryURL} onPress={this._goToDetailDonate} navi={this.props.navigation}/>
       donateHistory = <CardList token={this.state.token} url={this.state.donateHistoryURL} onPress={this._goToDetailDonate} navi={this.props.navigation}/>
     }
     else{
       donateHistory = <View />
     }
-    return(
-      <View style={{paddingTop:15,flex:1,backgroundColor:'white'}}>
-        <ProfileBox
-          list={this.state.list}
-          navigation={this.props.navigation}
-          onPress={this._goToEditProfile}
-        />
-        <CmPrasanmitBoldText style={styles.donateHisotyHeader}>
-          ประวัติการให้เลือด
-        </CmPrasanmitBoldText>
-          {donateHistory}
-      </View>
-    );
     if( this.state.loading) {
       return <Expo.AppLoading />
     } else {

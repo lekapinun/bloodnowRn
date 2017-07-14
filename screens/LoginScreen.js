@@ -32,7 +32,7 @@ export default class LoginScreen extends Component {
                 console.log(addressServer.APIRequest.toString() + '/api/index');
                 const api = addressServer.APIRequest.toString() + '/api/index';
                 axios(api,{ headers: {'Authorization' : 'Bearer ' + checkLogin.token},})
-                .then(response =>
+                .then(response => 
                 {
                     console.log(response.data)
                     this.saveUserData(response.data)
@@ -42,14 +42,14 @@ export default class LoginScreen extends Component {
             }
         })
     }*/
-
+    
 
     async _checkLogin() {
       try {
             const loginStatus = await AsyncStorage.getItem('@loginData:key');
             if (loginStatus.uesr !== null) {
                 console.log(loginStatus)
-                this._goToApp()
+                this._goToApp() 
             }
         } catch ( error ) {
             console.log('error');
@@ -96,7 +96,7 @@ export default class LoginScreen extends Component {
 
     render() {
         return(
-            <ScrollView style={{flex: 1,flexDirection: 'column', backgroundColor: '#FAFAFA'}}>
+            <ScrollView style={{flex: 1,flexDirection: 'column', backgroundColor: '#FAFAFA'}}> 
             <View style={{flex: 1,marginTop:80,flexDirection: 'column',justifyContent: 'center',alignItems: 'center', backgroundColor: '#FAFAFA'}}>
                 <Image source={require('../assets/icons/logo.png')} style={{width:190,height:90}}/>
                 <View><Text style={[Font.style('CmPrasanmit'),styles.caption]}>ม า ก ก ว่ า ก า ร ใ ห้ เ ลื อ ด</Text></View>
@@ -142,7 +142,7 @@ export default class LoginScreen extends Component {
                     </View>
                     {this.renderRegisButton()}
                 </View>
-            </View>
+            </View> 
             </ScrollView >
         );
     }
@@ -191,15 +191,15 @@ export default class LoginScreen extends Component {
         })
         .catch((error) => {
             console.warn(error);
-        });
+        }); 
     };
 
     _goToApp = () => {
         const resetAction = NavigationActions.reset(
             {
                 index: 0,
-                actions: [
-                    NavigationActions.navigate({ routeName: 'Bloodnow'})
+                actions: [ 
+                    NavigationActions.navigate({ routeName: 'Bloodnow'})   
                 ]
             }
         )
@@ -216,9 +216,9 @@ export default class LoginScreen extends Component {
         const resetAction = NavigationActions.reset(
             {
                 index: 1,
-                actions: [
+                actions: [ 
                     NavigationActions.navigate({ routeName: 'Login'}) ,
-                    NavigationActions.navigate({ routeName: 'Register'})
+                    NavigationActions.navigate({ routeName: 'Register'})   
                 ]
             }
         )

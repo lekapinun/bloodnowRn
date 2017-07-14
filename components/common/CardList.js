@@ -15,15 +15,6 @@ export class CardList extends Component{
   }
 
   componentWillMount() {
-    axios.get(this.props.url)
-    .then(response => this.setState({ list: response.data,loading: true }));
-  }
-
-  renderList() {
-     return this.state.list.map(list =>
-       <CardDetail
-         key = {list.title}
-         list = {list}
      /* axios.get(this.props.url)
     .then(response => this.setState({ list: response.data,loading: true }));  */
      console.log(addressServer.APIRequest.toString() + '/api/showdonate');
@@ -51,6 +42,7 @@ export class CardList extends Component{
          visible = {true}
          onPress = {this._Test}
        />
+       //<CardDetail key={list.title} list={list} visible={true}/>
      );
    }
 
@@ -71,7 +63,6 @@ export class CardList extends Component{
         <ScrollView style={styles.requestListContainerStyle}>
           {this.renderList()}
         </ScrollView>
-=======
         /* <ScrollView style={styles.requestListContainerStyle}>
         <View style={{borderBottomWidth: 1, borderBottomColor: '#DCDCDC',}}>
           <View style={[styles.requestCardContainerStyle,{marginLeft:28,justifyContent: 'center'}]}>
@@ -100,12 +91,6 @@ const CardDetail = ({ name, onPress, visible, gropBlood }) => {
               style={styles.imageRequestStyle}
               source={{ uri: 'http://images.boomsbeat.com/data/images/full/6954/tayl-png.png' }}
             />
-            <View style={{height:15,width:30,position:'absolute',bottom:12,left:18,backgroundColor:Colors.tabBar,borderRadius:15,alignItems: 'center',justifyContent:'center'}}>
-              <CmPrasanmitBoldText style={{fontSize:14,color:'white',backgroundColor:'transparent'}}>A+</CmPrasanmitBoldText>
-            </View>
-          </View>
-          <View style={{flex:35,justifyContent: 'center',}}>
-            <CmPrasanmitBoldText style={{fontSize:22,color:'#575757'}}>Lautner</CmPrasanmitBoldText>
             {/* <View style={{height:15,width:30,position:'absolute',bottom:12,left:18,backgroundColor:Colors.tabBar,borderRadius:15,alignItems: 'center',justifyContent:'center'}}>
               <CmPrasanmitBoldText style={{fontSize:14,color:'white',backgroundColor:'transparent'}}>A+</CmPrasanmitBoldText>
             </View> */}
