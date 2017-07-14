@@ -11,13 +11,14 @@ export class CardList extends Component{
 
   state = {
     list: [],
-    loading: false
+    loading: false,
+    pressDetail: false,
   }
 
   componentWillMount() {
      /* axios.get(this.props.url)
     .then(response => this.setState({ list: response.data,loading: true }));  */
-     console.log(addressServer.APIRequest.toString() + '/api/showdonate');
+    console.log(addressServer.APIRequest.toString() + '/api/showdonate');
     const api = addressServer.APIRequest.toString() + '/api/showdonate';
     axios(api,{ method: 'get', headers: {'Authorization' : 'Bearer ' + this.props.token} })
     .then(response =>
@@ -28,7 +29,7 @@ export class CardList extends Component{
     })
     .catch((error) =>  {
       console.log(error + ' @CardList')
-      this.setState({ loading: false })
+      this.setState({ loading: true })
     })
 
   }
@@ -40,37 +41,42 @@ export class CardList extends Component{
          key = {list.roomreq_id}
          name = {list.name}
          visible = {true}
-         onPress = {this._Test}
+         onPress = {() => this._goToDetail(list.roomreq_id)}
+         disable={this.state.pressDetail}
        />
        //<CardDetail key={list.title} list={list} visible={true}/>
      );
    }
 
-   _Test = () => {
-    const resetAction = NavigationActions.reset({
-      index: 1,
-      actions: [
-        NavigationActions.navigate({ routeName: 'Profile'}) ,
-        NavigationActions.navigate({ routeName: 'DonateHistory'})
-      ]
-    })
+   _goToDetail = (detail_id) => {
+    this.setState({pressDetail : true})
+    const resetAction = NavigationActions.navigate({routeName: 'DonateHistory',params: {'detail_id' : detail_id,'token' : this.props.token}})
     this.props.navi.dispatch(resetAction)
+    setTimeout(() => {
+      this.setState({pressDetail : false})
+    },1000) 
    }
 
   render() {
     if(this.state.loading) {
-      return(
-        <ScrollView style={styles.requestListContainerStyle}>
-          {this.renderList()}
-        </ScrollView>
-        /* <ScrollView style={styles.requestListContainerStyle}>
-        <View style={{borderBottomWidth: 1, borderBottomColor: '#DCDCDC',}}>
-          <View style={[styles.requestCardContainerStyle,{marginLeft:28,justifyContent: 'center'}]}>
-            <CmPrasanmitText style={{fontSize:22,color:'#575757'}}> ไม่มีรายการการให้เลือด</CmPrasanmitText>
+      if( this.state.list.length === 0 ) {
+        return(
+          <ScrollView style={styles.requestListContainerStyle}>
+          <View style={{borderBottomWidth: 1, borderBottomColor: '#DCDCDC',}}>
+            <View style={[styles.requestCardContainerStyle,{marginLeft:28,justifyContent: 'center'}]}>
+              <CmPrasanmitText style={{fontSize:22,color:'#575757'}}> ไม่มีรายการการให้เลือด</CmPrasanmitText>
+            </View>
           </View>
-        </View>
-        </ScrollView> */
-      )
+          </ScrollView>
+        )
+      } else {
+        return(
+          <ScrollView style={styles.requestListContainerStyle}>
+            {this.renderList()}
+          </ScrollView>
+        )
+      }
+
     }
     return (
       <ScrollView style={styles.requestListContainerStyle}>
@@ -80,23 +86,20 @@ export class CardList extends Component{
   }
 }
 
-const CardDetail = ({ name, onPress, visible, gropBlood }) => {
+const CardDetail = ({ name, onPress, visible, disable }) => {
   if(visible){
     return(
       <View style={{borderBottomWidth: 1, borderBottomColor: '#DCDCDC',}}>
-      <TouchableOpacity onPress={onPress} style={styles.requestCardContainerStyle} >
+      <TouchableOpacity disabled={disable} onPress={onPress} style={styles.requestCardContainerStyle} >
         <View style={{height:78,backgroundColor:'white',flexDirection:'row'}}>
           <View style={{flex:19,alignItems: 'center',justifyContent: 'center',}}>
             <Image
               style={styles.imageRequestStyle}
               source={{ uri: 'http://images.boomsbeat.com/data/images/full/6954/tayl-png.png' }}
             />
-            {/* <View style={{height:15,width:30,position:'absolute',bottom:12,left:18,backgroundColor:Colors.tabBar,borderRadius:15,alignItems: 'center',justifyContent:'center'}}>
-              <CmPrasanmitBoldText style={{fontSize:14,color:'white',backgroundColor:'transparent'}}>A+</CmPrasanmitBoldText>
-            </View> */}
           </View>
           <View style={{flex:35,justifyContent: 'center',}}>
-            <CmPrasanmitBoldText style={{fontSize:22,color:'#575757'}}>{name}</CmPrasanmitBoldText>
+            <CmPrasanmitBoldText style={{fontSize:22,color:'#575757'}}>{capitalizeFirstLetter(name)}</CmPrasanmitBoldText>
           </View>
           <View style={{flex:14,marginRight:10,alignItems: 'center',justifyContent: 'center'}}>
             <CmPrasanmitText style={{fontSize:18,color:'#575757'}}>รายละเอียด</CmPrasanmitText>
@@ -136,3 +139,7 @@ const styles = StyleSheet.create({
     backgroundColor:'white'
   },
 });
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}

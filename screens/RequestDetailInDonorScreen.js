@@ -29,8 +29,8 @@ export default class RequestDetailInDonorScreen extends Component {
       .then((loginStatus) => {
         const temp = JSON.parse(loginStatus)
         this.state.token = temp.token
-        console.log(addressServer.APIRequest + '/api/donate/detail');
-        const api = addressServer.APIRequest + '/api/donate/detail';
+        console.log(addressServer.APIRequest + '/api/req/detail');
+        const api = addressServer.APIRequest + '/api/req/detail';
         console.log(this.state.detail_id)
         axios(api,{ 
           method: 'post', 
