@@ -6,6 +6,7 @@ import { NavigationActions } from 'react-navigation'
 import { CmPrasanmitText } from '../CmPrasanmitText'
 import { CmPrasanmitBoldText } from '../CmPrasanmitBoldText'
 import { DonateHistoryCard } from './DonateHistoryCard';
+import addressServer from '../../utilities/addressServer';
 
 export class CardList extends Component{
 
@@ -15,13 +16,27 @@ export class CardList extends Component{
   }
 
   componentWillMount() {
-    axios.get(this.props.url)
-    .then(response => this.setState({ list: response.data,loading: true }));
+     axios.get(this.props.url)
+    .then(response => this.setState({ list: response.data,loading: true })); 
+    /* console.log(addressServer.APIRequest.toString() + '/api/donate');
+    const api = addressServer.APIRequest.toString() + '/api/donate';
+    axios(api,{ method: 'get', headers: {'Authorization' : 'Bearer ' + this.props.token} })
+    .then(response =>
+    {
+      console.log('asdfjkdsaknfmjdsa')
+      console.log(response.data)
+      this.setState({ list: response.data,loading: true })
+    })
+    .catch((error) =>  {
+      console.log(error + ' @CardList')
+      this.setState({ loading: false })
+    }) */
+    
   }
 
   renderList() {
     //console.log(this.state.list)
-     return this.state.list.map(list =>
+      return this.state.list.map(list =>
        <CardDetail
          key = {list.title}
          list = {list}
@@ -29,7 +44,7 @@ export class CardList extends Component{
          onPress = {this._Test}
        />
        //<CardDetail key={list.title} list={list} visible={true}/>
-     );
+     ); 
    }
 
    _Test = () => {

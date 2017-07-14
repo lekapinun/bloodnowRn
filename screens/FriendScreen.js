@@ -69,7 +69,7 @@ export default class FriendScreen extends Component {
     }
 
     _addFriend = (friends) => {
-        console.log(friends)
+        //console.log(friends)
         AsyncStorage.getItem('@loginData:key')
         .then((loginStatus) => {
             const temp = JSON.parse(loginStatus)
@@ -82,20 +82,14 @@ export default class FriendScreen extends Component {
                 data : { 'friend' : friends}
             })
             .then((response) => {
-                console.log('sadfadsfdsafdasfadsf')
                 console.log(response.data)
-                console.log('sadfadsfdsafdasfadsf')
             })
             .catch((error) => {
-                console.log('sadfadsfdsafdasfadsf')
                 console.log(error)
-                console.log('sadfadsfdsafdasfadsf')
             }) 
         })
         .catch((error) => {
-            console.log('sadfadsfdsafdasfadsf')
             console.log(error)
-            console.log('sadfadsfdsafdasfadsf')
         })
     }
 
