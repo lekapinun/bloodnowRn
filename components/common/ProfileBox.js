@@ -12,15 +12,14 @@ const ProfileBox = (props) => {
     <View style={styles.profileContainer}>
       <Image
         style={styles.imageStyle}
-        source={{ uri: props.list.thumbnail_image }}
+        source={{ uri: 'https://cache.gmo2.sistacafe.com/images/uploads/summary/image/1484/1437134731-taylor-swift-009.jpg' }}
       />
       <View style={styles.detailContainer}>
-        <CmPrasanmitBoldText style={styles.nameTextStyle}>Taylor</CmPrasanmitBoldText>
-        <CmPrasanmitText style={styles.detailTextStyle}>{'กรุ๊ปเลือด ' + 'A+'}</CmPrasanmitText>
+        <CmPrasanmitBoldText style={styles.nameTextStyle}>{props.user.name}</CmPrasanmitBoldText>
+        <CmPrasanmitText style={styles.detailTextStyle}>{'กรุ๊ปเลือด ' + props.user.blood + props.user.blood_type}</CmPrasanmitText>
         <TouchableOpacity onPress={() => {}} style={{marginTop:15,backgroundColor:'white',borderRadius:5}}>
           <Button
             title="ออกจากระบบ"
-            onPress={() => {}}
             sizeFont={24}
             colorFont={Colors.tabBar}
             buttonColor="transparent"
@@ -34,6 +33,7 @@ const ProfileBox = (props) => {
       <TouchableOpacity
         style={styles.editProfileButton}
         onPress={props.onPress}
+        disabled={props.disableEdit}
       >
         <SimpleLineIcons
             name="note"

@@ -4,6 +4,8 @@ import { Font } from 'expo';
 import { NavigatorBackground, Button, RegisterInput, PickerPartTouch, PickerModalDate, PickerModalBlood, PickerModalProvince } from '../components/common';
 import { NavigationActions } from 'react-navigation'
 
+import axios from 'axios'
+import Colors from '../constants/Colors'
 import addressServer from '../utilities/addressServer';
 
 export default class RegisterScreen extends Component {
@@ -17,12 +19,13 @@ export default class RegisterScreen extends Component {
   };
 
     state = {
-        name: 'yuki',
-        password: '123456',
-        password_confirmation: '123456',
-        phone: '08012341',
-        email: 'yuki@gmial.com',
-        subValidated: '00000'
+        name: '',
+        password: '',
+        password_confirmation: '',
+        phone: '',
+        email: '',
+        subValidated: '00000',
+        pressGotoRegis2: false,
     }
 
 
@@ -39,36 +42,12 @@ export default class RegisterScreen extends Component {
       (this.state.password_confirmation !== '' ) ? checkInput = checkInput.replaceAt(2,'1') : checkInput = checkInput.replaceAt(2,'0');
       (this.state.phone !== '' ) ? checkInput = checkInput.replaceAt(3,'1') : checkInput = checkInput.replaceAt(3,'0') ;
       (this.state.email !== '' ) ? checkInput = checkInput.replaceAt(4,'1') : checkInput = checkInput.replaceAt(4,'0') ;
-      if(canSubmit.search("0") === -1){
-        ButtonSubmit = 
-          <Button
-            title='ถัดไป'
-            buttonColor='#E84A5F'
-            sizeFont={25}
-            onPress={this._goToRegister2}
-            ButtonWidth={300}
-            ButtonHeight={50}
-            colorFont='white'
-          />;
-      }else{
-        ButtonSubmit = 
-          <Button
-            touchable={true}
-            title='ถัดไป'
-            buttonColor='#F6B6BF'
-            sizeFont={25}
-            onPress={() => {}}
-            ButtonWidth={300}
-            ButtonHeight={50}
-            colorFont='white'
-          />;
-      }
 
       return(
         <ScrollView style={{flex: 1,flexDirection: 'column', backgroundColor: '#FAFAFA'}}>       
         <View style={{flex: 1,flexDirection: 'column',alignItems: 'center', backgroundColor: '#FAFAFA'}}>
           <View style={{marginTop: 20}}/>
-          <Text style={{color: '#E84A5F'}}>● ○</Text>
+          <Text style={{color: '#E84A5F'}}>● ○ ○</Text>
           <RegisterInput
             label='ชื่อผู้ใช้'
             value={this.state.name}
@@ -130,15 +109,25 @@ export default class RegisterScreen extends Component {
             subvalidate = 'เบอร์โทรศัพท์นี้มีอยู่แล้ว'
           />
           <View style={{marginTop: 20}}/>
-          <View style={{marginTop:10}}></View>
-          {ButtonSubmit}
-          <View style={{marginTop:10}}></View>
+          <View style={{marginVertical:10}}>
+            <Button
+              title='ถัดไป'
+              buttonColor={canSubmit.search("0") === -1 ? Colors.tabBar : '#F6B6BF'}
+              sizeFont={25}
+              onPress={canSubmit.search("0") === -1 ? this._goToRegister2: null}
+              ButtonWidth={300}
+              ButtonHeight={50}
+              colorFont='white'
+              touchable={canSubmit.search("0") === -1 ? this.state.pressGotoRegis2 : true}
+            />
+          </View>
         </View>
         </ScrollView>
       );
     }
     
     _goToRegister2 = () => {
+      this.setState({pressGotoRegis2 : true})
       console.log(this.state);
 /*      console.log(addressServer.IPMac.toString() + '/checkregis');
       const api = addressServer.IPMac.toString() + '/checkregis';
@@ -159,6 +148,14 @@ export default class RegisterScreen extends Component {
           if(responseText.length > 0){
             console.log('fail')
             if(responseText.search('The name has already been taken.') !== -1){
+=======
+      console.log(addressServer.APIRequest.toString() + '/api/auth/check');
+      const api = addressServer.APIRequest.toString() + '/api/auth/check';
+      axios(api, { method: 'post', data : this.state })
+        .then(response => {
+          if( response.data !== 'ok'){
+            if( response.data.name !== undefined){
+>>>>>>> master
               this.setState({subValidated: this.state.subValidated.replaceAt(0,'1')})
             }
             if(responseText.search('The email has already been taken.') !== -1){
@@ -167,6 +164,7 @@ export default class RegisterScreen extends Component {
             if(responseText.search('The phone has already been taken.') !== -1){
               this.setState({subValidated: this.state.subValidated.replaceAt(3,'1')})
             }
+<<<<<<< HEAD
           } else {*/
             AsyncStorage.setItem('@RegisData:key', JSON.stringify(this.state))
             .then(() => {
@@ -183,6 +181,16 @@ export default class RegisterScreen extends Component {
                 }
               )
               this.props.navigation.dispatch(resetAction)
+=======
+            this.setState({pressGotoRegis2 : false})
+          } else {
+            console.log('clear')
+            AsyncStorage.setItem('@RegisData:key', JSON.stringify(this.state))
+            .then(() => {
+              const { navigate } = this.props.navigation;
+              navigate('Register2')
+              this.setState({pressGotoRegis2 : false})
+>>>>>>> master
             })
             .catch((error) => {
               console.log(error);

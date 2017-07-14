@@ -15,6 +15,7 @@ export default class LoginScreen extends Component {
         password: '',
         error: false,
         loadRegis: false,
+        pressRegis: false
     };
 
     static navigationOptions = {
@@ -85,6 +86,7 @@ export default class LoginScreen extends Component {
                     ButtonWidth={260}
                     ButtonHeight={50}
                     colorFont='white'
+                    touchable={this.state.pressRegis}
                 />
                 <View style={{marginTop:10}}></View>
                 </View>
@@ -206,6 +208,7 @@ export default class LoginScreen extends Component {
 
 
     _register = () => {
+        this.setState({ pressRegis: true})
         /*this.setState({loadRegis: true})
         const { navigate } = this.props.navigation;
         navigate('Register')

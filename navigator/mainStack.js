@@ -5,6 +5,7 @@ import { StackNavigator } from 'react-navigation';
 import LoginScreen from '../screens/LoginScreen'
 import RegisterScreen from '../screens/RegisterScreen'
 import RegisterScreen2 from '../screens/RegisterScreen2'
+import RegisterScreen3 from '../screens/RegisterScreen3'
 import Tab from './TabNavigator.js'
 import axios from 'axios'
 import addressServer from '../utilities/addressServer';
@@ -29,15 +30,18 @@ export default class Stack extends React.Component {
           this.setState({home: 'Bloodnow'})
           this.setState({finish: true})
         })
-        .catch((error) =>
-        {
+        .catch((error) => {
             console.log(error)
             this.setState({finish: true})
         })
       }
       else {
+      } else {
         this.setState({finish: true})
       }
+    })
+    .catch((error) => {
+      console.log(error)
     })
   }
 
@@ -52,6 +56,7 @@ export default class Stack extends React.Component {
       Login : {screen: LoginScreen},
       Register : {screen: RegisterScreen},
       Register2: {screen: RegisterScreen2},
+      Register3: {screen: RegisterScreen3},
       Bloodnow : {screen: Tab},
     },{
         initialRouteName: this.state.home,

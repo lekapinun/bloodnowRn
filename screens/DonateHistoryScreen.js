@@ -61,8 +61,13 @@ export default class DonateHistoryScreen extends Component {
               <CmPrasanmitText  style={{marginLeft: 10, fontSize: 25, height:25, color: 'black',}}>{this.state.receiver.name}</CmPrasanmitText>
             </View>
             <CmPrasanmitText style={{ marginLeft: 20, fontSize: 18, color: 'grey' }}>
+              {/* <CmPrasanmitText  style={{marginLeft: 20, fontSize: 25, height:25, color: 'black',}}>คุณ</CmPrasanmitText>
+              <CmPrasanmitText style={{marginLeft: 0, fontSize: 25, height:25, color: 'black',}}>ตอบรับ </CmPrasanmitText> */}
+              <CmPrasanmitText  style={{marginLeft: 20, fontSize: 25, height:25, color: 'black',}}>{this.state.receiver.name}</CmPrasanmitText>
+            </View>
+            {/* <CmPrasanmitText style={{ marginLeft: 20, fontSize: 18, color: 'grey' }}>
               {this.state.patient.patient_timestamp}
-            </CmPrasanmitText>
+            </CmPrasanmitText> */}
           </View>
         </View>
 

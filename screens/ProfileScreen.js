@@ -9,12 +9,14 @@ import {
   View,
   AsyncStorage
 } from 'react-native';
-import { Font } from 'expo'
+import Expo,{ Font } from 'expo'
 import { NavigationActions } from 'react-navigation';
 import { TestButton, NavigatorBackground,ExNavigationState, ProfileBox, CardList } from '../components/common';
 import { MonoText } from '../components/StyledText';
 import Colors from '../constants/Colors';
 import { CmPrasanmitBoldText } from '../components/CmPrasanmitBoldText';
+import addressServer from '../utilities/addressServer';
+import axios from 'axios'
 
 export default class ProfileScreen extends Component {
   static navigationOptions =  {
@@ -26,18 +28,49 @@ export default class ProfileScreen extends Component {
     gesturesEnabled: false,
   };
 
+  componentWillMount() {
+    AsyncStorage.getItem('@loginData:key')
+    .then((loginStatus) => {
+      const temp = JSON.parse(loginStatus)
+      this.state.token = temp.token
+      console.log(addressServer.APIRequest.toString() + '/api/index');
+      const api = addressServer.APIRequest.toString() + '/api/index';
+      axios(api,{ headers: {'Authorization' : 'Bearer ' + temp.token},})
+        .then(response =>
+        {
+          console.log(response.data.user)
+          this.setState({ user: response.data.user })
+          this.setState({ loading: false })
+        })
+        .catch((error) =>  {
+          console.log(error + ' @ProfileScreen')
+          this.setState({ loading: false })
+        })
+    })
+    .catch((error) => {
+      console.log(error + ' @ProfileScreen')
+      this.setState({ loading: false })
+    })
+  }
+
   state = {
+    user: '',
     donateHistoryURL: "http://rallycoding.herokuapp.com/api/music_albums",
     list: {
       title: "test",
       bloodType: "O",
       thumbnail_image: "https://cache.gmo2.sistacafe.com/images/uploads/summary/image/1484/1437134731-taylor-swift-009.jpg"
     },
+=======
+    token: '',
+    loading: true,
+    pressEdit: false,
   }
 
   render() {
     if(this.state.donateHistoryURL !== null){
       donateHistory = <CardList url={this.state.donateHistoryURL} onPress={this._goToDetailDonate} navi={this.props.navigation}/>
+      donateHistory = <CardList token={this.state.token} url={this.state.donateHistoryURL} onPress={this._goToDetailDonate} navi={this.props.navigation}/>
     }
     else{
       donateHistory = <View />
@@ -55,17 +88,49 @@ export default class ProfileScreen extends Component {
           {donateHistory}
       </View>
     );
+    if( this.state.loading) {
+      return <Expo.AppLoading />
+    } else {
+      return(
+        <View style={{paddingTop:15,flex:1,backgroundColor:'white'}}>
+          <ProfileBox
+            user={this.state.user}
+            navigation={this.props.navigation}
+            onPress={this._goToEditProfile}
+            logOut={this._logout}
+            disableEdit={this.state.pressEdit}
+          />
+          <CmPrasanmitBoldText style={styles.donateHisotyHeader}>
+            ประวัติการให้เลือด
+          </CmPrasanmitBoldText>
+            {donateHistory}
+        </View>
+      )
+    }
+  }
+
+  _logout = () => {
+    AsyncStorage.removeItem('@loginData:key')
+    .then(() => {
+      console.log('logout')
+    })
   }
 
   _goToEditProfile = () => {
-    const resetAction = NavigationActions.reset({
+    this.setState({pressEdit: true})
+    const { navigate } = this.props.navigation;
+    navigate('EditProfile')
+    setTimeout(() => {
+       this.setState({pressEdit: false})
+    },1000)
+    /* const resetAction = NavigationActions.reset({
       index: 1,
       actions: [
         NavigationActions.navigate({ routeName: 'Profile'}) ,
         NavigationActions.navigate({ routeName: 'EditProfile'})
       ]
     })
-    this.props.navigation.dispatch(resetAction)
+    this.props.navigation.dispatch(resetAction) */
   }
 
   _goToDetailDonate = () => {

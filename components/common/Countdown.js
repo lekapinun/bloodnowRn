@@ -69,7 +69,7 @@ const Countdown = ({ recentDonateDate, last_donate, manualModal, changeRecentDon
         </View>
       </View>
 
-      {last_donate !== null && countdownStatus}
+      {last_donate !== '' && countdownStatus}
     </View>
   );
 }

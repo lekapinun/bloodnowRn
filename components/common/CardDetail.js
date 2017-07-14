@@ -5,7 +5,7 @@ import Colors from '../../constants/Colors';
 import { CmPrasanmitText } from '../CmPrasanmitText'
 import { CmPrasanmitBoldText } from '../CmPrasanmitBoldText'
 
-const CardDetail = ({ list, req, onPress, visible, gropBlood }) => {
+const CardDetail = ({ list, req, onPress, visible, gropBlood ,ready}) => {
   if(visible && list !== ''){
     return(
       <TouchableOpacity onPress={onPress} style={[styles.requestCardContainerStyle,{borderWidth: 1, borderColor: '#DCDCDC',}]} >
@@ -24,7 +24,7 @@ const CardDetail = ({ list, req, onPress, visible, gropBlood }) => {
             </View>
           </View>
           <View style={{flex:35,justifyContent: 'center',}}>
-            <CmPrasanmitBoldText style={{fontSize:22,color:'#575757'}}>{list.patient_name}</CmPrasanmitBoldText>
+            <CmPrasanmitBoldText style={{fontSize:22,color:'#575757'}}>{list.name}</CmPrasanmitBoldText>
           </View>
           <View style={{flex:14,alignItems: 'center',justifyContent: 'center'}}>
             <CmPrasanmitText style={{fontSize:18,color:'#575757'}}>รายละเอียด</CmPrasanmitText>
@@ -33,7 +33,13 @@ const CardDetail = ({ list, req, onPress, visible, gropBlood }) => {
       </TouchableOpacity>
     );
   }
-  else if (visible && list === '') {
+  else if (visible && list === '' ) {
+    let message
+    if(ready){
+      message = 'ไม่มีคำร้องขอ'
+    } else {
+      message = 'ตอนนี้คุณไม่สามารถที่จะบริจาคเลือด'
+    }
     return(
       <TouchableOpacity onPress={null} style={[styles.requestCardContainerStyle,{borderWidth: 1, borderColor: '#DCDCDC',}]} >
         <View style={{height:40, justifyContent: 'center',alignItems: 'center',flexDirection:'row',borderBottomWidth: 1, borderColor: '#DCDCDC',}}>
@@ -41,9 +47,7 @@ const CardDetail = ({ list, req, onPress, visible, gropBlood }) => {
           <CmPrasanmitBoldText style={{fontSize:25,color:'#575757'}}> คำร้องขอที่ได้รับ</CmPrasanmitBoldText >
         </View >
         <View style={{height:78,flexDirection:'row'}}>
-
-          <CmPrasanmitBoldText style={{marginTop:10,marginLeft:10,fontSize:25,color:'#DCDCDC'}}>ไม่มีคำร้องขอ</CmPrasanmitBoldText>
-
+          <CmPrasanmitBoldText style={{marginTop:10,marginLeft:10,fontSize:25,color:'#DCDCDC'}}>{message}</CmPrasanmitBoldText>
         </View>
       </TouchableOpacity>
     );

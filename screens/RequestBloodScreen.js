@@ -243,6 +243,7 @@ export default class RequestBloodScreen extends Component {
 
     _backToHistory = () => {
         //this.setState({displayRequest : false,displayConfirm : false})
+<<<<<<< HEAD
         this.props.navigation.goBack()
     }
 
@@ -253,6 +254,17 @@ export default class RequestBloodScreen extends Component {
         //this.setState({displayConfirm : false})
         this.props.navigation.goBack()
        // },0)
+=======
+        const resetAction = NavigationActions.navigate(
+            {
+                index: 0,
+                actions: [ 
+                    NavigationActions.navigate({ routeName: 'RequestHistory'}) ,
+                ]
+            }
+        )
+        this.props.navigation.dispatch(resetAction)
+>>>>>>> master
     }
 
     _backToRequest = () => {
