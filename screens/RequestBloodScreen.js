@@ -286,7 +286,7 @@ export default class RequestBloodScreen extends Component {
 
     _backToHistory = () => {
         //this.setState({displayRequest : false,displayConfirm : false})
-        const resetAction = NavigationActions.reset(
+        const resetAction = NavigationActions.navigate(
             {
                 index: 0,
                 actions: [ 

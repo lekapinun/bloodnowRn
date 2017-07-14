@@ -24,7 +24,9 @@ import { CmPrasanmitBoldText } from '../components/CmPrasanmitBoldText'
 
 class ButtonRequest extends Component {
     _handlePress = () => {
-        const resetAction = NavigationActions.reset(
+        const { navigate } = this.props.navigation;
+        navigate('RequestBlood')
+        /* const resetAction = NavigationActions.reset(
             {
                 index: 1,
                 actions: [ 
@@ -33,7 +35,7 @@ class ButtonRequest extends Component {
                 ]
             }
         )
-        this.props.navigation.dispatch(resetAction)
+        this.props.navigation.dispatch(resetAction) */
     };
     render(){
         return(
@@ -69,7 +71,8 @@ export default class RequestBloodHistoryScreen extends Component {
     
     state = {
         history: [],
-        token: ''
+        token: '',
+        test_ajax: '',
     }
 
     componentWillMount() {
@@ -93,6 +96,26 @@ export default class RequestBloodHistoryScreen extends Component {
                 });
         })
     }
+
+    _loadData = () => {
+            //console.log(addressServer.APIRequest + '/api/req');
+            const api = addressServer.APIRequest + '/api/req';
+            axios(api,{ 
+                method: 'get', 
+                headers: {'Authorization' : 'Bearer ' + this.state.token},
+            })
+                .then(response => {
+                    if(this.state.history.toString() !== response.data.toString()){
+                        console.log(response.data)
+                        this.setState({ history: response.data })
+                    } else {
+                        this._loadData()
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });  
+    }
     
 
     renderHistory() {
@@ -100,6 +123,7 @@ export default class RequestBloodHistoryScreen extends Component {
         if(this.state.history.length === 0){
             return (
                 <View style={{justifyContent:'center',marginTop:10,width:310,height:80,borderWidth:1,borderColor:Colors.tabBar,borderRadius:5}}>
+                    {this._loadData()}
                     <CmPrasanmitText style={{marginLeft:15,fontSize:22,color:'#575757'}}>ไม่มีรายการการขอเลือดของคุณ หากต้อง</CmPrasanmitText>
                     <View style = {{flexDirection:'row'}}>
                         <CmPrasanmitText style={{marginLeft:15,fontSize:22,color:'#575757'}}>การจะชอเลือด กดปุ่ม </CmPrasanmitText>
@@ -112,6 +136,7 @@ export default class RequestBloodHistoryScreen extends Component {
             )
         } else {
             return this.state.history.map((history) => {
+                this._loadData()
                 //console.log(history.updated_at)
                 //console.log(history.updated_at.split(' ')[0])
                 var date = history.updated_at.split(' ')[0]
@@ -147,13 +172,10 @@ export default class RequestBloodHistoryScreen extends Component {
 
     goTodetail(detail_id) {
         //console.log(detail_id)
-        const resetAction = NavigationActions.reset(
+        const resetAction = NavigationActions.navigate(
             {
-                index: 1,
-                actions: [ 
-                    NavigationActions.navigate({ routeName: 'RequestHistory'}) ,
-                    NavigationActions.navigate({ routeName: 'RequestDetail', params: detail_id})   
-                ]
+                routeName: 'RequestDetail',
+                params: detail_id, 
             }
         )
         this.props.navigation.dispatch(resetAction)

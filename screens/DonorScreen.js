@@ -53,9 +53,9 @@ export default class DonorScreen extends Component {
           headers: {'Authorization' : 'Bearer ' + this.state.token},
         })
         .then((response) => {
-          console.log('adsfdsafsdafdsafdasf')
+          /* console.log('adsfdsafsdafdsafdasf')
           console.log(response.data)
-          console.log('adsfdsafsdafdsafdasf')
+          console.log('adsfdsafsdafdsafdasf') */
           if(response.data.user !== null){
             this.setState({req: response.data.user[0]})
           }  

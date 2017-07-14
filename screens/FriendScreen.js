@@ -4,6 +4,8 @@ import Expo, { Font } from 'expo';
 import { TestButton, NavigatorBackground,ExNavigationState, Button} from '../components/common';
 import { MonoText } from '../components/StyledText';
 import Colors from '../constants/Colors';
+import axios from 'axios'
+import addressServer from '../utilities/addressServer';
 
 export default class FriendScreen extends Component {
     static navigationOptions =  {
@@ -16,10 +18,15 @@ export default class FriendScreen extends Component {
 
     componentWillMount() {
         //this.showFirstContactAsync()
+        this.showFirstContactAsync()
+        /* .then(() => {
+            this._addFriend(this.state.phoneList)
+        }) */
     }
 
     state = {
-        phoneList : []
+        phoneList : [],
+        token : '',
     }
 
     async showFirstContactAsync() {
@@ -39,7 +46,7 @@ export default class FriendScreen extends Component {
         .then((contacts) => {
             var temp = 0
             var phonelist = []
-            console.log(contacts.data.length)
+            //console.log(contacts.data.length)
             for (var i = 0; i < contacts.data.length; i++) {
                 if( contacts.data[i].phoneNumbers[0] !== undefined) {
                     //console.log(contacts.data[i].name )
@@ -53,12 +60,43 @@ export default class FriendScreen extends Component {
                     }   
                 } 
             }
-            console.log(phonelist)
+             this._addFriend(phonelist)
+            //console.log(phonelist)
         })
         .catch((error) => {
             console.log(error)
         })
+    }
 
+    _addFriend = (friends) => {
+        console.log(friends)
+        AsyncStorage.getItem('@loginData:key')
+        .then((loginStatus) => {
+            const temp = JSON.parse(loginStatus)
+            this.state.token = temp.token
+            console.log(addressServer.APIRequest.toString() + '/api/friend');
+            const api = addressServer.APIRequest.toString() + '/api/friend';
+             axios(api, { 
+                method: 'post', 
+                headers: {'Authorization' : 'Bearer ' + this.state.token},
+                data : { 'friend' : friends}
+            })
+            .then((response) => {
+                console.log('sadfadsfdsafdasfadsf')
+                console.log(response.data)
+                console.log('sadfadsfdsafdasfadsf')
+            })
+            .catch((error) => {
+                console.log('sadfadsfdsafdasfadsf')
+                console.log(error)
+                console.log('sadfadsfdsafdasfadsf')
+            }) 
+        })
+        .catch((error) => {
+            console.log('sadfadsfdsafdasfadsf')
+            console.log(error)
+            console.log('sadfadsfdsafdasfadsf')
+        })
     }
 
     render() {
