@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, TouchableOpacity, Modal, StyleSheet, Button, Switch, AsyncStorage} from 'react-native';
 import { Font } from 'expo';
 import { NavigationActions } from 'react-navigation';
-import { CardDetail, Countdown } from '../components/common';
+import { CardDetail, Countdown, PickerModalDate } from '../components/common';
 import Colors from '../constants/Colors';
 import Layout from '../constants/Layout';
 import { CmPrasanmitText } from '../components/CmPrasanmitText'
@@ -29,6 +29,9 @@ export default class DonorScreen extends Component {
         req: '',
         last_donate: '',
         next_donate: '',
+
+        modalDateVisible: false,
+        last_donateTemp: new Date(),
     }
 
     constructor(props) {
@@ -37,19 +40,23 @@ export default class DonorScreen extends Component {
         setInterval(() => {
           if(this.state.nextReady > 0){
             this.setState({test : this.state.nextReady - 86400000})
-          } 
+          }
         }, 86400000);
     }
 
     componentWillMount() {
+<<<<<<< HEAD
+=======
+      //console.log('NEWNEWNEWNEWNEWNNEWENNEWNENWENEN')
+>>>>>>> sloth-branch
       AsyncStorage.getItem('@loginData:key')
       .then((loginStatus) => {
         const temp = JSON.parse(loginStatus)
         this.state.token = temp.token
         console.log(addressServer.APIRequest + '/api/donate');
         const api = addressServer.APIRequest + '/api/donate';
-        axios(api,{ 
-          method: 'get', 
+        axios(api,{
+          method: 'get',
           headers: {'Authorization' : 'Bearer ' + this.state.token},
         })
         .then((response) => {
@@ -58,7 +65,7 @@ export default class DonorScreen extends Component {
           console.log('adsfdsafsdafdsafdasf') */
           if(response.data.user !== null){
             this.setState({req: response.data.user[0]})
-          }  
+          }
           console.log(response.data)
           if(response.data.last_date_donate !== null){
             var date = response.data.last_date_donate.split(' ')[0]
@@ -68,13 +75,13 @@ export default class DonorScreen extends Component {
             nextTime = nextTime.getDate() + '/' + (nextTime.getMonth() + 1) + '/' + nextTime.getFullYear()
             this.setState({last_donate: date[2] + '/' + date[1] + '/' + date[0]})
             this.setState({next_donate: nextTime})
-            this.setState({nextReady: (new Date(dateTime).getTime() + (86400000*91)) - new Date().getTime() }) 
+            this.setState({nextReady: (new Date(dateTime).getTime() + (86400000*91)) - new Date().getTime() })
             if(response.data.status === 'ready'){
               this.setState({readyDonate: true})
             }
           } else {
             this.setState({last_donate : '', nextReady : 0})
-          }  
+          }
         })
         .catch((error) => {
           console.log(error)
@@ -94,8 +101,21 @@ export default class DonorScreen extends Component {
       }
         return(
             <View style={[styles.center, {height:Layout.window.height,flex:1,paddingTop:16,backgroundColor:'white'}]}>
-
-              <Countdown recentDonateDate={this.state.nextReady} last_donate={this.state.last_donate}/>
+              <PickerModalDate
+                  pickerVisible = {this.state.modalDateVisible}
+                  onPressCancel = {() => { this.setModalDateVisible(!this.state.modalDateVisible) }}
+                  onPressSubmit = {() => {
+                      this.setState({last_donate: this.state.last_donateTemp});
+                      this.setModalDateVisible(!this.state.modalDateVisible);
+                  }}
+                  selectOne = {this.state.last_donateTemp}
+                  onChangeOne = {date => this.setState({ last_donate: date })}
+              />
+              <Countdown
+                recentDonateDate={this.state.last_donate}
+                last_donate={this.state.last_donate}
+                manualModal={() => this.setState({modalDateVisible: true})}
+              />
 
               <View style={[styles.Border,{alignItems: 'center', flexDirection: 'column',justifyContent:'space-around'}]}>
                 <View />
@@ -103,10 +123,10 @@ export default class DonorScreen extends Component {
                 <View style={{flexDirection: 'row'}}>
                   <CmPrasanmitText style={{color: '#575757',fontSize:25}}>คุณพร้อมบริจาคหรือไม่?</CmPrasanmitText>
                   <View style={{marginLeft:20}}></View>
-                  <Switch 
-                    onTintColor={Colors.tabBar} 
-                    value={this.state.readyDonate} 
-                    onChange={() => { 
+                  <Switch
+                    onTintColor={Colors.tabBar}
+                    value={this.state.readyDonate}
+                    onChange={() => {
                       //if(this.state.nextReady <= 0){
                         this.setState({readyDonate: !this.state.readyDonate})
                         this._updateReady()
@@ -131,8 +151,8 @@ export default class DonorScreen extends Component {
     _updateReady = () => {
       console.log(addressServer.APIRequest + '/api/swap');
       const api = addressServer.APIRequest + '/api/swap';
-      axios(api,{ 
-        method: 'get', 
+      axios(api,{
+        method: 'get',
         headers: {'Authorization' : 'Bearer ' + this.state.token},
       })
       /* .then(() => {

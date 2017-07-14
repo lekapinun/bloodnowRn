@@ -1,11 +1,26 @@
 import React, { Component } from 'react';
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View, AsyncStorage,Alert } from 'react-native';
-import Expo, { Font } from 'expo';
-import { TestButton, NavigatorBackground,ExNavigationState, Button} from '../components/common';
+import {
+  Image,
+  Linking,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  AsyncStorage
+} from 'react-native';
+import { TabNavigator } from 'react-navigation';
+import { Font } from 'expo'
+import { TestButton, NavigatorBackground,ExNavigationState} from '../components/common';
 import { MonoText } from '../components/StyledText';
 import Colors from '../constants/Colors';
+<<<<<<< HEAD:screens/FriendScreen2.js
 import axios from 'axios'
 import addressServer from '../utilities/addressServer';
+=======
+import HomeScreen from './HomeScreen';
+>>>>>>> sloth-branch:screens/FriendScreen.js
 
 export default class FriendScreen extends Component {
     static navigationOptions =  {
@@ -16,6 +31,7 @@ export default class FriendScreen extends Component {
         gesturesEnabled: false,
     };
 
+<<<<<<< HEAD:screens/FriendScreen2.js
     componentWillMount() {
         //this.showFirstContactAsync()
         this.showFirstContactAsync()
@@ -93,21 +109,40 @@ export default class FriendScreen extends Component {
         })
     }
 
+=======
+>>>>>>> sloth-branch:screens/FriendScreen.js
     render() {
+      const FriendTab = TabNavigator(
+        {
+          ALL: {screen: HomeScreen},
+          A: {screen: HomeScreen},
+          B: {screen: HomeScreen},
+          AB: {screen: HomeScreen},
+          O: {screen: HomeScreen},
+        },{
+          ...TabNavigator.Presets.AndroidTopTabs,
+          tabBarOptions:{
+            activeTintColor: Colors.tabBar,
+            inactiveTintColor: 'grey',
+            indicatorStyle: {
+              borderBottomColor: Colors.tabBar,
+              borderBottomWidth: 2,
+            },
+            labelStyle: {
+              fontSize: 18,
+            },
+            style: {
+              backgroundColor: 'white',
+              borderBottomWidth: 0.5,
+              borderBottomColor: Colors.tabBar,
+            },
+          }
+        });
+
         return(
-            <View style={{marginTop:30}}>
-                <Text>FRIENDS SCREEN</Text>
-                <Button
-                    title='ดูเบอร์'
-                    buttonColor='#EF685E'
-                    sizeFont={25}
-                    onPress={this.showFirstContactAsync}
-                    ButtonWidth={260}
-                    ButtonHeight={50}
-                    colorFont='white'
-                />
-            </View>
+          <FriendTab screenProps="A"/>
         );
-    }
+
+      }
 
 }

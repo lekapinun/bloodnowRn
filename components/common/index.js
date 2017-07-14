@@ -21,4 +21,4 @@ export * from './CardHistoryRequest'
 export * from './RequestDetailInDonor'
 export * from './ProfileBox'
 export * from './EditProfileDetail';
-export * from './DonateHistoryCard';
+export * from './ManualDonate';

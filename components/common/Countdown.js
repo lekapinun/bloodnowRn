@@ -4,8 +4,10 @@ import { Font } from 'expo';
 import Colors from '../../constants/Colors';
 import { CmPrasanmitText } from '../CmPrasanmitText'
 import { CmPrasanmitBoldText } from '../CmPrasanmitBoldText'
+import { ManualDonate } from './ManualDonate';
 
-const Countdown = ({recentDonateDate,last_donate }) => {
+//ManualDonate require {manualModal, style} props
+const Countdown = ({ recentDonateDate, last_donate, manualModal, changeRecentDonate  }) => {
   const timeRemaining = Math.floor(recentDonateDate/(86400000))
   let remainMonth = '00';
   let remainDate = '00';
@@ -38,12 +40,15 @@ const Countdown = ({recentDonateDate,last_donate }) => {
 
   return (
     <View style={styles.countdownBorder}>
-      <View style={{width:270,marginTop:15,marginBottom:15}}>
+      <View style={{width:270,marginTop:15,marginBottom:15, flexDirection: 'row'}}>
         <CmPrasanmitBoldText style={{color: Colors.tabBar,fontSize:30}}>
           นับถอยหลัง
         </CmPrasanmitBoldText>
+        <ManualDonate
+          style={{position: 'absolute', right: 0}}
+          manualModal={manualModal}
+        />
       </View>
-      
       <View style={styles.countdownContainerStyle}>
         <View style={styles.countdownViewStyle}>
           <View style={[styles.textCenterView,{flex:2,backgroundColor:Colors.tabBar}]}>
