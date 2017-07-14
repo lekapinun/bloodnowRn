@@ -12,7 +12,7 @@ const ProfileBox = (props) => {
     <View style={styles.profileContainer}>
       <Image
         style={styles.imageStyle}
-        source={{ uri: 'https://cache.gmo2.sistacafe.com/images/uploads/summary/image/1484/1437134731-taylor-swift-009.jpg' }}
+        source={{ uri: 'https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/960w/NXZELRJWF8.jpg' }}
       />
       <View style={styles.detailContainer}>
         <CmPrasanmitBoldText style={styles.nameTextStyle}>{capitalizeFirstLetter(props.user.name)}</CmPrasanmitBoldText>

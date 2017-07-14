@@ -40,6 +40,7 @@ export default class Stack extends React.Component {
     })
     .catch((error) => {
       console.log(error)
+      this.setState({finish: true})
     })
   }
 

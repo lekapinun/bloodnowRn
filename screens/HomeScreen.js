@@ -15,10 +15,12 @@ import { Font } from 'expo';
 import { TestButton, NavigatorBackground, ExNavigationState } from '../components/common';
 import { MonoText } from '../components/StyledText';
 import Colors from '../constants/Colors';
+import Layout from '../constants/Layout';
 import axios from 'axios';
 import { NavigationActions } from 'react-navigation'
 import { CmPrasanmitText } from '../components/CmPrasanmitText'
 import { CmPrasanmitBoldText } from '../components/CmPrasanmitBoldText'
+import addressServer from '../utilities/addressServer';
 
 
 export default class HomeScreen extends Component {
@@ -29,18 +31,41 @@ export default class HomeScreen extends Component {
   }
   state = {
     list: [],
-    loading: false
+    loading: false,
+    token: '',
   }
 
   componentWillMount() {
-    axios.get("http://rallycoding.herokuapp.com/api/music_albums")
-    .then(response => this.setState({ list: response.data,loading: true }));
+    AsyncStorage.getItem('@loginData:key')
+    .then((loginStatus) => {
+      const temp = JSON.parse(loginStatus)
+      this.state.token = temp.token
+      console.log(addressServer.APIRequest + '/api/friend');
+      const api = addressServer.APIRequest + '/api/friend';
+      axios(api,{ method: 'get',  headers: {'Authorization' : 'Bearer ' + this.state.token},})
+      .then((response) => {
+        console.log(response.data)
+        this.setState({ list: response.data,loading: true })
+      })
+      .catch((error) => {
+        console.log(error)
+        this.setState({ loading: true })
+      })
+    })
+    .catch((error) => {
+      console.log(error)
+      this.setState({ loading: true })
+    })
+    //console.log(this.props.navigation.state.key)
+    //console.log(this.props.screenProps)
+    //axios.get("http://rallycoding.herokuapp.com/api/music_albums")
+    //.then(response => this.setState({ list: response.data,loading: true }));
   }
 
   renderList() {
     return this.state.list.map(list =>
       <CardDetail
-        key = {list.title}
+        key = {list.user_id + list.friend_id}
         list = {list}
         visible = {true}
         onPress = {() => {}}
@@ -50,11 +75,25 @@ export default class HomeScreen extends Component {
 
   render() {
     if(this.state.loading) {
-      return(
-        <ScrollView style={styles.requestListContainerStyle}>
-          {this.renderList()}
-        </ScrollView>
-      )
+      if(this.state.list.length !== 0){
+        return(
+          <ScrollView style={styles.requestListContainerStyle}>
+            {this.renderList()}
+          </ScrollView>
+        )
+      } else {
+        return (
+          <ScrollView style={[styles.requestListContainerStyle,{flexDirection: 'column'}]}>
+            <View style={{width:Layout.window.width,height:Layout.window.height}}>
+              <Image
+                style={{marginTop:100,height:200,width:200,alignSelf:'center'}}
+                source={require('../assets/images/cm.png')}
+              />
+              <CmPrasanmitText style={{color: '#DCDCDC',fontSize:27,marginTop:10,alignSelf:'center'}}>ไม่มีเพื่อนให้แสดง</CmPrasanmitText>
+            </View>
+          </ScrollView>
+        )
+      }
     }
     return (
       <ScrollView style={styles.requestListContainerStyle}>

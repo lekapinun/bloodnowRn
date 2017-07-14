@@ -24,16 +24,12 @@ export default class FriendScreen extends Component {
         title: 'เพื่อน',
         headerTintColor: 'white',
         headerTitleStyle: [Font.style('CmPrasanmitBold'),{fontSize:29}],
-        headerStyle: {marginLeft:-250,backgroundColor: '#E84A5F'},
+        headerStyle: {backgroundColor: '#E84A5F'},
         gesturesEnabled: false,
     };
 
     componentWillMount() {
-        //this.showFirstContactAsync()
         this.showFirstContactAsync()
-        /* .then(() => {
-            this._addFriend(this.state.phoneList)
-        }) */
     }
 
     state = {
@@ -58,12 +54,9 @@ export default class FriendScreen extends Component {
         .then((contacts) => {
             var temp = 0
             var phonelist = []
-            //console.log(contacts.data.length)
             for (var i = 0; i < contacts.data.length; i++) {
                 if( contacts.data[i].phoneNumbers[0] !== undefined) {
-                    //console.log(contacts.data[i].name )
                     for (var j = 0; j < contacts.data[i].phoneNumbers.length; j++) {
-                        //console.log(contacts.data[i].phoneNumbers[j].digits ) 
                         if(contacts.data[i].phoneNumbers[j].digits.search('[+]66') !== -1){
                             phonelist[temp++] = '0' + contacts.data[i].phoneNumbers[j].digits.substring(3)
                         } else {
@@ -73,7 +66,6 @@ export default class FriendScreen extends Component {
                 } 
             }
              this._addFriend(phonelist)
-            //console.log(phonelist)
         })
         .catch((error) => {
             console.log(error)
@@ -111,8 +103,8 @@ export default class FriendScreen extends Component {
           ALL: {screen: HomeScreen},
           A: {screen: HomeScreen},
           B: {screen: HomeScreen},
-          AB: {screen: HomeScreen},
           O: {screen: HomeScreen},
+          AB: {screen: HomeScreen},
         },{
           ...TabNavigator.Presets.AndroidTopTabs,
           tabBarOptions:{
@@ -120,15 +112,17 @@ export default class FriendScreen extends Component {
             inactiveTintColor: 'grey',
             indicatorStyle: {
               borderBottomColor: Colors.tabBar,
-              borderBottomWidth: 2,
+              borderBottomWidth: 3,
             },
-            labelStyle: {
-              fontSize: 18,
-            },
+            labelStyle: [Font.style('CmPrasanmitBold'),{
+              fontSize: 25,
+              marginTop: 0
+            }],
             style: {
               backgroundColor: 'white',
               borderBottomWidth: 0.5,
               borderBottomColor: Colors.tabBar,
+              height: 40
             },
           }
         });
