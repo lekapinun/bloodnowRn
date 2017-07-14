@@ -36,9 +36,22 @@ export default class FriendScreen extends Component {
           O: {screen: HomeScreen},
         },{
           ...TabNavigator.Presets.AndroidTopTabs,
-          //tabBarPosition: 'top',
-          //swipeEnabled: true,
-          //animationEnabled: true,
+          tabBarOptions:{
+            activeTintColor: Colors.tabBar,
+            inactiveTintColor: 'grey',
+            indicatorStyle: {
+              borderBottomColor: Colors.tabBar,
+              borderBottomWidth: 2,
+            },
+            labelStyle: {
+              fontSize: 18,
+            },
+            style: {
+              backgroundColor: 'white',
+              borderBottomWidth: 0.5,
+              borderBottomColor: Colors.tabBar,
+            },
+          }
         });
 
         return(

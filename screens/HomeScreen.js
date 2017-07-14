@@ -8,37 +8,113 @@ import {
   Text,
   TouchableOpacity,
   View,
-  AsyncStorage
+  AsyncStorage,
+  ActivityIndicator
 } from 'react-native';
-import { Font } from 'expo'
-
-import { TestButton, NavigatorBackground,ExNavigationState} from '../components/common';
+import { Font } from 'expo';
+import { TestButton, NavigatorBackground, ExNavigationState } from '../components/common';
 import { MonoText } from '../components/StyledText';
 import Colors from '../constants/Colors';
-
+import axios from 'axios';
+import { NavigationActions } from 'react-navigation'
+import { CmPrasanmitText } from '../components/CmPrasanmitText'
+import { CmPrasanmitBoldText } from '../components/CmPrasanmitBoldText'
 
 
 export default class HomeScreen extends Component {
-    static navigationOptions = props => {
-      return {
-        tabBarLabel: props.navigation.state.key
-      }
+  static navigationOptions = props => {
+    return {
+      tabBarLabel: props.navigation.state.key
     }
+  }
+  state = {
+    list: [],
+    loading: false
+  }
 
-    state= {
-      test: '',
-    }
-    componentWillMount() {
-    }
+  componentWillMount() {
+    axios.get("http://rallycoding.herokuapp.com/api/music_albums")
+    .then(response => this.setState({ list: response.data,loading: true }));
+  }
 
-    render() {
-        return(
-            <View style={{marginTop:30, height: 100}}>
-              <TouchableOpacity onPress={() => console.log(this.props)}>
-                <Text style={{fontSize: 23}}>{this.props.navigation.state.key+ "Group"}</Text>
-              </TouchableOpacity>
-              </View>
-        );
-    }
+  renderList() {
+    return this.state.list.map(list =>
+      <CardDetail
+        key = {list.title}
+        list = {list}
+        visible = {true}
+        onPress = {() => {}}
+      />
+    );
+  }
 
+  render() {
+    if(this.state.loading) {
+      return(
+        <ScrollView style={styles.requestListContainerStyle}>
+          {this.renderList()}
+        </ScrollView>
+      )
+    }
+    return (
+      <ScrollView style={styles.requestListContainerStyle}>
+        <ActivityIndicator style={{alignSelf:'center'}} size="large" />
+      </ScrollView>
+    )
+  }
 }
+
+const CardDetail = ({ list, onPress }) => {
+  _statusBox = (
+    <CmPrasanmitText style={{fontSize:18,color:'#575757'}}>
+      {list.title}
+    </CmPrasanmitText>
+  )
+
+  return(
+    <View style={styles.requestCardContainerStyle}>
+        <View style={{height:78,backgroundColor:'white',flexDirection:'row'}}>
+          <View style={{flex:19,alignItems: 'center',justifyContent: 'center',}}>
+            <Image
+              style={styles.imageRequestStyle}
+              source={{ uri: 'http://images.boomsbeat.com/data/images/full/6954/tayl-png.png' }}
+            />
+            <View style={{height:15,width:30,position:'absolute',bottom:12,left:18,backgroundColor:Colors.tabBar,borderRadius:15,alignItems: 'center',justifyContent:'center'}}>
+              <CmPrasanmitBoldText style={{fontSize:14,color:'white',backgroundColor:'transparent'}}>A+</CmPrasanmitBoldText>
+            </View>
+          </View>
+          <View style={{flex:35,justifyContent: 'center',}}>
+            <CmPrasanmitBoldText style={{fontSize:22,color:'#575757'}}>Lautner</CmPrasanmitBoldText>
+          </View>
+          <View style={{flex:14,marginRight:10,alignItems: 'center',justifyContent: 'center'}}>
+            {this._statusBox}
+          </View>
+        </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  requestCardContainerStyle: {
+    height: 78,
+    width: 340,
+    flexDirection: 'column',
+    alignSelf: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: '#DCDCDC',
+  },
+  imageRequestStyle: {
+    height: 50,
+    width: 50,
+    borderRadius: 25,
+    borderWidth:0.1,
+    borderColor: '#575757'
+  },
+  detailRequestStyle: {
+    paddingLeft: 20,
+  },
+  requestListContainerStyle: {
+    flex: 1,
+    backgroundColor:'white'
+  },
+});

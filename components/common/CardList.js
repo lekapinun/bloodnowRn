@@ -5,7 +5,6 @@ import Colors from '../../constants/Colors';
 import { NavigationActions } from 'react-navigation'
 import { CmPrasanmitText } from '../CmPrasanmitText'
 import { CmPrasanmitBoldText } from '../CmPrasanmitBoldText'
-import { DonateHistoryCard } from './DonateHistoryCard';
 
 export class CardList extends Component{
 
@@ -20,7 +19,6 @@ export class CardList extends Component{
   }
 
   renderList() {
-    //console.log(this.state.list)
      return this.state.list.map(list =>
        <CardDetail
          key = {list.title}
@@ -28,7 +26,6 @@ export class CardList extends Component{
          visible = {true}
          onPress = {this._Test}
        />
-       //<CardDetail key={list.title} list={list} visible={true}/>
      );
    }
 
@@ -49,13 +46,6 @@ export class CardList extends Component{
         <ScrollView style={styles.requestListContainerStyle}>
           {this.renderList()}
         </ScrollView>
-        /* <ScrollView style={styles.requestListContainerStyle}>
-        <View style={{borderBottomWidth: 1, borderBottomColor: '#DCDCDC',}}>
-          <View style={[styles.requestCardContainerStyle,{marginLeft:28,justifyContent: 'center'}]}>
-            <CmPrasanmitText style={{fontSize:22,color:'#575757'}}> ไม่มีรายการการให้เลือด</CmPrasanmitText>
-          </View>
-        </View>
-        </ScrollView> */
       )
     }
     return (
