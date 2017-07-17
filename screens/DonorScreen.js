@@ -30,7 +30,7 @@ export default class DonorScreen extends Component {
     last_donate: '',
     next_donate: '',
 
-    modalDateVisible: false,
+    //modalDateVisible: false,
     last_donateTemp: new Date(),
   }
 
@@ -97,7 +97,7 @@ export default class DonorScreen extends Component {
     }
     return(
       <View style={[styles.center, {height:Layout.window.height,flex:1,paddingTop:16,backgroundColor:'white'}]}>
-        <PickerModalDate
+        {/*<PickerModalDate
           pickerVisible = {this.state.modalDateVisible}
           onPressCancel = {() => { this.setModalDateVisible(!this.state.modalDateVisible) }}
           onPressSubmit = {() => {
@@ -106,11 +106,11 @@ export default class DonorScreen extends Component {
           }}
           selectOne = {this.state.last_donateTemp}
           onChangeOne = {date => this.setState({ last_donate: date })}
-        />
+        />*/}
         <Countdown
           recentDonateDate={this.state.last_donate}
           last_donate={this.state.last_donate}
-          manualModal={() => this.setState({modalDateVisible: true})}
+          manualModal={this._goToManualDonate}
         />
 
         <View style={[styles.Border,{alignItems: 'center', flexDirection: 'column',justifyContent:'space-around'}]}>
@@ -165,6 +165,17 @@ export default class DonorScreen extends Component {
       actions: [
         NavigationActions.navigate({ routeName: 'Donor'}) ,
         NavigationActions.navigate({ routeName: 'RequestInDonor', params: this.state.req})
+      ]
+    })
+    this.props.navigation.dispatch(resetAction)
+  }
+
+  _goToManualDonate = () => {
+    const resetAction = NavigationActions.reset({
+      index: 1,
+      actions: [
+        NavigationActions.navigate({ routeName: 'Donor'}) ,
+        NavigationActions.navigate({ routeName: 'ManualDonate',})
       ]
     })
     this.props.navigation.dispatch(resetAction)

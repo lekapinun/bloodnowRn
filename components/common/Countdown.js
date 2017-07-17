@@ -14,7 +14,7 @@ const Countdown = ({ recentDonateDate, last_donate, manualModal, changeRecentDon
   let countdownStatus = (
   <View style={{height:30,marginBottom:15, flexDirection: 'row', alignItems: 'center',justifyContent: 'center'}}>
   <CmPrasanmitText style={{color: Colors.tabBar,fontSize:25}}>{'บริจาคครั้งล่าสุด ' + last_donate}</CmPrasanmitText>
-  <ManualDonate
+  <ManualDonate 
     manualModal={manualModal}
   />
   </View>);
