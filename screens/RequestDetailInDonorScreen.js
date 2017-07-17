@@ -22,16 +22,15 @@ export default class RequestDetailInDonorScreen extends Component {
     };
 
     componentWillMount() {
-      /* console.log('adsfadsfdsafsdaf')
-      console.log(this.props.navigation.state.params)
-      console.log('adsfadsfdsafsdaf') */
+      console.log('adsfadsfdsafsdaf')
+      console.log(this.props.navigation.state.params.id)
+      console.log('adsfadsfdsafsdaf') 
       AsyncStorage.getItem('@loginData:key')
       .then((loginStatus) => {
         const temp = JSON.parse(loginStatus)
         this.state.token = temp.token
         console.log(addressServer.APIRequest + '/api/donate/detail');
         const api = addressServer.APIRequest + '/api/donate/detail';
-        console.log(this.state.detail_id)
         axios(api,{ 
           method: 'post', 
           headers: {'Authorization' : 'Bearer ' + this.state.token},

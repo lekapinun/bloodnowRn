@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { View, Image, StyleSheet } from 'react-native';
-import { Font } from 'expo';
+import Expo, { Font } from 'expo';
 import Colors from '../constants/Colors';
 import { CmPrasanmitText } from '../components/CmPrasanmitText';
 import { CmPrasanmitBoldText } from '../components/CmPrasanmitBoldText';
 import { RequestDetailInDonor  } from '../components/common';
+import addressServer from '../utilities/addressServer';
+import axios from 'axios';
 
 export default class DonateHistoryScreen extends Component {
   static navigationOptions =  {
@@ -15,51 +17,63 @@ export default class DonateHistoryScreen extends Component {
     gesturesEnabled: false,
   };
 
+  componentWillMount() {
+    var params = this.props.navigation.state.params
+    //console.log(params)
+    console.log(addressServer.APIRequest + '/api/user/donate/detail');
+    const api = addressServer.APIRequest + '/api/user/donate/detail';
+     axios(api,{ 
+      method: 'post', 
+      headers: {'Authorization' : 'Bearer ' + params.token},
+      data: {'roomreq_id' : params.detail_id}
+    })
+    .then(response =>
+    {
+      console.log(response.data)
+      this.setState({patient : response.data[0]})
+      var date = response.data[0].created_at.split(' ')[0]
+      date = date.split('-')
+      var dateTime = date[2] + '/' + date[1] + '/' + date[0]
+      this.setState({donateDate: dateTime}) 
+      this.setState({loading: false})
+    })
+    .catch((error) =>  {
+      console.log(error.toString() + ' @DonateHistoryScreen')
+      this.setState({ loading: false })
+    }) 
+  }
+
   state = {
-    donateDate: '5/5/55',
+    donateDate: '',
     receiver: {
       name: 'Lautner',
       blood: 'A',
       blood_type: '+'
     },
-    patient: {
-      patient_name: 'เทย์เลอร์ เลาต์เนอร์',
-      patient_id: '231313',
-      patient_blood: 'A',
-      patient_blood_type: '+',
-      //patient_bloodUnit: '',
-      //countblood: 0,
-      //patient_detail: '',
-      patient_hos: 'โรงพยาบาลลลลลล',
-      //patient_hos_la: '',
-      //patient_hos_long: '',
-      patient_province: 'เชียงใหม่',
-      patient_thankyou: 'ขอบคุณ',
-      patient_timestamp: '19/02/2017',
-    }
+    patient: '',
+    loading: true,
+    img : this.props.navigation.state.params.img
   }
 
   render() {
     var height_detail = 51
+    if( this.state.loading ) {
+      return <Expo.AppLoading />
+    }
     return (
       <View style={{ flex: 1,backgroundColor: 'white'}}>
         <View style={styles.receiverProfileContainer}>
           <View style={{ height: 70, width: 70,marginLeft: 25,}}>
             <Image
               style={styles.profileImageStyle}
-              source={{uri: 'http://images.boomsbeat.com/data/images/full/6954/tayl-png.png'}}
+              source={{uri: this.state.img}}
             />
-            <View style={styles.bloodTypeContainer}>
-              <CmPrasanmitText style={{ color: 'white'}}>
-                {this.state.receiver.blood + this.state.receiver.blood_type}
-              </CmPrasanmitText>
-            </View>
           </View>
           <View style={styles.requestInfotmationContainer}>
             <View style={styles.requestInformationStyle}>
               {/* <CmPrasanmitText  style={{marginLeft: 20, fontSize: 25, height:25, color: 'black',}}>คุณ</CmPrasanmitText>
               <CmPrasanmitText style={{marginLeft: 0, fontSize: 25, height:25, color: 'black',}}>ตอบรับ </CmPrasanmitText> */}
-              <CmPrasanmitText  style={{marginLeft: 20, fontSize: 25, height:25, color: 'black',}}>{this.state.receiver.name}</CmPrasanmitText>
+              <CmPrasanmitText  style={{marginLeft: 20, fontSize: 25, height:25, color: 'black',}}>{capitalizeFirstLetter(this.state.patient.name)}</CmPrasanmitText>
             </View>
             {/* <CmPrasanmitText style={{ marginLeft: 20, fontSize: 18, color: 'grey' }}>
               {this.state.patient.patient_timestamp}
@@ -74,7 +88,7 @@ export default class DonateHistoryScreen extends Component {
           <RequestDetailInDonor label='จังหวัด' information={this.state.patient.patient_province} height={height_detail}/>
           <RequestDetailInDonor label='สถานพยาบาล' information={this.state.patient.patient_hos} height={height_detail}/>
           <RequestDetailInDonor label='วันที่บริจาค' information={this.state.donateDate} height={height_detail}/>
-          <RequestDetailInDonor label='คำขอบคุณ' information={this.state.patient.patient_thankyou} height={height_detail}/>
+          {this.state.patient.patient_thankyou !== '' && <RequestDetailInDonor label='คำขอบคุณ' information={this.state.patient.patient_thankyou} height={height_detail}/> }
         </View>
       </View>
     );
@@ -139,5 +153,6 @@ const styles = StyleSheet.create({
   }
 });
 
-/*
-*/
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}

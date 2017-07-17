@@ -71,7 +71,7 @@ export default class Tab extends React.Component {
         };*/
 
         DonorStack.navigationOptions = {
-            tabBarIcon: ({ tintColor, focused }) => ( this._renderIconSimpleLineIcons('drop', focused, 30)),
+            tabBarIcon: ({ tintColor, focused }) => ( this._renderIconSimpleLineIcons('drop', focused, 25)),
         };
 
         FriendStack.navigationOptions = {

@@ -8,14 +8,19 @@ import { CmPrasanmitText } from '../CmPrasanmitText'
 import { CmPrasanmitBoldText } from '../CmPrasanmitBoldText'
 
 const ProfileBox = (props) => {
+
+  _renderImg = () => {
+    if(props.user.img === null){
+      return <Image style={styles.imageStyle} source={require('../../assets/images/user.png')}/>
+    }
+    return <Image style={styles.imageStyle} source={{uri : props.user.img}}/>
+  }
+
   return (
     <View style={styles.profileContainer}>
-      <Image
-        style={styles.imageStyle}
-        source={{ uri: 'https://cache.gmo2.sistacafe.com/images/uploads/summary/image/1484/1437134731-taylor-swift-009.jpg' }}
-      />
+      {_renderImg()}
       <View style={styles.detailContainer}>
-        <CmPrasanmitBoldText style={styles.nameTextStyle}>{props.user.name}</CmPrasanmitBoldText>
+        <CmPrasanmitBoldText style={styles.nameTextStyle}>{capitalizeFirstLetter(props.user.name)}</CmPrasanmitBoldText>
         <CmPrasanmitText style={styles.detailTextStyle}>{'กรุ๊ปเลือด ' + props.user.blood + props.user.blood_type}</CmPrasanmitText>
         <TouchableOpacity onPress={() => {}} style={{marginTop:15,backgroundColor:'white',borderRadius:5}}>
           <Button
@@ -83,5 +88,9 @@ const styles = StyleSheet.create({
     right: 20,
   },
 });
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
 export {ProfileBox};

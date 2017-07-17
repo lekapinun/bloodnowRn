@@ -4,7 +4,7 @@ import { Font } from 'expo';
 import { CmPrasanmitBoldText } from '../CmPrasanmitBoldText'
 import Colors from '../../constants/Colors'
 
-const EditProfileDetail = ({ label, information, onChange, editable}) => {
+const EditProfileDetail = ({ label, information, onChange, editable, keyboardType}) => {
   return(
     <View style={styles.underline}>
         <CmPrasanmitBoldText style={styles.title}>
@@ -21,6 +21,7 @@ const EditProfileDetail = ({ label, information, onChange, editable}) => {
             value={information}
             onChange={onChange}
             editable={editable}
+            keyboardType={keyboardType}
           />
         </View>
     </View>

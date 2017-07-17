@@ -161,7 +161,7 @@ export default class RequestBloodHistoryScreen extends Component {
                         blood = {history.patient_blood}
                         bloodType = {history.patient_blood_type}
                         name = {history.patient_name}
-                        hospital = {'โรงพยาบาล' + history.patient_hos}
+                        hospital = {history.patient_hos}
                         status = { status }
                         onPress={() => this.goTodetail(history.id) }
                     /> 
