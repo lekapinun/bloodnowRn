@@ -104,26 +104,30 @@ export default class HomeScreen extends Component {
 }
 
 const CardDetail = ({ list, onPress }) => {
-  _statusBox = (
-    <CmPrasanmitText style={{fontSize:18,color:'#575757'}}>
-      {list.title}
-    </CmPrasanmitText>
-  )
+  if(list.status === 'ready'){
+    _statusBox = <CmPrasanmitText style={{fontSize:22,color:'#4ED239'}}>พร้อม</CmPrasanmitText>
+  } else {
+    _statusBox = <CmPrasanmitText style={{fontSize:22,color:'#575757'}}>ไม่พร้อม</CmPrasanmitText>
+  }
+
+  _renderImg = () => {
+    if(list.img === null){
+      return <Image style={styles.imageRequestStyle} source={require('../assets/images/user.png')}/>
+    }
+    return <Image style={styles.imageRequestStyle} source={{uri : list.img}}/>
+  }
 
   return(
     <View style={styles.requestCardContainerStyle}>
         <View style={{height:78,backgroundColor:'white',flexDirection:'row'}}>
           <View style={{flex:19,alignItems: 'center',justifyContent: 'center',}}>
-            <Image
-              style={styles.imageRequestStyle}
-              source={{ uri: 'http://images.boomsbeat.com/data/images/full/6954/tayl-png.png' }}
-            />
+            {_renderImg()}
             <View style={{height:15,width:30,position:'absolute',bottom:12,left:18,backgroundColor:Colors.tabBar,borderRadius:15,alignItems: 'center',justifyContent:'center'}}>
-              <CmPrasanmitBoldText style={{fontSize:14,color:'white',backgroundColor:'transparent'}}>A+</CmPrasanmitBoldText>
+              <CmPrasanmitBoldText style={{fontSize:15,color:'white',backgroundColor:'transparent'}}>{list.blood+list.blood_type}</CmPrasanmitBoldText>
             </View>
           </View>
           <View style={{flex:35,justifyContent: 'center',}}>
-            <CmPrasanmitBoldText style={{fontSize:22,color:'#575757'}}>Lautner</CmPrasanmitBoldText>
+            <CmPrasanmitBoldText style={{fontSize:22,color:'#575757'}}>{capitalizeFirstLetter(list.name)}</CmPrasanmitBoldText>
           </View>
           <View style={{flex:14,marginRight:10,alignItems: 'center',justifyContent: 'center'}}>
             {this._statusBox}
@@ -157,3 +161,7 @@ const styles = StyleSheet.create({
     backgroundColor:'white'
   },
 });
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}

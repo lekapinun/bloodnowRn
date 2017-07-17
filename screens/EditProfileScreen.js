@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
 import { CmPrasanmitText } from '../components/CmPrasanmitText';
 import { CmPrasanmitBoldText } from '../components/CmPrasanmitBoldText';
 import { EditProfileDetail, Button } from '../components/common/';
-import { Font } from 'expo'
+import { Font, ImagePicker } from 'expo'
 import Colors from '../constants/Colors';
+import addressServer from '../utilities/addressServer';
+import axios from 'axios'
 
 export default class EditProfileScreen extends Component{
     static navigationOptions =  {
@@ -23,19 +25,31 @@ export default class EditProfileScreen extends Component{
         email: "t-swizzle@gmail.com",
         province: "กรุงเทพมหานคร",
         birthYear: "2532",
+        user: this.props.navigation.state.params.user,
+        birthDate: this.props.navigation.state.params.user.birthyear.toString(),
+        image: this.props.navigation.state.params.user.img,
+        token: this.props.navigation.state.params.token
     }
 
     render() {
+      const showPhotos = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({});
+
+        if (!result.cancelled) {
+          this.setState({ image: result.uri });
+        }
+      };
+
       return(
         <View style={{flex:1,backgroundColor:'white'}}>
         <View style={styles.pageStyle}>
           <View>
             <Image
               style={styles.imageStyle}
-              source={{uri: "https://cache.gmo2.sistacafe.com/images/uploads/summary/image/1484/1437134731-taylor-swift-009.jpg"}}
+              source={{uri: this.state.image}}
             />
             <TouchableOpacity
-              onPress={() => {}}
+              onPress={showPhotos}
               style={styles.changeProfileImageButtonContainer}
               >
               <Image
@@ -44,17 +58,17 @@ export default class EditProfileScreen extends Component{
               />
             </TouchableOpacity>
           </View>
-          <CmPrasanmitBoldText style={{marginVertical:10,fontSize:30}}>Taylor</CmPrasanmitBoldText >
-          <EditProfileDetail label = "ชื่อ-สกุล" information={this.state.name} editable={false}/>
-          <EditProfileDetail label = "กรุ๊ปเลือด" information= {this.state.bloodType} />
-          <EditProfileDetail label = "เบอร์โทรศัพท์" information= {this.state.phone} editable={false}/>
-          <EditProfileDetail label = "อีเมล์" information= {this.state.email}/>
-          <EditProfileDetail label = "จังหวัด" information= {this.state.province}/>
-          <EditProfileDetail label = "ปีเกิด" information= {this.state.birthYear}/>
+          <CmPrasanmitBoldText style={{marginVertical:10,fontSize:30}}>{capitalizeFirstLetter(this.state.user.name)}</CmPrasanmitBoldText >
+          <EditProfileDetail label = "ชื่อ-สกุล" information={this.state.user.firstname + ' ' + this.state.user.lastname} editable={false}/>
+          <EditProfileDetail label = "กรุ๊ปเลือด" information= {this.state.user.blood + this.state.user.blood_type} />
+          <EditProfileDetail label = "เบอร์โทรศัพท์" information= {this.state.user.phone} editable={false}/>
+          <EditProfileDetail label = "อีเมล์" information= {this.state.user.email}/>
+          <EditProfileDetail label = "จังหวัด" information= {this.state.user.province}/>
+          <EditProfileDetail label = "ปีเกิด" information= {this.state.birthDate}/>
           <View style={{marginTop:30}}/>
           <Button
             title="บันทึกการเปลี่ยนแปลง"
-            onPress={() => {}}
+            onPress={this._editProfile}
             buttonColor={Colors.tabBar}
             colorFont="white"
             sizeFont={23}
@@ -64,6 +78,20 @@ export default class EditProfileScreen extends Component{
         </View>
         </View>
       );
+    }
+
+    _editProfile = () => {
+      console.log(addressServer.APIRequest.toString() + '/api/edit');
+      const api = addressServer.APIRequest.toString() + '/api/edit';
+      axios(api,{ method: 'post',headers: {'Authorization' : 'Bearer ' + this.state.token},})
+      .then(response =>
+      {
+        console.log(response.data)
+        this.props.navigation.goBack()
+      })
+      .catch((error) =>  {
+        console.log(error + ' @EditScreen')
+      })
     }
 }
 
@@ -100,3 +128,7 @@ const styles = StyleSheet.create({
     width: 100,
   },
 });
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}

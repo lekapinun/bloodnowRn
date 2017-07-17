@@ -36,6 +36,7 @@ export default class App extends React.Component{
         require('./assets/icons/uncheck.png'),
         require('./assets/images/addRequest.png'),
         require('./assets/images/cm.png'),
+        require('./assets/images/user.png'),
       ],
       fonts: [
         FontAwesome.font,

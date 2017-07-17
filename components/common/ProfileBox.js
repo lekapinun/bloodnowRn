@@ -8,12 +8,17 @@ import { CmPrasanmitText } from '../CmPrasanmitText'
 import { CmPrasanmitBoldText } from '../CmPrasanmitBoldText'
 
 const ProfileBox = (props) => {
+
+  _renderImg = () => {
+    if(props.user.img === null){
+      return <Image style={styles.imageStyle} source={require('../../assets/images/user.png')}/>
+    }
+    return <Image style={styles.imageStyle} source={{uri : props.user.img}}/>
+  }
+
   return (
     <View style={styles.profileContainer}>
-      <Image
-        style={styles.imageStyle}
-        source={{ uri: 'https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/960w/NXZELRJWF8.jpg' }}
-      />
+      {_renderImg()}
       <View style={styles.detailContainer}>
         <CmPrasanmitBoldText style={styles.nameTextStyle}>{capitalizeFirstLetter(props.user.name)}</CmPrasanmitBoldText>
         <CmPrasanmitText style={styles.detailTextStyle}>{'กรุ๊ปเลือด ' + props.user.blood + props.user.blood_type}</CmPrasanmitText>

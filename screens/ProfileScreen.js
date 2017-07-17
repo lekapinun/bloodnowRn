@@ -76,7 +76,7 @@ export default class ProfileScreen extends Component {
           <ProfileBox
             user={this.state.user}
             navigation={this.props.navigation}
-            onPress={this._goToEditProfile}
+            onPress={() => this._goToEditProfile(this.state.user)}
             logOut={this._logout}
             disableEdit={this.state.pressEdit}
           />
@@ -96,10 +96,10 @@ export default class ProfileScreen extends Component {
     })
   }
 
-  _goToEditProfile = () => {
+  _goToEditProfile = (detail) => {
     this.setState({pressEdit: true})
-    const { navigate } = this.props.navigation;
-    navigate('EditProfile')
+    const resetAction = NavigationActions.navigate({routeName: 'EditProfile',params: { 'user' : detail, 'token' : this.state.token}})
+    this.props.navigation.dispatch(resetAction)
     setTimeout(() => {
        this.setState({pressEdit: false})
     },1000)
