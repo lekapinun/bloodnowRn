@@ -7,6 +7,7 @@ import { Font, ImagePicker } from 'expo'
 import Colors from '../constants/Colors';
 import Layout from '../constants/Layout';
 import addressServer from '../utilities/addressServer';
+import { NavigationActions } from 'react-navigation';
 import axios from 'axios'
 
 export default class EditProfileScreen extends Component{
@@ -68,6 +69,7 @@ export default class EditProfileScreen extends Component{
         blood_typeTemp: this.props.navigation.state.params.user.blood_type,
         modalBloodVisible: false,
         modalProvinceVisible: false,
+        pressEdit : false,
     }
 
     setModalBloodVisible(visible) {
@@ -175,6 +177,7 @@ export default class EditProfileScreen extends Component{
               sizeFont={23}
               ButtonWidth={300}
               ButtonHeight={40}
+              touchable={this.state.pressEdit}
             />
           </View>
         </ScrollView >
@@ -184,6 +187,7 @@ export default class EditProfileScreen extends Component{
     }
 
     _editProfile = () => {
+      this.setState({pressEdit: true})
       console.log(addressServer.APIRequest.toString() + '/api/user/edit');
       const api = addressServer.APIRequest.toString() + '/api/user/edit';
       axios(api,{ 
@@ -200,7 +204,16 @@ export default class EditProfileScreen extends Component{
       .then(response =>
       {
         console.log(response.data)
-        this.props.navigation.goBack()
+        const resetAction = NavigationActions.reset({
+          index: 0,
+          actions: [
+            NavigationActions.navigate({ routeName: 'Profile'})
+          ]
+        })
+        this.props.navigation.dispatch(resetAction)
+        this.setTimeout(() => {
+          this.setState({pressEdit: false})
+        }, 1000);
       })
       .catch((error) =>  {
         console.log(error + ' @EditScreen')
