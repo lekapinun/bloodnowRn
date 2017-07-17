@@ -17,7 +17,7 @@ const CardDetail = ({ list, req, onPress, visible, gropBlood ,ready}) => {
           <View style={{flex:19,alignItems: 'center',justifyContent: 'center',}}>
             <Image
               style={styles.imageRequestStyle}
-              source={{ uri: 'http://sim02.in.com/639415d3d6d757648ba28ff9e3929e59_lt.jpg' }}
+              source={{ uri: 'https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/960w/NXZELRJWF8.jpg' }}
             />
             <View style={{height:15,width:30,position:'absolute',bottom:12,left:18,backgroundColor:Colors.tabBar,borderRadius:15,alignItems: 'center',justifyContent:'center'}}>
               <CmPrasanmitBoldText style={{fontSize:17,color:'white',backgroundColor:'transparent'}}>{gropBlood}</CmPrasanmitBoldText>

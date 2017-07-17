@@ -248,7 +248,7 @@ export default class RequestBloodScreen extends Component {
                                     <InputText
                                         label = 'สถานพยาบาล'
                                         onChangeText={(patient_hos) => this.setState({patient_hos})}
-                                        value={this.state.patient_hos}
+                                        value={'โรงพยาบาล' + this.state.patient_hos}
                                         onEndEditing={() => this._findLocation()}
                                     />
                                     </View>
@@ -285,15 +285,12 @@ export default class RequestBloodScreen extends Component {
     
 
     _backToHistory = () => {
-        //this.setState({displayRequest : false,displayConfirm : false})
-        const resetAction = NavigationActions.navigate(
-            {
-                index: 0,
-                actions: [ 
-                    NavigationActions.navigate({ routeName: 'RequestHistory'}) ,
-                ]
-            }
-        )
+        this.setState({displayRequest : false,displayConfirm : false})
+        const resetAction = NavigationActions.reset({index: 0,
+            actions: [ 
+                NavigationActions.navigate({ routeName: 'RequestHistory'}) ,
+            ]
+        })
         this.props.navigation.dispatch(resetAction)
     }
 
@@ -326,6 +323,7 @@ export default class RequestBloodScreen extends Component {
     _ConfirmRequest = () => {
         this.state.patient_hos_la = this.state.region.latitude.toString()
         this.state.patient_hos_long = this.state.region.longitude.toString()
+        this.state.patient_hos = 'โรงพยาบาล' + this.state.patient_hos
         console.log(this.state)
         console.log(addressServer.APIRequest + '/api/req');
         const api = addressServer.APIRequest + '/api/req';

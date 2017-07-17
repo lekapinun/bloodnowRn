@@ -20,8 +20,8 @@ export default class Stack extends React.Component {
       if(loginStatus !== null){
         checkLogin = JSON.parse(loginStatus)
         //console.log(checkLogin)
-        console.log(addressServer.APIRequest.toString() + '/api/index');
-        const api = addressServer.APIRequest.toString() + '/api/index';
+        console.log(addressServer.APIRequest.toString() + '/api/user');
+        const api = addressServer.APIRequest.toString() + '/api/user';
         axios(api,{ headers: {'Authorization' : 'Bearer ' + checkLogin.token},})
         .then(response =>
         {

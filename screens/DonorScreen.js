@@ -90,7 +90,7 @@ export default class DonorScreen extends Component {
 
   render() {
     let status_donate
-    if(this.state.nextReady > 0){
+    if((new Date()).getFullYear() - (new Date(this.state.nextReady)).getFullYear() < 1){
       status_donate = 'การบริจาคครั้งถัดไป วันที่ ' + this.state.next_donate
     } else {
       status_donate = 'ตอนนี้คุณสามารถบริจาคได้แล้ว'

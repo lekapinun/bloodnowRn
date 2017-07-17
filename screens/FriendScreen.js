@@ -35,6 +35,7 @@ export default class FriendScreen extends Component {
     state = {
         phoneList : [],
         token : '',
+        loadfriend : false
     }
 
     async showFirstContactAsync() {
@@ -87,13 +88,16 @@ export default class FriendScreen extends Component {
             })
             .then((response) => {
                 console.log(response.data)
+                this.setState({loadfriend : true})
             })
             .catch((error) => {
                 console.log(error)
+                this.setState({loadfriend : true})
             }) 
         })
         .catch((error) => {
             console.log(error)
+            this.setState({loadfriend : true})
         })
     }
 

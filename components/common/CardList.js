@@ -18,8 +18,8 @@ export class CardList extends Component{
   componentWillMount() {
      /* axios.get(this.props.url)
     .then(response => this.setState({ list: response.data,loading: true }));  */
-    console.log(addressServer.APIRequest.toString() + '/api/showdonate');
-    const api = addressServer.APIRequest.toString() + '/api/showdonate';
+    console.log(addressServer.APIRequest.toString() + '/api/user/donate');
+    const api = addressServer.APIRequest.toString() + '/api/user/donate';
     axios(api,{ method: 'get', headers: {'Authorization' : 'Bearer ' + this.props.token} })
     .then(response =>
     {
@@ -41,16 +41,17 @@ export class CardList extends Component{
          key = {list.roomreq_id}
          name = {list.name}
          visible = {true}
-         onPress = {() => this._goToDetail(list.roomreq_id)}
+         onPress = {() => this._goToDetail(list.roomreq_id,list.img)}
          disable={this.state.pressDetail}
+         img = {list.img}
        />
        //<CardDetail key={list.title} list={list} visible={true}/>
      );
    }
 
-   _goToDetail = (detail_id) => {
+   _goToDetail = (detail_id,img) => {
     this.setState({pressDetail : true})
-    const resetAction = NavigationActions.navigate({routeName: 'DonateHistory',params: {'detail_id' : detail_id,'token' : this.props.token}})
+    const resetAction = NavigationActions.navigate({routeName: 'DonateHistory',params: {'detail_id' : detail_id,'token' : this.props.token,'img' : img}})
     this.props.navi.dispatch(resetAction)
     setTimeout(() => {
       this.setState({pressDetail : false})
@@ -86,7 +87,7 @@ export class CardList extends Component{
   }
 }
 
-const CardDetail = ({ name, onPress, visible, disable }) => {
+const CardDetail = ({ name,img ,onPress, visible, disable }) => {
   if(visible){
     return(
       <View style={{borderBottomWidth: 1, borderBottomColor: '#DCDCDC',}}>
@@ -95,7 +96,7 @@ const CardDetail = ({ name, onPress, visible, disable }) => {
           <View style={{flex:19,alignItems: 'center',justifyContent: 'center',}}>
             <Image
               style={styles.imageRequestStyle}
-              source={{ uri: 'http://images.boomsbeat.com/data/images/full/6954/tayl-png.png' }}
+              source={{ uri: img }}
             />
           </View>
           <View style={{flex:35,justifyContent: 'center',}}>

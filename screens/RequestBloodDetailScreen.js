@@ -120,7 +120,7 @@ export default class RequestBloodDetailScreen extends Component {
     }
 
     _renderThankBox() {
-      if(this.state.complete === true && this.state.thankyou_temp === ''){
+      if(this.state.complete === true && this.state.thankyou_temp === null){
         return (
           <View style={[styles.borderBottom,{width:300, height:85, marginTop:20,marginBottom:20,flexDirection: 'column',justifyContent: 'center',alignItems: 'center'}]}>
               <CmPrasanmitText style={{fontSize:22,marginBottom:10}}>ส่งคำขอบคุณให้กับผู้ตอบรับคำขอของคุณ</CmPrasanmitText>

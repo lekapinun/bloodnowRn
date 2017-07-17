@@ -36,13 +36,18 @@ export default class HomeScreen extends Component {
   }
 
   componentWillMount() {
+    //console.log(this.props.navigation.state.routeName)
     AsyncStorage.getItem('@loginData:key')
     .then((loginStatus) => {
       const temp = JSON.parse(loginStatus)
       this.state.token = temp.token
-      console.log(addressServer.APIRequest + '/api/friend');
-      const api = addressServer.APIRequest + '/api/friend';
-      axios(api,{ method: 'get',  headers: {'Authorization' : 'Bearer ' + this.state.token},})
+      console.log(addressServer.APIRequest + '/api/friend/detail');
+      const api = addressServer.APIRequest + '/api/friend/detail';
+      axios(api,{ 
+        method: 'post',  
+        headers: {'Authorization' : 'Bearer ' + this.state.token},
+        data: {'blood' : this.props.navigation.state.routeName}
+      })
       .then((response) => {
         console.log(response.data)
         this.setState({ list: response.data,loading: true })
@@ -50,7 +55,7 @@ export default class HomeScreen extends Component {
       .catch((error) => {
         console.log(error)
         this.setState({ loading: true })
-      })
+      }) 
     })
     .catch((error) => {
       console.log(error)

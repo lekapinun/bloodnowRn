@@ -20,8 +20,8 @@ export default class DonateHistoryScreen extends Component {
   componentWillMount() {
     var params = this.props.navigation.state.params
     //console.log(params)
-    console.log(addressServer.APIRequest + '/api/donate/detail');
-    const api = addressServer.APIRequest + '/api/donate/detail';
+    console.log(addressServer.APIRequest + '/api/user/donate/detail');
+    const api = addressServer.APIRequest + '/api/user/donate/detail';
      axios(api,{ 
       method: 'post', 
       headers: {'Authorization' : 'Bearer ' + params.token},
@@ -52,6 +52,7 @@ export default class DonateHistoryScreen extends Component {
     },
     patient: '',
     loading: true,
+    img : this.props.navigation.state.params.img
   }
 
   render() {
@@ -65,7 +66,7 @@ export default class DonateHistoryScreen extends Component {
           <View style={{ height: 70, width: 70,marginLeft: 25,}}>
             <Image
               style={styles.profileImageStyle}
-              source={{uri: 'http://images.boomsbeat.com/data/images/full/6954/tayl-png.png'}}
+              source={{uri: this.state.img}}
             />
           </View>
           <View style={styles.requestInfotmationContainer}>

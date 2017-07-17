@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet, KeyboardAvoidingView} from 'react-native';
 import { CmPrasanmitText } from '../components/CmPrasanmitText';
 import { CmPrasanmitBoldText } from '../components/CmPrasanmitBoldText';
 import { EditProfileDetail, Button } from '../components/common/';
@@ -41,7 +41,7 @@ export default class EditProfileScreen extends Component{
       };
 
       return(
-        <View style={{flex:1,backgroundColor:'white'}}>
+        <View style={{flex:1,backgroundColor:'white'}}> 
         <View style={styles.pageStyle}>
           <View>
             <Image
@@ -61,10 +61,10 @@ export default class EditProfileScreen extends Component{
           <CmPrasanmitBoldText style={{marginVertical:10,fontSize:30}}>{capitalizeFirstLetter(this.state.user.name)}</CmPrasanmitBoldText >
           <EditProfileDetail label = "ชื่อ-สกุล" information={this.state.user.firstname + ' ' + this.state.user.lastname} editable={false}/>
           <EditProfileDetail label = "กรุ๊ปเลือด" information= {this.state.user.blood + this.state.user.blood_type} />
-          <EditProfileDetail label = "เบอร์โทรศัพท์" information= {this.state.user.phone} editable={false}/>
-          <EditProfileDetail label = "อีเมล์" information= {this.state.user.email}/>
+          <EditProfileDetail keyboardType='number-pad' label = "เบอร์โทรศัพท์" information= {this.state.user.phone} editable={false}/>
+          <EditProfileDetail keyboardType='email-address' label = "อีเมล์" information= {this.state.user.email}/>
           <EditProfileDetail label = "จังหวัด" information= {this.state.user.province}/>
-          <EditProfileDetail label = "ปีเกิด" information= {this.state.birthDate}/>
+          <EditProfileDetail keyboardType='number-pad' label = "ปีเกิด" information= {this.state.birthDate}/>
           <View style={{marginTop:30}}/>
           <Button
             title="บันทึกการเปลี่ยนแปลง"
@@ -76,7 +76,7 @@ export default class EditProfileScreen extends Component{
             ButtonHeight={40}
           />
         </View>
-        </View>
+        </View> 
       );
     }
 

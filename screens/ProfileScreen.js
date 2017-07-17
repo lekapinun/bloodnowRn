@@ -33,8 +33,8 @@ export default class ProfileScreen extends Component {
     .then((loginStatus) => {
       const temp = JSON.parse(loginStatus)
       this.state.token = temp.token
-      console.log(addressServer.APIRequest.toString() + '/api/index');
-      const api = addressServer.APIRequest.toString() + '/api/index';
+      console.log(addressServer.APIRequest.toString() + '/api/user');
+      const api = addressServer.APIRequest.toString() + '/api/user';
       axios(api,{ headers: {'Authorization' : 'Bearer ' + temp.token},})
         .then(response =>
         {
