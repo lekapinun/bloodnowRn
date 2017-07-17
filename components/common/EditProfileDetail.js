@@ -19,7 +19,7 @@ const EditProfileDetail = ({ label, information, onChange, editable, keyboardTyp
           <TextInput
             style={[Font.style('CmPrasanmitBold'),styles.informationText]}
             value={information}
-            onChange={onChange}
+            onChangeText={onChange}
             editable={editable}
             keyboardType={keyboardType}
           />

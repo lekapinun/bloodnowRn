@@ -65,7 +65,7 @@ export default class Stack extends React.Component {
     if(this.state.finish){
       return <Stack/>
     }else {
-      return <Expo.AppLoading />
+      return <Text>dsfasdfdshabjli</Text>  //<Expo.AppLoading />
     }
   }
 }
