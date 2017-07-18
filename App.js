@@ -1,7 +1,7 @@
 import React from 'react';
 import Expo, { Font } from 'expo';
 import PropTypes from 'prop-types';
-import { AppRegistry, Text, View, Button } from 'react-native';
+import { AppRegistry, Text, View, ActivityIndicator } from 'react-native';
 import cacheAssetsAsync from './utilities/cacheAssetsAsync';
 import { FontAwesome } from '@expo/vector-icons';
 import Stack from './navigator/mainStack';
@@ -58,11 +58,14 @@ export default class App extends React.Component{
   }
 
   render() {
-
     if (this.state.appIsReady) {
       return <Stack/>
     } else {
-      return <Expo.AppLoading />
+      return  (
+        <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+          <ActivityIndicator size="large" />
+        </View>
+      )
     }
   }
 }
