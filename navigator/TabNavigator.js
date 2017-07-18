@@ -7,7 +7,7 @@ import {
   FontAwesome,
   MaterialCommunityIcons,
   Ionicons,
-  SimpleLineIcons, 
+  SimpleLineIcons,
  } from '@expo/vector-icons';
 
 import HomeScreen from '../screens/HomeScreen';
@@ -22,13 +22,13 @@ import ProfileStack from './ProfileTab';
 import RequestStack from './RequestTab';
 import DonorStack from './DonorTab';
 import FriendStack from './FriendTab';
-import InformationStack from './InformationTab';
+import InformationTab from './InformationTab';
 
 
 export default class Tab extends React.Component {
     static navigationOptions =  {
         header: null
-    };   
+    };
 
     render(){
         //console.log(this.props.navigation)
@@ -41,7 +41,7 @@ export default class Tab extends React.Component {
             requestbloodhistory: {screen: RequestStack},
             donor: {screen: DonorStack},
             friend: {screen: FriendStack},
-            Information: {screen: InformationStack},
+            Information: {screen: InformationTab},
         },{
            // ...TabNavigator.Presets.AndroidTopTabs,
            initialRouteName: 'profile',
@@ -78,14 +78,14 @@ export default class Tab extends React.Component {
             tabBarIcon: ({ tintColor, focused }) => ( this._renderIconSimpleLineIcons('globe', focused, 20)),
         };
 
-        InformationStack.navigationOptions = {
+        InformationTab.navigationOptions = {
             tabBarIcon: ({ tintColor, focused }) => ( this._renderIconSimpleLineIcons('notebook', focused, 20)),
         };
 
         return(
             <Tab/>
         );
-        
+
     }
     _renderIconSimpleLineIcons(name, focused, size){
         return (

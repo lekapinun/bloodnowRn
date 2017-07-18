@@ -8,7 +8,7 @@ import { Font } from 'expo'
 
 export default class InformationThirdScreen extends Component {
     static navigationOptions =  {
-        title: 'คำแนะนำ',
+        title: 'คำแนะนำ3',
         headerTintColor: 'white',
         headerTitleStyle: [Font.style('CmPrasanmitBold'),{fontSize:29}],
         headerStyle: {marginLeft:-250,backgroundColor: '#E84A5F'},
