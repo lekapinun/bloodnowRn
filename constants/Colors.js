@@ -3,8 +3,8 @@ const tintColor = 'white';
 export default {
   tintColor,
   tabIconDefault: '#888',
-  tabIconSelected: /*'#EF685E'*/'#E84A5F',
-  tabBar: /*'#fefefe'*/'#E84A5F',
+  tabIconSelected: '#E84A5F',
+  tabBar: '#E84A5F',
   errorBackground: 'red',
   errorText: '#fff',
   warningBackground: '#EAEB5E',
@@ -12,4 +12,9 @@ export default {
   noticeBackground: tintColor,
   noticeText: '#fff',
   routeColor : '#E84A5F',
+  buttonLogin : '#EF685E',
+  buttonRegister: '#9FAC9B',
+  textgrey : '#575757',
+  greylight: '#DADBDC',
+  textgreydetail : '#95989A'
 };

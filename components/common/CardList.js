@@ -65,7 +65,7 @@ export class CardList extends Component{
           <ScrollView style={styles.requestListContainerStyle}>
           <View style={{borderBottomWidth: 1, borderBottomColor: '#DCDCDC',}}>
             <View style={[styles.requestCardContainerStyle,{marginLeft:28,justifyContent: 'center'}]}>
-              <CmPrasanmitText style={{fontSize:22,color:'#575757'}}> ไม่มีรายการการให้เลือด</CmPrasanmitText>
+              <CmPrasanmitText style={{fontSize:22,color:Colors.textgreydetail}}> ไม่มีรายการการให้เลือด</CmPrasanmitText>
             </View>
           </View>
           </ScrollView>

@@ -1,12 +1,12 @@
 import React, { Component} from 'react';
-import { Text, View, TouchableOpacity, TextInput, Image, StyleSheet, AsyncStorage, ScrollView, ActivityIndicator } from 'react-native';
+import { Text, View, TouchableOpacity, TextInput, Image, StyleSheet, AsyncStorage, ScrollView,  Keyboard, Animated } from 'react-native';
 import { Font } from 'expo';
 import { NavigationActions } from 'react-navigation'
 import axios from 'axios'
-
 import addressServer from '../utilities/addressServer';
-
-import { Button } from '../components/common';
+import { BaseButton } from '../components/common';
+import { CmPrasanmitBoldText, CmPrasanmitText, KeyboardAvoid } from '../components';
+import Colors from '../constants/Colors.js'
 
 export default class LoginScreen extends Component {
 
@@ -14,46 +14,39 @@ export default class LoginScreen extends Component {
         name: '',
         password: '',
         error: false,
-        loadRegis: false,
-        pressRegis: false
+        pressRegis: false,
+        pressLogin: false,
     };
 
     static navigationOptions = {
         header: null
     };
 
+    componentWillMount () {
+      this.keyboardWillShowListener = Keyboard.addListener('keyboardWillShow', this._keyboardWillShow);
+      this.keyboardWillHideListener = Keyboard.addListener('keyboardWillHide', this._keyboardWillHide);
+      this.positon = new Animated.ValueXY(0,0);
+    }
 
-/*    componentWillMount() {
-        //this._checkLogin();
-        AsyncStorage.getItem('@loginData:key')
-        .then((loginStatus) => {
-            if(loginStatus !== null){
-                checkLogin = JSON.parse(loginStatus)
-                console.log(addressServer.APIRequest.toString() + '/api/index');
-                const api = addressServer.APIRequest.toString() + '/api/index';
-                axios(api,{ headers: {'Authorization' : 'Bearer ' + checkLogin.token},})
-                .then(response => 
-                {
-                    console.log(response.data)
-                    this.saveUserData(response.data)
-                    this._goToApp()
-                })
-                .catch((error) => console.log(error))
-            }
-        })
-    }*/
-    
+    componentWillUnmount () {
+      this.keyboardWillShowListener.remove();
+      this.keyboardWillHideListener.remove();
+    }
 
-    async _checkLogin() {
-      try {
-            const loginStatus = await AsyncStorage.getItem('@loginData:key');
-            if (loginStatus.uesr !== null) {
-                console.log(loginStatus)
-                this._goToApp() 
-            }
-        } catch ( error ) {
-            console.log('error');
-        }
+    _keyboardWillShow = () => {
+      this.positon = new Animated.ValueXY({ x: 0, y: 0});
+      Animated.timing(this.positon,{
+          toValue: { x: 0, y: -100},
+      }).start();
+      this.forceUpdate();
+    }
+
+    _keyboardWillHide = () => {
+      this.positon = new Animated.ValueXY({ x: 0, y: -100});
+      Animated.timing(this.positon,{
+          toValue: { x: 0, y: 0},
+      }).start();
+      this.forceUpdate();
     }
 
     async saveUserData(userData) {
@@ -65,41 +58,16 @@ export default class LoginScreen extends Component {
     }
 
     renderErrorMessage() {
-        if(!this.state.error){
-            return <Text />
-        }
-        return <Text style={[Font.style('CmPrasanmit'),{ fontSize: 20,color:'red',}]}>ลองใหม่อีกครั้ง</Text>
-    }
-
-    renderRegisButton(){
-        if(this.state.loadRegis){
-            return <ActivityIndicator size="large" color='#9FAC9B'/>
-        } else {
-            return(
-                <View>
-                <View style={{marginTop:10}}></View>
-                <Button
-                    title='ลงทะเบียน'
-                    buttonColor='#9FAC9B'
-                    sizeFont={25}
-                    onPress={this._register}
-                    ButtonWidth={260}
-                    ButtonHeight={50}
-                    colorFont='white'
-                    touchable={this.state.pressRegis}
-                />
-                <View style={{marginTop:10}}></View>
-                </View>
-            );
-        }
+        return this.state.error ? <CmPrasanmitText style={styles.errorText}>ลองใหม่อีกครั้ง</CmPrasanmitText> : null
     }
 
     render() {
         return(
+            <KeyboardAvoid>
             <ScrollView style={{flex: 1,flexDirection: 'column', backgroundColor: '#FAFAFA'}}> 
             <View style={{flex: 1,marginTop:80,flexDirection: 'column',justifyContent: 'center',alignItems: 'center', backgroundColor: '#FAFAFA'}}>
                 <Image source={require('../assets/icons/logo.png')} style={{width:190,height:90}}/>
-                <View><Text style={[Font.style('CmPrasanmit'),styles.caption]}>ม า ก ก ว่ า ก า ร ใ ห้ เ ลื อ ด</Text></View>
+                <CmPrasanmitText style={styles.caption}>ม า ก ก ว่ า ก า ร ใ ห้ เ ลื อ ด</CmPrasanmitText>
                 <View style={{width: 260}}>
                     <TextInput
                         style={[Font.style('CmPrasanmit'),styles.input]}
@@ -121,29 +89,32 @@ export default class LoginScreen extends Component {
                         underlineColorAndroid='rgba(0,0,0,0)'
                     />
                     {this.renderErrorMessage()}
-                    <View style={{height: 30, marginTop:-5,justifyContent: 'flex-start',alignItems: 'flex-end'}}>
+                    <View style={{height: 30, marginTop:5,justifyContent: 'flex-start',alignItems: 'flex-end'}}>
                         <TouchableOpacity>
-                            <Text style={[Font.style('CmPrasanmit'),{ fontSize: 20,color:'#95989A',}]}>ลืมรหัสผ่าน?</Text>
+                            <CmPrasanmitText style={{ fontSize: 20,color:'#95989A'}}>ลืมรหัสผ่าน?</CmPrasanmitText>
                         </TouchableOpacity>
                     </View>
-                    <View style={{marginTop:10}}></View>
-                    <Button
+                    <BaseButton
                         title='เข้าสู่ระบบ'
-                        buttonColor='#EF685E'
-                        sizeFont={25}
+                        fontStyle = {{fontSize:25,color:'white'}}
+                        ButtonStyle = {{backgroundColor: Colors.buttonLogin, width: 260, height: 50, marginVertical:10}}
                         onPress={this._loginPress}
-                        ButtonWidth={260}
-                        ButtonHeight={50}
-                        colorFont='white'
+                        press={this.state.pressLogin}
                     />
-                    <View style={{marginTop:10}}></View>
                     <View style={{justifyContent: 'center',alignItems: 'center'}}>
-                        <Text style={[Font.style('CmPrasanmit'),{ fontSize: 23,color:'#95989A',marginBottom:5,marginTop:5}]}>หรือ</Text>
+                        <CmPrasanmitText style={{ fontSize: 23,color:'#95989A',marginVertical:5}}>หรือ</CmPrasanmitText>
                     </View>
-                    {this.renderRegisButton()}
+                    <BaseButton
+                        title='ลงทะเบียน'
+                        fontStyle = {{fontSize:25,color:'white'}}
+                        ButtonStyle = {{backgroundColor: Colors.buttonRegister, width: 260, height: 50, marginVertical:10}}
+                        onPress={this._register}
+                        press={this.state.pressRegis}
+                    />
                 </View>
             </View> 
             </ScrollView >
+            </KeyboardAvoid>
         );
     }
 
@@ -158,70 +129,51 @@ export default class LoginScreen extends Component {
 
 
     _loginPress = () => {
+        this.setState({ pressLogin: true})
         console.log(addressServer.APIRequest.toString() + '/api/auth/login');
         const api = addressServer.APIRequest.toString() + '/api/auth/login';
         this.setState({error : false});
-        const myRequest = new Request(
-            api,
-            {
-                method: 'POST',
-                 headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(this.state)
-            });
-        var loginData = '';
-        fetch(myRequest)
-        .then((response) => response.text())
-        .then((responseText) => {
+        axios(api,{ method: 'post', data: this.state})
+        .then((response) => {
             //console.log(JSON.parse(responseText))
-            loginData = JSON.parse(responseText);
+            loginData = response.data;
             if(loginData.status === 'ok'){
                 console.log('login success');
                 this._loginData(loginData)
                 this._goToApp()
-            }
-            else
-            {
+            } else {
                 this.setState({ password: '' });
                 console.log('login fail');
                 this.setState({error : true});
+                this.setState({ pressLogin: false})
             }
         })
         .catch((error) => {
             console.warn(error);
+            this.setState({ pressLogin: false})
         }); 
     };
 
     _goToApp = () => {
-        const resetAction = NavigationActions.reset(
-            {
-                index: 0,
-                actions: [ 
-                    NavigationActions.navigate({ routeName: 'Bloodnow'})   
-                ]
-            }
-        )
+        const resetAction = NavigationActions.reset({
+            index: 0,
+            actions: [ 
+                NavigationActions.navigate({ routeName: 'Bloodnow'})   
+            ]
+        })
         this.props.navigation.dispatch(resetAction)
     }
 
 
     _register = () => {
         this.setState({ pressRegis: true})
-        /*this.setState({loadRegis: true})
-        const { navigate } = this.props.navigation;
-        navigate('Register')
-        this.setState({loadRegis: false})*/
-        const resetAction = NavigationActions.reset(
-            {
-                index: 1,
-                actions: [ 
-                    NavigationActions.navigate({ routeName: 'Login'}) ,
-                    NavigationActions.navigate({ routeName: 'Register'})   
-                ]
-            }
-        )
+        const resetAction = NavigationActions.reset({
+            index: 1,
+            actions: [ 
+                NavigationActions.navigate({ routeName: 'Login'}) ,
+                NavigationActions.navigate({ routeName: 'Register'})   
+            ]
+        })
         this.props.navigation.dispatch(resetAction)
     };
 }
@@ -246,4 +198,8 @@ const styles = StyleSheet.create({
     fontSize: 23,
     backgroundColor: 'white',
   },
+  errorText: {
+    fontSize: 20,
+    color:'red'
+  }
 });

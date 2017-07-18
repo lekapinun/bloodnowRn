@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     width: 200,
     height: 30,
     fontSize: 23,
-    color: '#575757',
+    color: Colors.textgreydetail,
     /* borderBottomWidth: 1,
     borderBottomColor: 'grey', */
   }

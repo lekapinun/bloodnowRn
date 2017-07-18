@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import Colors from '../../constants/Colors';
 import { Font } from 'expo'
 import { CmPrasanmitText } from '../CmPrasanmitText'
 import { CmPrasanmitBoldText } from '../CmPrasanmitBoldText'
@@ -25,7 +26,7 @@ const styles = StyleSheet.create({
   underline : {
     flexDirection: 'row',
     width: 310,
-    borderBottomColor: '#D1D1D1',
+    borderBottomColor: Colors.greylight,
     borderBottomWidth: 1,
     paddingVertical: 7,
     justifyContent: 'space-between',
@@ -34,7 +35,7 @@ const styles = StyleSheet.create({
   title:{
     fontSize: 23,
     height:25,
-    color: '#575757',
+    color: Colors.textgrey,
   },
   detail: {
     width: 200,
@@ -44,7 +45,7 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     alignSelf: 'flex-end',
     fontSize: 23,
-    color: 'grey'
+    color: Colors.textgreydetail
   }
 });
 

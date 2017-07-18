@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView, Keyboard, 
 import { CmPrasanmitText } from '../components/CmPrasanmitText';
 import { CmPrasanmitBoldText } from '../components/CmPrasanmitBoldText';
 import { EditProfileDetail, Button, PickerModalBlood, PickerPartTouch, PickerModalDate, PickerModalProvince } from '../components/common/';
+import { KeyboardAvoid } from '../components';
 import { Font, ImagePicker } from 'expo'
 import Colors from '../constants/Colors';
 import Layout from '../constants/Layout';
@@ -19,38 +20,6 @@ export default class EditProfileScreen extends Component{
       headerStyle: {backgroundColor: '#E84A5F'},
       gesturesEnabled: false,
     };
-
-    componentWillMount () {
-      this.keyboardWillShowListener = Keyboard.addListener('keyboardWillShow', this._keyboardWillShow);
-      this.keyboardWillHideListener = Keyboard.addListener('keyboardWillHide', this._keyboardWillHide);
-      this.positon = new Animated.ValueXY(0,0);
-    }
-
-    componentWillUnmount () {
-      this.keyboardWillShowListener.remove();
-      this.keyboardWillHideListener.remove();
-    }
-
-    _keyboardWillShow = () => {
-      //this.setState({keyboard : true})
-      this.positon = new Animated.ValueXY({ x: 0, y: 0});
-      Animated.timing(this.positon,{
-          toValue: { x: 0, y: -100},
-          //duration: 1000
-      }).start();
-      this.forceUpdate();
-    }
-
-    _keyboardWillHide = () => {
-      //console.log('asdfsdafsadfdsafadsf')
-      //this.setState({keyboard : false})
-      this.positon = new Animated.ValueXY({ x: 0, y: -100});
-      Animated.timing(this.positon,{
-          toValue: { x: 0, y: 0},
-          //duration: 1000
-      }).start();
-      this.forceUpdate();
-    }
 
     state = {
         //name: "เทย์เลอร์ สวิฟต์",
@@ -89,15 +58,14 @@ export default class EditProfileScreen extends Component{
       };
 
       if(this.state.blood !== ''){
-        blood = <Text style={[Font.style('CmPrasanmit'),{fontSize: 23,}]}>{this.state.blood + this.state.blood_type }</Text>;
+        blood = <CmPrasanmitBoldText style={{fontSize: 23,color:Colors.textgreydetail}}>{this.state.blood + this.state.blood_type }</CmPrasanmitBoldText>;
       }else{
-        blood = <Text />
+        blood = <CmPrasanmitText />
       }
 
 
       return(
-        <View style={{backgroundColor:'white',flex:1}}>
-        <Animated.View style={[this.positon.getLayout(),{flex:1}]}>
+        <KeyboardAvoid>
         <ScrollView style={{height:Layout.window.height,backgroundColor:'white'}}> 
           <PickerModalBlood
             pickerVisible = {this.state.modalBloodVisible}
@@ -162,7 +130,7 @@ export default class EditProfileScreen extends Component{
                 <View style={{ borderBottomColor: '#DCDCDC', borderBottomWidth: 1,}}>
                   <TouchableOpacity onPress={() => this.setModalProvinceVisible(true)} >
                     <View style={styles.informationText}>
-                      <Text style={[Font.style('CmPrasanmit'),{fontSize: 23,}]}>{this.state.province}</Text>
+                      <CmPrasanmitBoldText style={{fontSize: 23,color:Colors.textgreydetail}}>{this.state.province}</CmPrasanmitBoldText>
                     </View>
                   </TouchableOpacity>
                 </View>
@@ -181,8 +149,7 @@ export default class EditProfileScreen extends Component{
             />
           </View>
         </ScrollView >
-        </Animated.View> 
-        </View>
+        </KeyboardAvoid>
       );
     }
 

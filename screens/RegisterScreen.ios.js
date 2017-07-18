@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import { Text, ScrollView, StyleSheet, View, Modal, Image, ActivityIndicator,AsyncStorage } from 'react-native';
+import { Text, ScrollView, StyleSheet, View, Modal, Image, ActivityIndicator,AsyncStorage,Keyboard, Animated  } from 'react-native';
 import { Font } from 'expo';
-import { NavigatorBackground, Button, RegisterInput, PickerPartTouch, PickerModalDate, PickerModalBlood, PickerModalProvince } from '../components/common';
+import { NavigatorBackground, Button, RegisterInput } from '../components/common';
 import { NavigationActions } from 'react-navigation'
 import axios from 'axios'
 import Colors from '../constants/Colors'
@@ -17,6 +17,33 @@ export default class RegisterScreen extends Component {
     gesturesEnabled: false,
   };
 
+  componentWillMount () {
+    this.keyboardWillShowListener = Keyboard.addListener('keyboardWillShow', this._keyboardWillShow);
+    this.keyboardWillHideListener = Keyboard.addListener('keyboardWillHide', this._keyboardWillHide);
+    this.positon = new Animated.ValueXY(0,0);
+  }
+
+  componentWillUnmount () {
+    this.keyboardWillShowListener.remove();
+    this.keyboardWillHideListener.remove();
+  }
+
+  _keyboardWillShow = () => {
+    this.positon = new Animated.ValueXY({ x: 0, y: 0});
+    Animated.timing(this.positon,{
+      toValue: { x: 0, y: this.state.avoid},
+    }).start();
+    this.forceUpdate();
+  }
+
+  _keyboardWillHide = () => {
+    this.positon = new Animated.ValueXY({ x: 0, y: this.state.avoid});
+    Animated.timing(this.positon,{
+      toValue: { x: 0, y: 0},
+    }).start();
+    this.forceUpdate();
+  }
+
     state = {
         name: '',
         password: '',
@@ -25,6 +52,7 @@ export default class RegisterScreen extends Component {
         email: '',
         subValidated: '00000',
         pressGotoRegis2: false,
+        avoid: -50,
     }
 
 
@@ -43,6 +71,8 @@ export default class RegisterScreen extends Component {
       (this.state.email !== '' ) ? checkInput = checkInput.replaceAt(4,'1') : checkInput = checkInput.replaceAt(4,'0') ;
 
       return(
+        <View style={{backgroundColor:'#FAFAFA',flex:1}}>
+        <Animated.View style={[this.positon.getLayout(),{flex:1}]} >
         <ScrollView style={{flex: 1,flexDirection: 'column', backgroundColor: '#FAFAFA'}}>       
         <View style={{flex: 1,flexDirection: 'column',alignItems: 'center', backgroundColor: '#FAFAFA'}}>
           <View style={{marginTop: 20}}/>
@@ -58,6 +88,7 @@ export default class RegisterScreen extends Component {
             placeholder='เฉพาะตัวอักษร'
             validate = {canSubmit.charAt(0) + checkInput.charAt(0) + this.state.subValidated.charAt(0)}
             subvalidate = 'ชื่อผู้ใช้มีอยู่แล้ว'
+            onFocus={() => this.setState({avoid: 0})}
           />
           <RegisterInput
             label='รหัสผ่าน'
@@ -70,6 +101,7 @@ export default class RegisterScreen extends Component {
             maxLength={30}
             placeholder='อย่างน้อย 6 ตัว'
             validate = {canSubmit.charAt(1) + checkInput.charAt(1) + this.state.subValidated.charAt(1)}
+            onFocus={() => this.setState({avoid: 0})}
           />
           <RegisterInput
             label='ยืนยันรหัสผ่าน'
@@ -81,6 +113,7 @@ export default class RegisterScreen extends Component {
             secureTextEntry={true}
             maxLength={20}
             validate = {canSubmit.charAt(2) + checkInput.charAt(2) + this.state.subValidated.charAt(2)}
+            onFocus={() => this.setState({avoid: 0})}
           />
           <RegisterInput
             label='อีเมลล์'
@@ -94,6 +127,7 @@ export default class RegisterScreen extends Component {
             validate = {canSubmit.charAt(4) + checkInput.charAt(4) + this.state.subValidated.charAt(4)}
             placeholder='address@example.com'
             subvalidate = 'อีเมลล์นี้มีอยู่แล้ว'
+            onFocus={() => this.setState({avoid: -130})}
           />
           <RegisterInput
             label='เบอร์โทรศัพท์'
@@ -106,6 +140,7 @@ export default class RegisterScreen extends Component {
             maxLength={10}
             validate = {canSubmit.charAt(3) + checkInput.charAt(3) + this.state.subValidated.charAt(3)}
             subvalidate = 'เบอร์โทรศัพท์นี้มีอยู่แล้ว'
+            onFocus={() => this.setState({avoid: -130})}
           />
           <View style={{marginTop: 20}}/>
           <View style={{marginVertical:10}}>
@@ -122,6 +157,8 @@ export default class RegisterScreen extends Component {
           </View>
         </View>
         </ScrollView>
+        </Animated.View>
+        </View>
       );
     }
     

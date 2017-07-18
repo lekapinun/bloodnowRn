@@ -1,9 +1,9 @@
 import React from 'react';
-import { StyleSheet, TextInput, View, Image, Text } from 'react-native';
+import { StyleSheet, TextInput, View, Image, Text, TouchableOpacity } from 'react-native';
 import { Font } from 'expo'
 import { RegisterTitle } from './RegisterTitle'
 
-const RegisterInput = ({label,secureTextEntry,onChangeText,value,keyboardType,maxLength,placeholder,validate,subvalidate}) => {
+const RegisterInput = ({label,secureTextEntry,onChangeText,value,keyboardType,maxLength,placeholder,validate,subvalidate,onFocus}) => {
 let vali
 if(validate.charAt(0) === '0' && validate.charAt(1) === '1' ) { vali = <View style={{width:35,height:30}}><Image source={require('../../assets/icons/ex.png')} style={{width:25,height:25}}/></View> }
 else if(validate.charAt(0) === '1' && validate.charAt(2) === '1') { vali = <View style={{width:35,height:30}}><Image source={require('../../assets/icons/ex.png')} style={{width:25,height:25}}/></View>}
@@ -18,17 +18,18 @@ else{ subvali = <Text></Text>}
       <View style={styles.underline}> 
         <RegisterTitle>{label}</RegisterTitle>
         <View style={{flexDirection: 'row'}}>
-          <TextInput
-            style={[Font.style('CmPrasanmit'),styles.input]}
-            autoCorrect={false}
-            onChangeText={onChangeText}
-            value={value}
-            secureTextEntry={secureTextEntry}
-            keyboardType={keyboardType}
-            autoCapitalize='none'
-            maxLength={maxLength}
-            placeholder={placeholder}
-          />
+            <TextInput
+              style={[Font.style('CmPrasanmit'),styles.input]}
+              autoCorrect={false}
+              onChangeText={onChangeText}
+              value={value}
+              secureTextEntry={secureTextEntry}
+              keyboardType={keyboardType}
+              autoCapitalize='none'
+              maxLength={maxLength}
+              placeholder={placeholder}
+              onFocus={onFocus}
+            />
           {vali}
         </View>
       </View>

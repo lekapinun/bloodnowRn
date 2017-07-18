@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import { Text, ScrollView, StyleSheet, View, Modal, Image, ActivityIndicator, AsyncStorage } from 'react-native';
+import { Text, ScrollView, StyleSheet, View, Modal, Image, ActivityIndicator, AsyncStorage, Keyboard, Animated } from 'react-native';
 import { Font } from 'expo';
-import { NavigatorBackground, Button, RegisterInput, PickerPartTouch, PickerModalDate, PickerModalBlood, PickerModalProvince, ButtonBack } from '../components/common';
+import { NavigatorBackground, Button, RegisterInput, PickerPartTouch, PickerModalBlood, PickerModalProvince, ButtonBack } from '../components/common';
 import Colors from '../constants/Colors'
 import addressServer from '../utilities/addressServer';
 
@@ -19,22 +19,44 @@ export default class RegisterScreen2 extends Component {
   };
 
     componentWillMount() {
-        console.log('Register2')
-        AsyncStorage.getItem('@RegisData:key')
-        .then((result) => {
-          //console.log(result);
-          const dataRegis1 = JSON.parse(result)
-          this.setState({name : dataRegis1.name})
-          this.setState({password : dataRegis1.password})
-          this.setState({password_confirmation : dataRegis1.password_confirmation})
-          this.setState({phone : dataRegis1.phone})
-          this.setState({email : dataRegis1.email})
-          //console.log(this.state)
-          AsyncStorage.removeItem('@RegisData:key')
-        })
+      this.keyboardWillShowListener = Keyboard.addListener('keyboardWillShow', this._keyboardWillShow);
+      this.keyboardWillHideListener = Keyboard.addListener('keyboardWillHide', this._keyboardWillHide);
+      this.positon = new Animated.ValueXY(0,0);
+      console.log('Register2')
+      AsyncStorage.getItem('@RegisData:key')
+      .then((result) => {
+        //console.log(result);
+        const dataRegis1 = JSON.parse(result)
+        this.setState({name : dataRegis1.name})
+        this.setState({password : dataRegis1.password})
+        this.setState({password_confirmation : dataRegis1.password_confirmation})
+        this.setState({phone : dataRegis1.phone})
+        this.setState({email : dataRegis1.email})
+        //console.log(this.state)
+        AsyncStorage.removeItem('@RegisData:key')
+      })
     }
 
+    componentWillUnmount () {
+      this.keyboardWillShowListener.remove();
+      this.keyboardWillHideListener.remove();
+    }
 
+    _keyboardWillShow = () => {
+      this.positon = new Animated.ValueXY({ x: 0, y: 0});
+      Animated.timing(this.positon,{
+        toValue: { x: 0, y: this.state.avoid},
+      }).start();
+      this.forceUpdate();
+    }
+
+    _keyboardWillHide = () => {
+      this.positon = new Animated.ValueXY({ x: 0, y: this.state.avoid});
+      Animated.timing(this.positon,{
+        toValue: { x: 0, y: 0},
+      }).start();
+      this.forceUpdate();
+    }
 
     state = {
         name: '',
@@ -58,6 +80,7 @@ export default class RegisterScreen2 extends Component {
         modalProvinceVisible: false,
         load: false,
         pressGoToRegis3: false,
+        avoid: 0,
     }
 
     setModalVisible(visible) {
@@ -101,6 +124,8 @@ export default class RegisterScreen2 extends Component {
       let subValidated = '00000';
 
       return(
+        <View style={{backgroundColor:'#FAFAFA',flex:1}}>
+        <Animated.View style={[this.positon.getLayout(),{flex:1}]} >
         <ScrollView style={{flex: 1,flexDirection: 'column', backgroundColor: '#FAFAFA'}}> 
         <View style={{flex: 1,flexDirection: 'column',alignItems: 'center', backgroundColor: '#FAFAFA'}}>
             <PickerModalProvince
@@ -143,6 +168,7 @@ export default class RegisterScreen2 extends Component {
                     maxLength={30}
                     placeholder='เฉพาะตัวอักษร'
                     validate = {canSubmit.charAt(0) + checkInput.charAt(0) + subValidated.charAt(0)}
+                    onFocus={() => this.setState({avoid: 0})}
                 />
                 <RegisterInput
                     label='นามสกุล'
@@ -151,6 +177,7 @@ export default class RegisterScreen2 extends Component {
                     maxLength={30}
                     placeholder='เฉพาะตัวอักษร'
                     validate = {canSubmit.charAt(1) + checkInput.charAt(1) + subValidated.charAt(1)}
+                    onFocus={() => this.setState({avoid: 0})}
                 />
                 <PickerPartTouch
                     label='กรุ๊ปเลือด'
@@ -169,6 +196,7 @@ export default class RegisterScreen2 extends Component {
                     keyboardType='numeric'
                     maxLength={4}
                     validate = {canSubmit.charAt(3) + checkInput.charAt(3) + + subValidated.charAt(3)}
+                    onFocus={() => this.setState({avoid: -130})}
                 />
                 <View style={{marginTop: 20}}/>
                 <View style={{marginVertical:10}}>
@@ -186,6 +214,8 @@ export default class RegisterScreen2 extends Component {
             {/*</View>*/}
         </View>
         </ScrollView>
+        </Animated.View>
+        </View>
       );
     }
 

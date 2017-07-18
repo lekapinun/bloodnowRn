@@ -62,6 +62,7 @@ export default class DonateHistoryScreen extends Component {
     }
     return (
       <View style={{ flex: 1,backgroundColor: 'white'}}>
+        <CmPrasanmitBoldText style={{height:28,marginTop:12,marginLeft:28,fontSize:25,color:Colors.tabBar}}>ผู้ส่งคำขอ</CmPrasanmitBoldText>
         <View style={styles.receiverProfileContainer}>
           <View style={{ height: 70, width: 70,marginLeft: 25,}}>
             <Image
@@ -71,13 +72,8 @@ export default class DonateHistoryScreen extends Component {
           </View>
           <View style={styles.requestInfotmationContainer}>
             <View style={styles.requestInformationStyle}>
-              {/* <CmPrasanmitText  style={{marginLeft: 20, fontSize: 25, height:25, color: 'black',}}>คุณ</CmPrasanmitText>
-              <CmPrasanmitText style={{marginLeft: 0, fontSize: 25, height:25, color: 'black',}}>ตอบรับ </CmPrasanmitText> */}
               <CmPrasanmitText  style={{marginLeft: 20, fontSize: 25, height:25, color: 'black',}}>{capitalizeFirstLetter(this.state.patient.name)}</CmPrasanmitText>
             </View>
-            {/* <CmPrasanmitText style={{ marginLeft: 20, fontSize: 18, color: 'grey' }}>
-              {this.state.patient.patient_timestamp}
-            </CmPrasanmitText> */}
           </View>
         </View>
 
@@ -97,12 +93,13 @@ export default class DonateHistoryScreen extends Component {
 
 const styles = StyleSheet.create({
   receiverProfileContainer: {
-    marginTop: 15,
+    marginTop: 5,
     flexDirection: 'row',
     height: 90,
     width: 320,
     borderColor: Colors.tabBar,
     borderWidth: 2,
+    borderRadius: 5,
     alignSelf: 'center',
     alignItems: 'center',
   },

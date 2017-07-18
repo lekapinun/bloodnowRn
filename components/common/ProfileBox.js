@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     marginLeft: 25,
     borderWidth:1,
-    borderColor: 'grey'
+    borderColor: Colors.greylight
   },
   detailContainer: {
     flexDirection: 'column',

@@ -1,4 +1,4 @@
-export * from './TestButton';
+export * from './BaseButton';
 export * from './NavigatorBackground';
 export * from './Button'
 export * from './RegisterInput'

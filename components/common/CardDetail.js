@@ -8,7 +8,7 @@ import { CmPrasanmitBoldText } from '../CmPrasanmitBoldText'
 const CardDetail = ({ list, req, onPress, visible, gropBlood ,ready}) => {
   if(visible && list !== ''){
     return(
-      <TouchableOpacity onPress={onPress} style={[styles.requestCardContainerStyle,{borderWidth: 1, borderColor: '#DCDCDC',}]} >
+      <TouchableOpacity onPress={onPress} style={[styles.requestCardContainerStyle,{borderWidth: 1, borderColor: Colors.greylight,}]} >
         <View style={{height:40, justifyContent: 'center',alignItems: 'center',flexDirection:'row',borderBottomWidth: 1, borderColor: '#DCDCDC',}}>
           <Image source={require('../../assets/images/envelope.png')} style={{height:17,width:22}}/>
           <CmPrasanmitBoldText style={{fontSize:25,color:'#575757'}}> คำร้องขอที่ได้รับ</CmPrasanmitBoldText >
@@ -24,10 +24,10 @@ const CardDetail = ({ list, req, onPress, visible, gropBlood ,ready}) => {
             </View>
           </View>
           <View style={{flex:35,justifyContent: 'center',}}>
-            <CmPrasanmitBoldText style={{fontSize:22,color:'#575757'}}>{list.name}</CmPrasanmitBoldText>
+            <CmPrasanmitBoldText style={{fontSize:22,color: Colors.greylight}}>{list.name}</CmPrasanmitBoldText>
           </View>
           <View style={{flex:14,alignItems: 'center',justifyContent: 'center'}}>
-            <CmPrasanmitText style={{fontSize:18,color:'#575757'}}>รายละเอียด</CmPrasanmitText>
+            <CmPrasanmitText style={{fontSize:18,color:Colors.greylight}}>รายละเอียด</CmPrasanmitText>
           </View> 
         </View>
       </TouchableOpacity>
