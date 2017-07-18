@@ -7,20 +7,24 @@ import { CmPrasanmitBoldText } from '../CmPrasanmitBoldText'
 import { ManualDonate } from './ManualDonate';
 
 //ManualDonate require {manualModal, style} props
-const Countdown = ({ recentDonateDate, last_donate, manualModal, changeRecentDonate  }) => {
+const Countdown = ({ disableManual, recentDonateDate, last_donate, manualModal, changeRecentDonate  }) => {
   const timeRemaining = Math.floor(recentDonateDate/(86400000))
   let remainMonth = '00';
   let remainDate = '00';
+  let countdownStatus = (
+  <View style={{height:30,marginBottom:15, flexDirection: 'row', alignItems: 'center',justifyContent: 'center'}}>
+  <CmPrasanmitText style={{color: Colors.tabBar,fontSize:25}}>{'บริจาคครั้งล่าสุด ' + last_donate}</CmPrasanmitText>
+  <ManualDonate
+    manualModal={manualModal}
+    disableManual={disableManual}
+  />
+  </View>);
   if( timeRemaining > 0) {
     remainMonth = Math.floor(timeRemaining/30).toString();
     (remainMonth.length === 1) ? remainMonth = '0' + remainMonth : null
     remainDate = Math.floor(timeRemaining%30).toString();
     (remainDate.length === 1) ? remainDate = '0' + remainDate : null
     const nextDonation = new Date(new Date().getTime() + (86400000 * timeRemaining));
-    countdownStatus =
-    <View style={{height:30,marginBottom:15,alignItems: 'center',justifyContent: 'center'}}>
-    <CmPrasanmitText style={{color: Colors.tabBar,fontSize:25}}>{'บริจาคครั้งล่าสุด ' + last_donate}</CmPrasanmitText>
-    </View>
     {/* <View style={{flex:1,alignItems: 'center',justifyContent: 'center'}}>
       <CmPrasanmitText style={{color: Colors.tabBar,fontSize:25}}>
         {'การบริจาคครั้งถัดไป วันที่ ' + nextDonation.getDate().toString()
@@ -33,9 +37,6 @@ const Countdown = ({ recentDonateDate, last_donate, manualModal, changeRecentDon
   else {
     remainDate = '00';
     remainMonth = '00';
-    countdownStatus = <View style={{height:30,marginBottom:15,alignItems: 'center',justifyContent: 'center'}}>
-    <CmPrasanmitText style={{color: Colors.tabBar,fontSize:25}}>{'บริจาคครั้งล่าสุด ' + last_donate}</CmPrasanmitText>
-    </View>
   }
 
   return (
@@ -44,10 +45,6 @@ const Countdown = ({ recentDonateDate, last_donate, manualModal, changeRecentDon
         <CmPrasanmitBoldText style={{color: Colors.tabBar,fontSize:30}}>
           นับถอยหลัง
         </CmPrasanmitBoldText>
-        <ManualDonate
-          style={{position: 'absolute', right: 0}}
-          manualModal={manualModal}
-        />
       </View>
       <View style={styles.countdownContainerStyle}>
         <View style={styles.countdownViewStyle}>
@@ -70,6 +67,8 @@ const Countdown = ({ recentDonateDate, last_donate, manualModal, changeRecentDon
       </View>
 
       {last_donate !== '' && countdownStatus}
+
+
     </View>
   );
 }
@@ -77,7 +76,6 @@ const Countdown = ({ recentDonateDate, last_donate, manualModal, changeRecentDon
 const styles = StyleSheet.create({
   countdownBorder: {
     width: 340,
-    //height: 250,
     marginTop: 10,
     borderWidth: 2,
     borderRadius: 5,
