@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import { Font } from 'expo'
 
-export default class InformationScreen extends Component {
+export default class InformationSecondScreen extends Component {
     static navigationOptions =  {
         title: 'คำแนะนำ',
         headerTintColor: 'white',
@@ -17,7 +17,7 @@ export default class InformationScreen extends Component {
     render() {
         return(
             <View style={{marginTop:30}}>
-                <Text>INFORMATION SCREEN</Text>
+                <Text>INFORMATION2 SCREEN</Text>
             </View>
         );
     }
