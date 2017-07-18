@@ -30,7 +30,7 @@ export default class DonorScreen extends Component {
     last_donate: '',
     next_donate: '',
 
-    //modalDateVisible: false,
+    manualDonate: false,
     last_donateTemp: new Date(),
   }
 
@@ -111,6 +111,7 @@ export default class DonorScreen extends Component {
           recentDonateDate={this.state.last_donate}
           last_donate={this.state.last_donate}
           manualModal={this._goToManualDonate}
+          disableManual={this.state.manualDonate}
         />
 
         <View style={[styles.Border,{alignItems: 'center', flexDirection: 'column',justifyContent:'space-around'}]}>
@@ -171,6 +172,7 @@ export default class DonorScreen extends Component {
   }
 
   _goToManualDonate = () => {
+    this.setState({ manualDonate: true })
     const resetAction = NavigationActions.reset({
       index: 1,
       actions: [
@@ -179,6 +181,9 @@ export default class DonorScreen extends Component {
       ]
     })
     this.props.navigation.dispatch(resetAction)
+    setTimeout(() => {
+      this.setState({ manualDonate: false })
+    }, 500)
   }
 }
 

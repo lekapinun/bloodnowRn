@@ -7,15 +7,16 @@ import { CmPrasanmitBoldText } from '../CmPrasanmitBoldText'
 import { ManualDonate } from './ManualDonate';
 
 //ManualDonate require {manualModal, style} props
-const Countdown = ({ recentDonateDate, last_donate, manualModal, changeRecentDonate  }) => {
+const Countdown = ({ disableManual, recentDonateDate, last_donate, manualModal, changeRecentDonate  }) => {
   const timeRemaining = Math.floor(recentDonateDate/(86400000))
   let remainMonth = '00';
   let remainDate = '00';
   let countdownStatus = (
   <View style={{height:30,marginBottom:15, flexDirection: 'row', alignItems: 'center',justifyContent: 'center'}}>
   <CmPrasanmitText style={{color: Colors.tabBar,fontSize:25}}>{'บริจาคครั้งล่าสุด ' + last_donate}</CmPrasanmitText>
-  <ManualDonate 
+  <ManualDonate
     manualModal={manualModal}
+    disableManual={disableManual}
   />
   </View>);
   if( timeRemaining > 0) {

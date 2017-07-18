@@ -4,9 +4,9 @@ import Colors from '../../constants/Colors';
 import { CmPrasanmitText } from '../CmPrasanmitText';
 import { PickerModalDate } from './PickerModalDate';
 
-const ManualDonate = ({manualModal, style}) => {
+const ManualDonate = ({disableManual, manualModal, style}) => {
   return(
-    <TouchableOpacity onPress={manualModal} style={[style,styles.container]} >
+    <TouchableOpacity disabled={disableManual} onPress={manualModal} style={[style,styles.container]} >
       <CmPrasanmitText style={{ fontSize: 20, color: 'white'}}>
         แก้ไข
       </CmPrasanmitText>
