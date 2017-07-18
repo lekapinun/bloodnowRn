@@ -16,5 +16,6 @@ export default {
   buttonRegister: '#9FAC9B',
   textgrey : '#575757',
   greylight: '#DADBDC',
-  textgreydetail : '#95989A'
+  textgreydetail : '#95989A',
+  underlinePopup : '#F7BCC4',
 };

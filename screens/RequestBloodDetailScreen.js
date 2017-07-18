@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { ScrollView, View , TextInput, Text ,StyleSheet, Dimensions, AsyncStorage, TouchableOpacity, Image, Modal } from 'react-native';
-import { RequestDetailInDonor, Button, Map } from '../components/common';
+import { RequestDetailInDonor, BaseButton , Button, Map, Loading } from '../components/common';
 import Colors from '../constants/Colors';
 import Expo,{ Font } from 'expo';
 import { NavigationActions } from 'react-navigation'
@@ -37,6 +37,7 @@ export default class RequestBloodDetailScreen extends Component {
       loading: false,
       thankyou: '',
       thankyou_temp: '',
+      bloodWant: ''
     }
 
     componentWillMount() {
@@ -71,7 +72,7 @@ export default class RequestBloodDetailScreen extends Component {
             dateTime = dateTime.getDate() + '/' + (dateTime.getMonth() + 1) + '/' + dateTime.getFullYear()
             dateTime_exp = dateTime_exp.getDate() + '/' + (dateTime_exp.getMonth() + 1) + '/' + dateTime_exp.getFullYear()
             this.setState({time : dateTime, time_exp: dateTime_exp,thankyou_temp : response.data[0].patient_thankyou})
-            this.setState({loading : true})
+            this.setState({loading : true, bloodWant: response.data[0].countblood.toString()})
             //console.log(dateTime)
             //console.log(dateTime_exp)
           })
@@ -165,6 +166,8 @@ export default class RequestBloodDetailScreen extends Component {
                 onPress2 = { () => {
                   this.setState({displayRe: false})
                 }}
+                value = {this.state.bloodWant}
+                onChangeText = {(bloodWant) => this.setState({bloodWant})}
               >
               </ModalRe>
               <ModalThankyou
@@ -198,7 +201,7 @@ export default class RequestBloodDetailScreen extends Component {
           </ScrollView>
         );
       } else {
-        return <Expo.AppLoading />
+        return <Loading />
       }
     }
 
@@ -231,7 +234,10 @@ export default class RequestBloodDetailScreen extends Component {
       axios(api,{ 
         method: 'post', 
         headers: {'Authorization' : 'Bearer ' + this.state.token},
-        data : { 'roomreq_id' : this.props.navigation.state.params}
+        data : { 
+          'roomreq_id' : this.props.navigation.state.params,
+          'countblood' : this.state.bloodWant
+        }
       })
         .then(() => this._backHistory())
         .catch((error) => console.log(error))
@@ -261,28 +267,23 @@ const ModalFinish = ({pickerVisible,onPress1,onPress2}) => {
         visible={pickerVisible}
       >
         <View style={[styles.container,{flex:1,backgroundColor:'rgba(52, 52, 52, 0.3)'}]}>
-            <View style={{paddingTop:25,alignItems: 'center',height:180,width:260,backgroundColor:'white',borderRadius:10}}>
-                <Image source={require('../assets/icons/ex.png')} style={{height:70,width:70}}/>
-                <Text style={[Font.style('CmPrasanmit'),{paddingTop:5,fontSize:20}]}>คำร้องขอของคุณเสร็จสิ้นแล้ว?</Text>
-                <View style={{borderBottomColor: 'red', width:260, marginTop:20,borderBottomWidth: 1,}}/>
+            <View style={{paddingTop:25,alignItems: 'center',height:188,width:230,backgroundColor:'white',borderRadius:10}}>
+                <Image source={require('../assets/images/conf.png')} style={{height:70,width:70}}/>
+                <Text style={[Font.style('CmPrasanmit'),{paddingTop:5,fontSize:23}]}>คำร้องขอของคุณเสร็จสิ้นแล้ว?</Text>
+                <View style={{borderBottomColor: Colors.underlinePopup, width:230, marginTop:20,borderBottomWidth: 1,}}/>
                 <View style={{marginTop: 10,flexDirection:'row'}}>
-                  <Button
-                        onPress={onPress1}
-                        buttonColor='white'
-                        title='ตกลง'
-                        sizeFont={20}
-                        ButtonWidth={130}
-                        colorFont='red'
-                    />
-                  <View style={{borderColor: 'red',width:1,height:38.5,borderRightWidth: 1,position:'absolute',right:130,top:-10}}> 
-                  </View>
-                  <Button
-                      onPress={onPress2}
-                      buttonColor='white'
-                      title='ยกเลิก'
-                      sizeFont={20}
-                      ButtonWidth={130}
-                      colorFont='red'
+                  <BaseButton
+                    onPress={onPress1}
+                    title='ตกลง'
+                    ButtonStyle = {{backgroundColor: 'transparent', width: 115,}}
+                    fontStyle={[Font.style('CmPrasanmitBold'),{color: 'red',fontSize:23}]}
+                  />
+                  <View style={{borderColor: Colors.underlinePopup,width:1,height:43,borderRightWidth: 1,position:'absolute',right:115,top:-10}}/>
+                  <BaseButton
+                    onPress={onPress2}
+                    title='ยกเลิก'
+                    ButtonStyle = {{backgroundColor: 'transparent', width: 115,}}
+                    fontStyle={[Font.style('CmPrasanmitBold'),{color: 'red',fontSize:23}]}
                   />
                 </View> 
             </View>
@@ -292,7 +293,7 @@ const ModalFinish = ({pickerVisible,onPress1,onPress2}) => {
 }
 
 
-const ModalRe = ({pickerVisible,onPress1,onPress2}) => {
+const ModalRe = ({pickerVisible,onPress1,onPress2,value,onChangeText}) => {
   return(
       <Modal
         animationType={"fade"}
@@ -300,30 +301,38 @@ const ModalRe = ({pickerVisible,onPress1,onPress2}) => {
         visible={pickerVisible}
       >
         <View style={[styles.container,{flex:1,backgroundColor:'rgba(52, 52, 52, 0.3)'}]}>
-            <View style={{paddingTop:25,alignItems: 'center',height:153,width:260,backgroundColor:'white',borderRadius:10}}>
+            <View style={{paddingTop:25,alignItems: 'center',height:154,width:260,backgroundColor:'white',borderRadius:10}}>
                 <View style={{height:67,justifyContent:'space-around',alignItems:'center'}}>
-                  <Text style={[Font.style('CmPrasanmitBold'),{paddingTop:5,fontSize:20}]}>คุณต้องการส่งคำขออีกครั้ง?</Text>
-                  <Text style={[Font.style('CmPrasanmit'),{paddingTop:5,fontSize:20}]}>ต้องการเลือดอีก __ ถุง</Text>
-                </View>
-                <View style={{borderBottomColor: 'red', width:260, marginTop:20,borderBottomWidth: 1,}}/>
-                <View style={{marginTop: 10,flexDirection:'row'}}>
-                  <Button
-                        onPress={onPress1}
-                        buttonColor='white'
-                        title='ตกลง'
-                        sizeFont={20}
-                        ButtonWidth={130}
-                        colorFont='red'
+                  <Text style={[Font.style('CmPrasanmitBold'),{paddingTop:5,fontSize:23,color:Colors.textgrey}]}>คุณต้องการส่งคำขออีกครั้ง?</Text>
+                  <View style={{flexDirection: 'row',paddingTop:5}}>
+                    <CmPrasanmitText style={{fontSize:21,color: Colors.textgreydetail}}>ต้องการเลือดอีก </CmPrasanmitText>
+                    <View style={{borderBottomWidth : 0.5,borderBottomColor : Colors.textgreydetail,alignItems:'center'}}>
+                    <TextInput
+                      style={[Font.style('CmPrasanmit'),styles.input,{alignSelf:'center'}]}
+                      value={value}
+                      onChangeText={onChangeText}
+                      autoCorrect={false}
+                      keyboardType='number-pad'
+                      maxLength={2}
                     />
-                  <View style={{borderColor: 'red',width:1,height:39.5,borderRightWidth: 1,position:'absolute',right:130,top:-10}}> 
+                    </View>
+                    <CmPrasanmitText style={{fontSize:21,color: Colors.textgreydetail}}> ถุง</CmPrasanmitText>
                   </View>
-                  <Button
-                      onPress={onPress2}
-                      buttonColor='white'
-                      title='ยกเลิก'
-                      sizeFont={20}
-                      ButtonWidth={130}
-                      colorFont='red'
+                </View>
+                <View style={{borderBottomColor: Colors.underlinePopup, width:260, marginTop:20,borderBottomWidth: 1,}}/>
+                <View style={{marginTop: 10,flexDirection:'row'}}>
+                  <BaseButton
+                    onPress={onPress1}
+                    title='ตกลง'
+                    ButtonStyle = {{backgroundColor: 'transparent', width: 130,}}
+                    fontStyle={[Font.style('CmPrasanmitBold'),{color: 'red',fontSize:23}]}
+                  />
+                  <View style={{borderColor: Colors.underlinePopup,width:1,height:41.5,borderRightWidth: 1,position:'absolute',right:130,top:-10}}/>
+                  <BaseButton
+                    onPress={onPress2}
+                    title='ยกเลิก'
+                    ButtonStyle = {{backgroundColor: 'transparent', width: 130,}}
+                    fontStyle={[Font.style('CmPrasanmitBold'),{color: 'red',fontSize:23}]}
                   />
                 </View> 
             </View>
@@ -391,5 +400,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center', 
     alignItems: 'center',
     flexDirection: 'row'
+  },
+  input: {
+    height: 21,
+    width: 20,
+    fontSize: 21,
+    backgroundColor: 'transparent',
+    color: Colors.textgreydetail
   },
 });

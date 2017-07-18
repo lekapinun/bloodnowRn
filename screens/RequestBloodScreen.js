@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ScrollView, View, Text, TextInput, Modal, TouchableOpacity, Picker, StyleSheet,AsyncStorage,Dimensions, TouchableWithoutFeedback ,Animated,Image} from 'react-native';
 import { Font } from 'expo';
-import { Map, InputText, InputTextLarge , PickerPartTouch, PickerModalDate, PickerModalBlood, Button, ButtonBack,DetailBox,PickerModalProvince} from '../components/common';
+import { Map, InputText, InputTextLarge , PickerPartTouch, PickerModalDate, PickerModalBlood, BaseButton, Button, ButtonBack,DetailBox,PickerModalProvince} from '../components/common';
 import Colors from '../constants/Colors';
 import Layout from '../constants/Layout';
 import MapView, {PROVIDER_GOOGLE } from 'react-native-maps';
@@ -9,6 +9,7 @@ import { NavigationActions } from 'react-navigation'
 import addressServer from '../utilities/addressServer';
 import RequestSubmitScreen from './RequestBloodSubmitScreen';
 import axios from 'axios'
+import { CmPrasanmitText, CmPrasanmitBoldText } from '../components'
 
 export default class RequestBloodScreen extends Component {
 
@@ -52,7 +53,7 @@ export default class RequestBloodScreen extends Component {
         patient_bloodUnit: '',
         countblood: '',
         patient_detail: '',
-        patient_hos: '',
+        patient_hos: 'โรงพยาบาล',
         patient_bloodTemp: '',
         patient_blood_typeTemp: '',
         patient_hos_la: '',
@@ -248,7 +249,7 @@ export default class RequestBloodScreen extends Component {
                                     <InputText
                                         label = 'สถานพยาบาล'
                                         onChangeText={(patient_hos) => this.setState({patient_hos})}
-                                        value={'โรงพยาบาล' + this.state.patient_hos}
+                                        value={this.state.patient_hos}
                                         onEndEditing={() => this._findLocation()}
                                     />
                                     </View>
@@ -323,7 +324,6 @@ export default class RequestBloodScreen extends Component {
     _ConfirmRequest = () => {
         this.state.patient_hos_la = this.state.region.latitude.toString()
         this.state.patient_hos_long = this.state.region.longitude.toString()
-        this.state.patient_hos = 'โรงพยาบาล' + this.state.patient_hos
         console.log(this.state)
         console.log(addressServer.APIRequest + '/api/req');
         const api = addressServer.APIRequest + '/api/req';
@@ -382,18 +382,16 @@ const ModalValidate = ({pickerVisible,onPress}) => {
         visible={pickerVisible}
       >
         <View style={[styles.container,{flex:1,backgroundColor:'rgba(52, 52, 52, 0.3)'}]}>
-            <View style={{paddingTop:25,alignItems: 'center',height:180,width:200,backgroundColor:'white',borderRadius:10}}>
-                <Image source={require('../assets/icons/ex.png')} style={{height:70,width:70}}/>
-                <Text style={[Font.style('CmPrasanmit'),{paddingTop:5,fontSize:20}]}>คำร้องขอนี้ถูกสร้างแล้ว</Text>
-                <View style={{borderBottomColor: 'red', width:200, marginTop:20,borderBottomWidth: 1,}}/>
+            <View style={{paddingTop:25,alignItems: 'center',height:200,width:230,backgroundColor:'white',borderRadius:10}}>
+                <Image source={require('../assets/images/error.png')} style={{height:70,width:70}}/>
+                <CmPrasanmitText style={{paddingTop:10,height:40,fontSize:25}}>คำร้องขอนี้ถูกสร้างแล้ว</CmPrasanmitText>
+                <View style={{borderBottomColor: Colors.underlinePopup, width:230, marginTop:20,borderBottomWidth: 1,}}/>
                 <View style={{marginTop: 10}}>
-                <Button
+                <BaseButton
                     onPress={onPress}
-                    buttonColor='white'
                     title='ตกลง'
-                    sizeFont={20}
-                    ButtonWidth={200}
-                    colorFont='red'
+                    ButtonStyle = {{backgroundColor: 'transparent', width: 200,}}
+                    fontStyle={[Font.style('CmPrasanmitBold'),{color: 'red',fontSize:25}]}
                 />
                 </View> 
             </View>
@@ -442,7 +440,6 @@ const styles = StyleSheet.create({
         fontSize: 23,
     },
     pickerText:{
-        marginTop:10,
         paddingLeft:10,
         fontSize: 23,
     },
