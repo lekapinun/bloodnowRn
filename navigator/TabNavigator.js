@@ -1,6 +1,6 @@
 import React from 'react';
 import Expo, { Font } from 'expo';
-import { Text, View, Button } from 'react-native';
+import { Text, View, Button, Modal, ActivityIndicator } from 'react-native';
 import { TabNavigator } from 'react-navigation';
 import Colors from '../constants/Colors';
 import {
@@ -29,6 +29,15 @@ export default class Tab extends React.Component {
     static navigationOptions =  {
         header: null
     };
+
+    state = {
+        loading : true
+    }
+    componentWillMount() {
+        setTimeout(() => {
+            this.setState({loading : false})
+        },500)
+    }
 
     render(){
         //console.log(this.props.navigation)
@@ -81,10 +90,10 @@ export default class Tab extends React.Component {
         InformationTab.navigationOptions = {
             tabBarIcon: ({ tintColor, focused }) => ( this._renderIconSimpleLineIcons('notebook', focused, 20)),
         };
-
-        return(
-            <Tab/>
-        );
+        console.log('xxxxsdfasdfhadsfasdfdsafasdfasdf')
+        console.log(this.props)
+        console.log('xxxxsdfasdfhadsfasdfdsafasdfasdf')
+        return this.state.loading ? <Loading visible={this.state.loading}/> : <Tab/>
 
     }
     _renderIconSimpleLineIcons(name, focused, size){
@@ -96,4 +105,14 @@ export default class Tab extends React.Component {
             />
         );
     }
+}
+
+const Loading = ({visible}) => {
+  return (
+    <Modal visible={visible}>
+        <View style={{flex:1,backgroundColor:'#FAFAFA',justifyContent:'center',alignItems:'center'}}>
+            <ActivityIndicator size="large" />
+        </View>
+    </Modal>
+  )
 }

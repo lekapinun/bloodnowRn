@@ -1,5 +1,5 @@
 import React, { Component} from 'react';
-import { Text, View, TouchableOpacity, TextInput, Image, StyleSheet, AsyncStorage, ScrollView,  Keyboard, Animated } from 'react-native';
+import { Text, View, TouchableOpacity, TextInput, Image, StyleSheet, AsyncStorage, ScrollView,  Keyboard, Animated, ActivityIndicator } from 'react-native';
 import { Font } from 'expo';
 import { NavigationActions } from 'react-navigation'
 import axios from 'axios'
@@ -16,6 +16,7 @@ export default class LoginScreen extends Component {
         error: false,
         pressRegis: false,
         pressLogin: false,
+        finish: false
     };
 
     static navigationOptions = {
@@ -26,6 +27,32 @@ export default class LoginScreen extends Component {
       this.keyboardWillShowListener = Keyboard.addListener('keyboardWillShow', this._keyboardWillShow);
       this.keyboardWillHideListener = Keyboard.addListener('keyboardWillHide', this._keyboardWillHide);
       this.positon = new Animated.ValueXY(0,0);
+        AsyncStorage.getItem('@loginData:key')
+        .then((loginStatus) => {
+            if(loginStatus !== null){
+                checkLogin = JSON.parse(loginStatus)
+                console.log(addressServer.APIRequest.toString() + '/api/user');
+                const api = addressServer.APIRequest.toString() + '/api/user';
+                axios(api,{ headers: {'Authorization' : 'Bearer ' + checkLogin.token},})
+                .then(response =>{
+                    console.log(response.data)
+                    this.props.navigation.navigate('Bloodnow')
+                    setTimeout(() => {
+                        this.setState({finish: true}) 
+                    },500)   
+                })
+                .catch((error) => {
+                    console.log(error)
+                    this.setState({finish: true})
+                })
+            } else {
+                this.setState({finish: true})
+            }
+        })
+        .catch((error) => {
+            console.log(error)
+            this.setState({finish: true})
+        })
     }
 
     componentWillUnmount () {
@@ -62,60 +89,68 @@ export default class LoginScreen extends Component {
     }
 
     render() {
-        return(
-            <KeyboardAvoid>
-            <ScrollView style={{flex: 1,flexDirection: 'column', backgroundColor: '#FAFAFA'}}> 
-            <View style={{flex: 1,marginTop:80,flexDirection: 'column',justifyContent: 'center',alignItems: 'center', backgroundColor: '#FAFAFA'}}>
-                <Image source={require('../assets/icons/logo.png')} style={{width:190,height:90}}/>
-                <CmPrasanmitText style={styles.caption}>ม า ก ก ว่ า ก า ร ใ ห้ เ ลื อ ด</CmPrasanmitText>
-                <View style={{width: 260}}>
-                    <TextInput
-                        style={[Font.style('CmPrasanmit'),styles.input]}
-                        autoCorrect={false}
-                        autoCapitalize='none'
-                        onChangeText={(name) => this.setState({name})}
-                        value={this.state.name}
-                        placeholder="ชื่อผู้ใช้หรือเบอร์โทรศัพท์"
-                        underlineColorAndroid='rgba(0,0,0,0)'
-                    />
-                    <TextInput
-                        style={[Font.style('CmPrasanmit'),styles.input]}
-                        autoCorrect={false}
-                        secureTextEntry={true}
-                        autoCapitalize='none'
-                        onChangeText={(password) => this.setState({password})}
-                        value={this.state.password}
-                        placeholder="รหัสผ่าน"
-                        underlineColorAndroid='rgba(0,0,0,0)'
-                    />
-                    {this.renderErrorMessage()}
-                    <View style={{height: 30, marginTop:5,justifyContent: 'flex-start',alignItems: 'flex-end'}}>
-                        <TouchableOpacity>
-                            <CmPrasanmitText style={{ fontSize: 20,color:'#95989A'}}>ลืมรหัสผ่าน?</CmPrasanmitText>
-                        </TouchableOpacity>
+        if(this.state.finish) {
+            return(
+                <KeyboardAvoid>
+                <ScrollView style={{flex: 1,flexDirection: 'column', backgroundColor: '#FAFAFA'}}> 
+                <View style={{flex: 1,marginTop:80,flexDirection: 'column',justifyContent: 'center',alignItems: 'center', backgroundColor: '#FAFAFA'}}>
+                    <Image source={require('../assets/icons/logo.png')} style={{width:190,height:90}}/>
+                    <CmPrasanmitText style={styles.caption}>ม า ก ก ว่ า ก า ร ใ ห้ เ ลื อ ด</CmPrasanmitText>
+                    <View style={{width: 260}}>
+                        <TextInput
+                            style={[Font.style('CmPrasanmit'),styles.input]}
+                            autoCorrect={false}
+                            autoCapitalize='none'
+                            onChangeText={(name) => this.setState({name})}
+                            value={this.state.name}
+                            placeholder="ชื่อผู้ใช้หรือเบอร์โทรศัพท์"
+                            underlineColorAndroid='rgba(0,0,0,0)'
+                        />
+                        <TextInput
+                            style={[Font.style('CmPrasanmit'),styles.input]}
+                            autoCorrect={false}
+                            secureTextEntry={true}
+                            autoCapitalize='none'
+                            onChangeText={(password) => this.setState({password})}
+                            value={this.state.password}
+                            placeholder="รหัสผ่าน"
+                            underlineColorAndroid='rgba(0,0,0,0)'
+                        />
+                        {this.renderErrorMessage()}
+                        <View style={{height: 30, marginTop:5,justifyContent: 'flex-start',alignItems: 'flex-end'}}>
+                            <TouchableOpacity>
+                                <CmPrasanmitText style={{ fontSize: 20,color:'#95989A'}}>ลืมรหัสผ่าน?</CmPrasanmitText>
+                            </TouchableOpacity>
+                        </View>
+                        <BaseButton
+                            title='เข้าสู่ระบบ'
+                            fontStyle = {[Font.style('CmPrasanmit'),{fontSize:25,color:'white'}]}
+                            ButtonStyle = {{backgroundColor: Colors.buttonLogin, width: 260, height: 50, marginVertical:10}}
+                            onPress={this._loginPress}
+                            press={this.state.pressLogin}
+                        />
+                        <View style={{justifyContent: 'center',alignItems: 'center'}}>
+                            <CmPrasanmitText style={{ fontSize: 23,color:'#95989A',marginVertical:5}}>หรือ</CmPrasanmitText>
+                        </View>
+                        <BaseButton
+                            title='ลงทะเบียน'
+                            fontStyle = {[Font.style('CmPrasanmit'),{fontSize:25,color:'white'}]}
+                            ButtonStyle = {{backgroundColor: Colors.buttonRegister, width: 260, height: 50, marginVertical:10}}
+                            onPress={this._register}
+                            press={this.state.pressRegis}
+                        />
                     </View>
-                    <BaseButton
-                        title='เข้าสู่ระบบ'
-                        fontStyle = {[Font.style('CmPrasanmit'),{fontSize:25,color:'white'}]}
-                        ButtonStyle = {{backgroundColor: Colors.buttonLogin, width: 260, height: 50, marginVertical:10}}
-                        onPress={this._loginPress}
-                        press={this.state.pressLogin}
-                    />
-                    <View style={{justifyContent: 'center',alignItems: 'center'}}>
-                        <CmPrasanmitText style={{ fontSize: 23,color:'#95989A',marginVertical:5}}>หรือ</CmPrasanmitText>
-                    </View>
-                    <BaseButton
-                        title='ลงทะเบียน'
-                        fontStyle = {[Font.style('CmPrasanmit'),{fontSize:25,color:'white'}]}
-                        ButtonStyle = {{backgroundColor: Colors.buttonRegister, width: 260, height: 50, marginVertical:10}}
-                        onPress={this._register}
-                        press={this.state.pressRegis}
-                    />
+                </View> 
+                </ScrollView >
+                </KeyboardAvoid>
+            )
+        } else {
+            return (
+                <View style={{flex:1,backgroundColor:'#FAFAFA',justifyContent:'center',alignItems:'center'}}>
+                    <ActivityIndicator size="large" />
                 </View>
-            </View> 
-            </ScrollView >
-            </KeyboardAvoid>
-        );
+            )
+        }
     }
 
     async _loginData(loginData){
