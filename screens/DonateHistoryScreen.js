@@ -4,7 +4,7 @@ import Expo, { Font } from 'expo';
 import Colors from '../constants/Colors';
 import { CmPrasanmitText } from '../components/CmPrasanmitText';
 import { CmPrasanmitBoldText } from '../components/CmPrasanmitBoldText';
-import { RequestDetailInDonor  } from '../components/common';
+import { RequestDetailInDonor, Loading  } from '../components/common';
 import addressServer from '../utilities/addressServer';
 import axios from 'axios';
 
@@ -58,7 +58,7 @@ export default class DonateHistoryScreen extends Component {
   render() {
     var height_detail = 51
     if( this.state.loading ) {
-      return <Expo.AppLoading />
+      return <Loading />
     }
     return (
       <View style={{ flex: 1,backgroundColor: 'white'}}>

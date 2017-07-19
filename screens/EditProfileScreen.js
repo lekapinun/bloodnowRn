@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView, Keyboard, Animated, TextInput } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView, Keyboard, Animated, TextInput,ActivityIndicator } from 'react-native';
 import { CmPrasanmitText } from '../components/CmPrasanmitText';
 import { CmPrasanmitBoldText } from '../components/CmPrasanmitBoldText';
-import { EditProfileDetail, Button, PickerModalBlood, PickerPartTouch, PickerModalDate, PickerModalProvince } from '../components/common/';
+import { EditProfileDetail, BaseButton, Button, PickerModalBlood, PickerPartTouch, PickerModalDate, PickerModalProvince } from '../components/common/';
 import { KeyboardAvoid } from '../components';
 import { Font, ImagePicker } from 'expo'
 import Colors from '../constants/Colors';
@@ -39,6 +39,7 @@ export default class EditProfileScreen extends Component{
         modalBloodVisible: false,
         modalProvinceVisible: false,
         pressEdit : false,
+        loading : false,
     }
 
     setModalBloodVisible(visible) {
@@ -136,16 +137,13 @@ export default class EditProfileScreen extends Component{
                 </View>
             </View>
             <EditProfileDetail keyboardType='number-pad' label = "ปีเกิด" information= {this.state.birthyear} onChange={(birthyear) => this.setState({ birthyear })}/>
-            <View style={{marginTop:30}}/>
-            <Button
-              title="บันทึกการเปลี่ยนแปลง"
+            <BaseButton
+              title='บันทึกการเปลี่ยนแปลง'
+              fontStyle = {[Font.style('CmPrasanmit'),{fontSize:23,color:'white'}]}
+              ButtonStyle = {{backgroundColor: Colors.tabBar, width: 300, height: 40,marginTop:30}}
               onPress={this._editProfile}
-              buttonColor={Colors.tabBar}
-              colorFont="white"
-              sizeFont={23}
-              ButtonWidth={300}
-              ButtonHeight={40}
-              touchable={this.state.pressEdit}
+              press={this.state.pressEdit}
+              loadColor='white'
             />
           </View>
         </ScrollView >
@@ -154,7 +152,7 @@ export default class EditProfileScreen extends Component{
     }
 
     _editProfile = () => {
-      this.setState({pressEdit: true})
+      this.setState({pressEdit: true,loading: true})
       console.log(addressServer.APIRequest.toString() + '/api/user/edit');
       const api = addressServer.APIRequest.toString() + '/api/user/edit';
       axios(api,{ 
@@ -179,11 +177,12 @@ export default class EditProfileScreen extends Component{
         })
         this.props.navigation.dispatch(resetAction)
         this.setTimeout(() => {
-          this.setState({pressEdit: false})
+          this.setState({pressEdit: false,loading: true})
         }, 1000);
       })
       .catch((error) =>  {
         console.log(error + ' @EditScreen')
+        this.setState({pressEdit: false,loading: true})
       })
     }
 }

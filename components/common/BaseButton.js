@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, StyleSheet, Text } from 'react-native';
+import { TouchableOpacity, StyleSheet, Text, ActivityIndicator } from 'react-native';
 import { Font } from 'expo'
 import { CmPrasanmitBoldText, CmPrasanmitText } from '../';
 
@@ -16,9 +16,10 @@ class BaseButton extends Component {
         onPress={this.props.onPress}
         disabled={this.props.press}
       >
-        <Text style={this.props.fontStyle}>
+        {this.props.press && <ActivityIndicator color={this.props.loadColor}/>}
+        {!this.props.press && <Text style={this.props.fontStyle}>
           {this.props.title}
-        </Text>
+        </Text>}
       </TouchableOpacity>
     )
   }
