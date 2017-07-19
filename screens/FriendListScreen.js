@@ -23,7 +23,7 @@ import { CmPrasanmitBoldText } from '../components/CmPrasanmitBoldText'
 import addressServer from '../utilities/addressServer';
 
 
-export default class HomeScreen extends Component {
+export default class FriendListScreen extends Component {
   static navigationOptions = props => {
     return {
       tabBarLabel: props.navigation.state.key
@@ -124,7 +124,7 @@ const CardDetail = ({ list, onPress }) => {
 
   return(
     <View style={styles.requestCardContainerStyle}>
-        <View style={{height:78,backgroundColor:'white',flexDirection:'row'}}>
+        <View style={{height:78,flexDirection:'row'}}>
           <View style={{flex:19,alignItems: 'center',justifyContent: 'center',}}>
             {_renderImg()}
             <View style={{height:15,width:30,position:'absolute',bottom:12,left:18,backgroundColor:Colors.tabBar,borderRadius:15,alignItems: 'center',justifyContent:'center'}}>
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignSelf: 'center',
     borderBottomWidth: 1,
-    borderBottomColor: '#DCDCDC',
+    borderBottomColor: Colors.greylight,
   },
   imageRequestStyle: {
     height: 50,

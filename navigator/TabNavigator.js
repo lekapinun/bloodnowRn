@@ -10,7 +10,6 @@ import {
   SimpleLineIcons,
  } from '@expo/vector-icons';
 
-import HomeScreen from '../screens/HomeScreen';
 import FriendScreen from '../screens/FriendScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import DonorScreen from '../screens/DonorScreen';

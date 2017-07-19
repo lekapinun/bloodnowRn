@@ -15,9 +15,9 @@ import { Font } from 'expo'
 import { TestButton, NavigatorBackground,ExNavigationState} from '../components/common';
 import { MonoText } from '../components/StyledText';
 import Colors from '../constants/Colors';
-import HomeScreen from './HomeScreen';
 import axios from 'axios'
 import addressServer from '../utilities/addressServer';
+import FriendListScreen from './FriendListScreen'
 
 export default class FriendScreen extends Component {
     static navigationOptions =  {
@@ -104,11 +104,11 @@ export default class FriendScreen extends Component {
     render() {
       const FriendTab = TabNavigator(
         {
-          ALL: {screen: HomeScreen},
-          A: {screen: HomeScreen},
-          B: {screen: HomeScreen},
-          O: {screen: HomeScreen},
-          AB: {screen: HomeScreen},
+          ALL: {screen: FriendListScreen},
+          A: {screen: FriendListScreen},
+          B: {screen: FriendListScreen},
+          O: {screen: FriendListScreen},
+          AB: {screen: FriendListScreen},
         },{
           ...TabNavigator.Presets.AndroidTopTabs,
           tabBarOptions:{
