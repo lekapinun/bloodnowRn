@@ -6,11 +6,12 @@ import {
   StyleSheet,
 } from 'react-native';
 import { Font } from 'expo'
+import Colors from '../constants/Colors'
 import { CmPrasanmitText, CmPrasanmitBoldText } from '../components/';
 
 export default class InformationSecondScreen extends Component {
   static navigationOptions =  {
-    title: 'คำแนะนำ2',
+    title: 'คุณสมบัติ',
     headerTintColor: 'white',
     headerTitleStyle: [Font.style('CmPrasanmitBold'),{fontSize:29}],
     headerStyle: {marginLeft:-250,backgroundColor: '#E84A5F'},
@@ -23,15 +24,16 @@ export default class InformationSecondScreen extends Component {
       <CardDetail
         key = {list.key}
         list = {list}
-        color = {list.key % 2 === 0 ? 'green' : 'white'}
+        color = {list.key % 2 === 0 ? '#F8DDE1' : 'white'}
       />
     );
   }
 
   render() {
     return(
-      <ScrollView style={{ paddingBottom: 7}}>
+      <ScrollView style={{ flex:1,backgroundColor:'white', paddingVertical:10}}>
         {this.renderList()}
+        <CmPrasanmitText style={styles.refText}>อ้างอิงจาก ศูนย์บริการโลหิตแห่งชาติ สภากาชาติไทย, 2553</CmPrasanmitText>
       </ScrollView>
     );
   }
@@ -40,7 +42,7 @@ export default class InformationSecondScreen extends Component {
 const CardDetail = (props) => {
   return (
     <View style={[styles.cardStyle, {backgroundColor: props.color }]}>
-      <Text>{props.list.information}</Text>
+      <CmPrasanmitText style={{fontSize:22}}>{props.list.information}</CmPrasanmitText>
     </View>
   );
 }
@@ -49,12 +51,20 @@ const styles = StyleSheet.create({
   cardStyle: {
     width: 350,
     alignSelf: 'center',
-    marginTop: 5,
+    marginTop: 3,
     paddingHorizontal: 15,
     paddingVertical: 7,
-    backgroundColor: 'white',
-    shadowColor: 'grey',
-    shadowOffset: {width: 2, height: -1},
-    shadowOpacity: 0.5,
+    shadowColor: 'black',
+    shadowOffset: {width: 0, height: 1},
+    shadowOpacity: 0.3,
+    //borderColor: '#F3F3F3',
+    //borderWidth: 0.5,
   },
+  refText: {
+    color:Colors.textgreydetail,
+    alignSelf: 'center',
+    fontSize: 18,
+    marginTop : 10,
+    marginBottom : 20
+  }
 })
