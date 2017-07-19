@@ -42,7 +42,7 @@ export default class InformationSecondScreen extends Component {
 const CardDetail = (props) => {
   return (
     <View style={[styles.cardStyle, {backgroundColor: props.color }]}>
-      <CmPrasanmitText style={{fontSize:22}}>{props.list.information}</CmPrasanmitText>
+      <CmPrasanmitText style={{fontSize:22,color: "#444444",}}>{props.list.information}</CmPrasanmitText>
     </View>
   );
 }

@@ -205,8 +205,7 @@ export default class LoginScreen extends Component {
 
 
     _register = () => {
-        this.props.navigation.goBack()
-        /* this.setState({ pressRegis: true})
+        this.setState({ pressRegis: true})
         const resetAction = NavigationActions.reset({
             index: 1,
             actions: [ 
@@ -214,7 +213,7 @@ export default class LoginScreen extends Component {
                 NavigationActions.navigate({ routeName: 'Register'})   
             ]
         })
-        this.props.navigation.dispatch(resetAction) */
+        this.props.navigation.dispatch(resetAction) 
     };
 }
 

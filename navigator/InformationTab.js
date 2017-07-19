@@ -26,14 +26,14 @@ export default class InformationTab extends React.Component {
                   borderBottomWidth: 3,
                 },
                 labelStyle: [Font.style('CmPrasanmitBold'),{
-                  fontSize: 25,
-                  marginTop: 0
+                  fontSize: 24,
+                  marginTop: 2
                 }],
                 style: {
                   backgroundColor: 'white',
                   borderBottomWidth: 0.5,
                   borderBottomColor: Colors.tabBar,
-                  height: 40
+                  height: 45
                 },
               }
           }),

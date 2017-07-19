@@ -33,9 +33,6 @@ export default class Tab extends React.Component {
         loading : true
     }
     componentWillMount() {
-        console.log('dsaffsdafdasfasdfdasf')
-        console.log(this.props)
-        console.log('dsaffsdafdasfasdfdasf')
         setTimeout(() => {
             this.setState({loading : false})
         },500)

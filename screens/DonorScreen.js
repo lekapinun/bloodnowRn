@@ -108,7 +108,7 @@ export default class DonorScreen extends Component {
           onChangeOne = {date => this.setState({ last_donate: date })}
         />*/}
         <Countdown
-          recentDonateDate={this.state.last_donate}
+          recentDonateDate={this.state.nextReady}
           last_donate={this.state.last_donate}
           manualModal={this._goToManualDonate}
           disableManual={this.state.manualDonate}
@@ -147,8 +147,8 @@ export default class DonorScreen extends Component {
     }
 
     _updateReady = () => {
-      console.log(addressServer.APIRequest + '/api/swap');
-      const api = addressServer.APIRequest + '/api/swap';
+      console.log(addressServer.APIRequest + '/api/user/swap');
+      const api = addressServer.APIRequest + '/api/user/swap';
       axios(api,{
         method: 'get',
         headers: {'Authorization' : 'Bearer ' + this.state.token},

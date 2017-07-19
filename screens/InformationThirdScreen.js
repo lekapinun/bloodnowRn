@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 import { Font } from 'expo'
 import { CmPrasanmitBoldText, CmPrasanmitText } from '../components/';
+import Colors from '../constants/Colors'
 
 export default class InformationThirdScreen extends Component {
     static navigationOptions =  {
@@ -30,6 +31,7 @@ export default class InformationThirdScreen extends Component {
       return(
         <ScrollView style={{ backgroundColor: 'white', paddingBottom: 7}}>
           {this.renderSection()}
+          <CmPrasanmitText style={styles.refText}>อ้างอิงจาก ศูนย์บริการโลหิตแห่งชาติ สภากาชาติไทย, 2553</CmPrasanmitText>
         </ScrollView>
       );
     }
@@ -56,7 +58,7 @@ export default class InformationThirdScreen extends Component {
   const CardDetail = (props) => {
     return (
       <View style={styles.cardStyle}>
-        <CmPrasanmitText style={{ marginVertical: 3, color: "#444444", fontSize: 20}}>{props.information}</CmPrasanmitText>
+        <CmPrasanmitText style={{ marginVertical: 3, color: "#444444", fontSize: 22}}>{props.information}</CmPrasanmitText>
       </View>
     );
   }
@@ -71,7 +73,7 @@ export default class InformationThirdScreen extends Component {
     cardStyle: {
       width: 350,
       alignSelf: 'center',
-      marginTop: 5,
+      marginTop: 3,
       paddingHorizontal: 15,
       paddingVertical: 7,
       backgroundColor: 'white',
@@ -79,4 +81,11 @@ export default class InformationThirdScreen extends Component {
       shadowOffset: {width: 0, height: 1},
       shadowOpacity: 0.5,
     },
+    refText: {
+      color:Colors.textgreydetail,
+      alignSelf: 'center',
+      fontSize: 18,
+      marginTop : 10,
+      marginBottom : 20
+    }
   })

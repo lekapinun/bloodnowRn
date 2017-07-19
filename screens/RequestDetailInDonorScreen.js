@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { ScrollView, View , Text ,StyleSheet, Dimensions, AsyncStorage,Linking } from 'react-native';
-import { RequestDetailInDonor, Button, Map } from '../components/common';
+import { RequestDetailInDonor, Button, Map, Loading } from '../components/common';
 import { NavigationActions } from 'react-navigation';
 import Colors from '../constants/Colors';
 import { Font } from 'expo';
@@ -46,9 +46,11 @@ export default class RequestDetailInDonorScreen extends Component {
               longitudeDelta: 0.00421
               }
             })
+            this.setState({finish : true})
           })
           .catch(function (error) {
             console.log(error);
+            this.setState({finish : true})
           });
       })
     }
@@ -61,11 +63,13 @@ export default class RequestDetailInDonorScreen extends Component {
             longitudeDelta: 0.00421
         },
         accept: false,
-        room: ''
+        room: '',
+        loading: false,
     }
 
     render() {
       const url="http://maps.google.com/maps?daddr=("+ this.state.region.latitude + "," + this.state.region.longitude + ")";
+      if(this.state.finish) {
       return(
         <ScrollView style={{flex:1, backgroundColor: 'white' }}>
           <View style={{flex: 1,width:Dimensions.get('window').width,flexDirection: 'column',alignItems: 'center'}}>
@@ -111,6 +115,9 @@ export default class RequestDetailInDonorScreen extends Component {
           </View>
         </ScrollView>
       );
+      } else {
+        return <Loading/>
+      }
   }
 
   _Accept = () => {
