@@ -29,7 +29,7 @@ export default class DonorScreen extends Component {
     req: '',
     last_donate: '',
     next_donate: '',
-
+    img: '',
     manualDonate: false,
     last_donateTemp: new Date(),
   }
@@ -60,7 +60,7 @@ export default class DonorScreen extends Component {
         console.log(response.data)
         console.log('adsfdsafsdafdsafdasf') */
         if(response.data.user !== null){
-          this.setState({req: response.data.user[0]})
+          this.setState({req: response.data.user[0], img: response.data.img})
         }
         console.log(response.data)
         if(response.data.last_date_donate !== null){
@@ -139,6 +139,7 @@ export default class DonorScreen extends Component {
             visible={this.state.readyDonate}
             gropBlood={this.state.req.patient_blood + this.state.req.patient_blood_type}
             ready={this.state.nextReady <= 0}
+            img={this.state.img}
           />
 
         </View>
@@ -177,7 +178,7 @@ export default class DonorScreen extends Component {
       index: 1,
       actions: [
         NavigationActions.navigate({ routeName: 'Donor'}) ,
-        NavigationActions.navigate({ routeName: 'ManualDonate',})
+        NavigationActions.navigate({ routeName: 'ManualDonate', params: {'last_donate': this.state.last_donate, token : this.state.token} })
       ]
     })
     this.props.navigation.dispatch(resetAction)

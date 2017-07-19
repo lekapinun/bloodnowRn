@@ -96,7 +96,7 @@ export default class LoginScreen extends Component {
                     </View>
                     <BaseButton
                         title='เข้าสู่ระบบ'
-                        fontStyle = {{fontSize:25,color:'white'}}
+                        fontStyle = {[Font.style('CmPrasanmit'),{fontSize:25,color:'white'}]}
                         ButtonStyle = {{backgroundColor: Colors.buttonLogin, width: 260, height: 50, marginVertical:10}}
                         onPress={this._loginPress}
                         press={this.state.pressLogin}
@@ -106,7 +106,7 @@ export default class LoginScreen extends Component {
                     </View>
                     <BaseButton
                         title='ลงทะเบียน'
-                        fontStyle = {{fontSize:25,color:'white'}}
+                        fontStyle = {[Font.style('CmPrasanmit'),{fontSize:25,color:'white'}]}
                         ButtonStyle = {{backgroundColor: Colors.buttonRegister, width: 260, height: 50, marginVertical:10}}
                         onPress={this._register}
                         press={this.state.pressRegis}

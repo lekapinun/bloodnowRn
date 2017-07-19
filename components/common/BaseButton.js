@@ -16,9 +16,9 @@ class BaseButton extends Component {
         onPress={this.props.onPress}
         disabled={this.props.press}
       >
-        <CmPrasanmitText style={this.props.fontStyle}>
+        <Text style={this.props.fontStyle}>
           {this.props.title}
-        </CmPrasanmitText>
+        </Text>
       </TouchableOpacity>
     )
   }

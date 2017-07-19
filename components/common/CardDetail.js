@@ -5,7 +5,10 @@ import Colors from '../../constants/Colors';
 import { CmPrasanmitText } from '../CmPrasanmitText'
 import { CmPrasanmitBoldText } from '../CmPrasanmitBoldText'
 
-const CardDetail = ({ list, req, onPress, visible, gropBlood ,ready}) => {
+const CardDetail = ({ list, onPress, img, visible, gropBlood ,ready}) => {
+  console.log('sadfdsafadsfdsaf')
+  console.log(list)
+  console.log('sadfdsafadsfdsaf')
   if(visible && list !== ''){
     return(
       <TouchableOpacity onPress={onPress} style={[styles.requestCardContainerStyle,{borderWidth: 1, borderColor: Colors.greylight,}]} >
@@ -17,17 +20,17 @@ const CardDetail = ({ list, req, onPress, visible, gropBlood ,ready}) => {
           <View style={{flex:19,alignItems: 'center',justifyContent: 'center',}}>
             <Image
               style={styles.imageRequestStyle}
-              source={{ uri: 'https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/960w/NXZELRJWF8.jpg' }}
+              source={{ uri: list.img }}
             />
-            <View style={{height:15,width:30,position:'absolute',bottom:12,left:18,backgroundColor:Colors.tabBar,borderRadius:15,alignItems: 'center',justifyContent:'center'}}>
+            {/* <View style={{height:15,width:30,position:'absolute',bottom:12,left:18,backgroundColor:Colors.tabBar,borderRadius:15,alignItems: 'center',justifyContent:'center'}}>
               <CmPrasanmitBoldText style={{fontSize:17,color:'white',backgroundColor:'transparent'}}>{gropBlood}</CmPrasanmitBoldText>
-            </View>
+            </View> */}
           </View>
           <View style={{flex:35,justifyContent: 'center',}}>
-            <CmPrasanmitBoldText style={{fontSize:22,color: Colors.greylight}}>{list.name}</CmPrasanmitBoldText>
+            <CmPrasanmitBoldText style={{fontSize:22}}>{capitalizeFirstLetter(list.name)}</CmPrasanmitBoldText>
           </View>
           <View style={{flex:14,alignItems: 'center',justifyContent: 'center'}}>
-            <CmPrasanmitText style={{fontSize:18,color:Colors.greylight}}>รายละเอียด</CmPrasanmitText>
+            <CmPrasanmitText style={{fontSize:18,color:Colors.textgrey,marginRight:10}}>รายละเอียด</CmPrasanmitText>
           </View> 
         </View>
       </TouchableOpacity>
@@ -77,5 +80,10 @@ const styles = StyleSheet.create({
   },
 
 });
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 
 export {CardDetail};
