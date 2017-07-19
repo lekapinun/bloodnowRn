@@ -29,6 +29,9 @@ export default class ProfileScreen extends Component {
   };
 
   componentWillMount() {
+    console.log('222222222')
+    console.log(this.props.screenProps)
+    console.log('222222222')
     AsyncStorage.getItem('@loginData:key')
     .then((loginStatus) => {
       const temp = JSON.parse(loginStatus)
@@ -92,6 +95,8 @@ export default class ProfileScreen extends Component {
   _logout = () => {
     AsyncStorage.removeItem('@loginData:key')
     .then(() => {
+      const resetAction = NavigationActions.navigate({routeName: 'Login'})
+      this.props.screenProps.navigation.dispatch(resetAction)  
       console.log('logout')
     })
   }

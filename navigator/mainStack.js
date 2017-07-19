@@ -31,6 +31,7 @@ export default class Stack extends React.Component {
         mode: 'modal',
         headerMode: 'float',
     });
-    return <Stack screenProps={this.props}/>
+    return <Stack/>
   }
+  
 }

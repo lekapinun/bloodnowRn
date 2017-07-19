@@ -7,6 +7,11 @@ import EditProfileScreen from '../screens/EditProfileScreen';
 import DonateHistoryScreen from '../screens/DonateHistoryScreen';
 
 export default class ProfileStack extends React.Component {
+  componentWillMount() {
+    console.log('1111111111111')
+    console.log(this.props)
+    console.log('1111111111111')
+  }
   render(){
     const ProfileStack = StackNavigator(
     {
@@ -19,7 +24,7 @@ export default class ProfileStack extends React.Component {
         headerMode: 'float',
     });
     return(
-      <ProfileStack/>
+      <ProfileStack screenProps={this.props.screenProps}/>
     );
   }
 }

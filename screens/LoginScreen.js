@@ -16,7 +16,8 @@ export default class LoginScreen extends Component {
         error: false,
         pressRegis: false,
         pressLogin: false,
-        finish: false
+        finish: false,
+        errorText: '',
     };
 
     static navigationOptions = {
@@ -36,7 +37,9 @@ export default class LoginScreen extends Component {
                 axios(api,{ headers: {'Authorization' : 'Bearer ' + checkLogin.token},})
                 .then(response =>{
                     console.log(response.data)
-                    this.props.navigation.navigate('Bloodnow')
+                    const resetAction = NavigationActions.navigate({routeName: 'Bloodnow',})
+                    this.props.navigation.dispatch(resetAction)
+                    //this.props.navigation.navigate('Bloodnow')
                     setTimeout(() => {
                         this.setState({finish: true}) 
                     },500)   
@@ -85,7 +88,7 @@ export default class LoginScreen extends Component {
     }
 
     renderErrorMessage() {
-        return this.state.error ? <CmPrasanmitText style={styles.errorText}>ลองใหม่อีกครั้ง</CmPrasanmitText> : null
+        return this.state.error ? <CmPrasanmitText style={styles.errorText}>{this.state.errorText}</CmPrasanmitText> : null
     }
 
     render() {
@@ -170,6 +173,7 @@ export default class LoginScreen extends Component {
         this.setState({error : false});
         axios(api,{ method: 'post', data: this.state})
         .then((response) => {
+            console.log(response.data)
             //console.log(JSON.parse(responseText))
             loginData = response.data;
             if(loginData.status === 'ok'){
@@ -177,15 +181,15 @@ export default class LoginScreen extends Component {
                 this._loginData(loginData)
                 this._goToApp()
             } else {
-                this.setState({ password: '' });
+                this.setState({ password: '', error : true, pressLogin: false, errorText: 'ลองใหม่อีกครั้ง' });
                 console.log('login fail');
-                this.setState({error : true});
-                this.setState({ pressLogin: false})
             }
         })
         .catch((error) => {
-            console.warn(error);
-            this.setState({ pressLogin: false})
+            console.log(error);
+            this.setState({ error : true, pressLogin: false, errorText: 'กรุณากรอกข้อมูลให้ครบ' });
+            console.log('login fail');
+            this.setState({error : true});
         }); 
     };
 
@@ -201,7 +205,8 @@ export default class LoginScreen extends Component {
 
 
     _register = () => {
-        this.setState({ pressRegis: true})
+        this.props.navigation.goBack()
+        /* this.setState({ pressRegis: true})
         const resetAction = NavigationActions.reset({
             index: 1,
             actions: [ 
@@ -209,7 +214,7 @@ export default class LoginScreen extends Component {
                 NavigationActions.navigate({ routeName: 'Register'})   
             ]
         })
-        this.props.navigation.dispatch(resetAction)
+        this.props.navigation.dispatch(resetAction) */
     };
 }
 

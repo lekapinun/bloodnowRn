@@ -33,6 +33,9 @@ export default class Tab extends React.Component {
         loading : true
     }
     componentWillMount() {
+        console.log('dsaffsdafdasfasdfdasf')
+        console.log(this.props)
+        console.log('dsaffsdafdasfasdfdasf')
         setTimeout(() => {
             this.setState({loading : false})
         },500)
@@ -89,10 +92,7 @@ export default class Tab extends React.Component {
         InformationTab.navigationOptions = {
             tabBarIcon: ({ tintColor, focused }) => ( this._renderIconSimpleLineIcons('notebook', focused, 20)),
         };
-        console.log('xxxxsdfasdfhadsfasdfdsafasdfasdf')
-        console.log(this.props)
-        console.log('xxxxsdfasdfhadsfasdfdsafasdfasdf')
-        return this.state.loading ? <Loading visible={this.state.loading}/> : <Tab/>
+        return this.state.loading ? <Loading visible={this.state.loading}/> : <Tab screenProps={this.props}/>
 
     }
     _renderIconSimpleLineIcons(name, focused, size){
