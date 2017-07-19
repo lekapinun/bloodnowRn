@@ -178,7 +178,7 @@ export default class DonorScreen extends Component {
       index: 1,
       actions: [
         NavigationActions.navigate({ routeName: 'Donor'}) ,
-        NavigationActions.navigate({ routeName: 'ManualDonate',})
+        NavigationActions.navigate({ routeName: 'ManualDonate', params: {'last_donate': this.state.last_donate, token : this.state.token} })
       ]
     })
     this.props.navigation.dispatch(resetAction)

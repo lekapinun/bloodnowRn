@@ -20,7 +20,7 @@ const CardDetail = ({ list, onPress, img, visible, gropBlood ,ready}) => {
           <View style={{flex:19,alignItems: 'center',justifyContent: 'center',}}>
             <Image
               style={styles.imageRequestStyle}
-              source={{ uri: img }}
+              source={{ uri: list.img }}
             />
             {/* <View style={{height:15,width:30,position:'absolute',bottom:12,left:18,backgroundColor:Colors.tabBar,borderRadius:15,alignItems: 'center',justifyContent:'center'}}>
               <CmPrasanmitBoldText style={{fontSize:17,color:'white',backgroundColor:'transparent'}}>{gropBlood}</CmPrasanmitBoldText>
