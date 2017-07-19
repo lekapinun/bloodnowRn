@@ -71,8 +71,9 @@ export default class DonateHistoryScreen extends Component {
             />
           </View>
           <View style={styles.requestInfotmationContainer}>
-            <View style={styles.requestInformationStyle}>
+            <View>
               <CmPrasanmitText  style={{marginLeft: 20, fontSize: 25, height:25, color: 'black',}}>{capitalizeFirstLetter(this.state.patient.name)}</CmPrasanmitText>
+              {this.state.patient.patient_thankyou !== null && <CmPrasanmitText style={{marginLeft: 20, fontSize: 21,width:190,color:Colors.textgreydetail}}>{this.state.patient.patient_thankyou}</CmPrasanmitText > }
             </View>
           </View>
         </View>
@@ -84,7 +85,6 @@ export default class DonateHistoryScreen extends Component {
           <RequestDetailInDonor label='จังหวัด' information={this.state.patient.patient_province} height={height_detail}/>
           <RequestDetailInDonor label='สถานพยาบาล' information={this.state.patient.patient_hos} height={height_detail}/>
           <RequestDetailInDonor label='วันที่บริจาค' information={this.state.donateDate} height={height_detail}/>
-          {this.state.patient.patient_thankyou !== '' && <RequestDetailInDonor label='คำขอบคุณ' information={this.state.patient.patient_thankyou} height={height_detail}/> }
         </View>
       </View>
     );
@@ -95,7 +95,8 @@ const styles = StyleSheet.create({
   receiverProfileContainer: {
     marginTop: 5,
     flexDirection: 'row',
-    height: 90,
+    //height: 120,
+    paddingVertical : 10,
     width: 320,
     borderColor: Colors.tabBar,
     borderWidth: 2,
