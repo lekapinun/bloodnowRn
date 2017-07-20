@@ -73,7 +73,12 @@ export default class RequestBloodHistoryScreen extends Component {
         history: [],
         token: '',
         test_ajax: '',
+<<<<<<< HEAD
         loading: false,
+=======
+        loading : false ,
+        listen : false,
+>>>>>>> UI_by_Thomas
     }
 
     componentWillMount() {
@@ -87,6 +92,7 @@ export default class RequestBloodHistoryScreen extends Component {
                 method: 'get', 
                 headers: {'Authorization' : 'Bearer ' + this.state.token},
             })
+<<<<<<< HEAD
             .then(response => {
                 //console.log(response.data)
                 this.state.history = response.data
@@ -95,36 +101,24 @@ export default class RequestBloodHistoryScreen extends Component {
             .catch(function (error) {
                 console.log(error);
             });
-        })
-    }
-
-    _loadData = () => {
-            //console.log(addressServer.APIRequest + '/api/req');
-            const api = addressServer.APIRequest + '/api/req';
-            axios(api,{ 
-                method: 'get', 
-                headers: {'Authorization' : 'Bearer ' + this.state.token},
-            })
+=======
                 .then(response => {
-                    if(this.state.history.toString() !== response.data.toString()){
-                        console.log(response.data)
-                        this.setState({ history: response.data })
-                    } else {
-                        this._loadData()
-                    }
+                    //console.log(response.data)
+                    this.state.history = response.data
+                    this.setState({ history: response.data , loading : true})
                 })
                 .catch(function (error) {
                     console.log(error);
-                });  
+                });
+>>>>>>> UI_by_Thomas
+        })
     }
-    
 
     renderHistory() {
         //console.log(this.state.history.length )
         if(this.state.history.length === 0){
             return (
                 <View style={{justifyContent:'center',marginTop:10,width:310,height:80,borderWidth:1,borderColor:Colors.tabBar,borderRadius:5}}>
-                    {this._loadData()}
                     <CmPrasanmitText style={{marginLeft:15,fontSize:22,color:'#575757'}}>ไม่มีรายการการขอเลือดของคุณ หากต้อง</CmPrasanmitText>
                     <View style = {{flexDirection:'row'}}>
                         <CmPrasanmitText style={{marginLeft:15,fontSize:22,color:'#575757'}}>การจะชอเลือด กดปุ่ม </CmPrasanmitText>
@@ -137,7 +131,6 @@ export default class RequestBloodHistoryScreen extends Component {
             )
         } else {
             return this.state.history.map((history) => {
-                this._loadData()
                 //console.log(history.updated_at)
                 //console.log(history.updated_at.split(' ')[0])
                 var date = history.updated_at.split(' ')[0]
@@ -171,20 +164,42 @@ export default class RequestBloodHistoryScreen extends Component {
         }
     }
 
+    _update = data => {
+        this.setState({listen : data})
+        console.log(addressServer.APIRequest + '/api/req')
+        const api = addressServer.APIRequest + '/api/req'
+        axios(api,{ 
+            method: 'get', 
+            headers: {'Authorization' : 'Bearer ' + this.state.token},
+        })
+        .then(response => {
+            console.log(response.data)
+            this.setState({ history: response.data })
+        })
+        .catch(function (error) {
+            console.log(error);
+        }); 
+    }
+
     goTodetail(detail_id) {
         //console.log(detail_id)
-        const resetAction = NavigationActions.navigate(
+        /* const resetAction = NavigationActions.navigate(
             {
                 routeName: 'RequestDetail',
                 params: detail_id, 
             }
         )
-        this.props.navigation.dispatch(resetAction)
+        this.props.navigation.dispatch(resetAction) */
+        this.props.navigation.navigate('RequestDetail', {params: detail_id, onSelect: this._update})
     }
     
 
     render() {
+<<<<<<< HEAD
         return !this.state.loading ? <Loading/> : (
+=======
+        return !this.state.loading ?  <Loading/> : (
+>>>>>>> UI_by_Thomas
             <ScrollView style={{flex: 1,backgroundColor:'white'}}> 
                 <View style={[styles.center, {paddingTop:16}]}>
                     {this.renderHistory()}
