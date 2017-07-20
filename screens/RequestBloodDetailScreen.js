@@ -156,18 +156,8 @@ export default class RequestBloodDetailScreen extends Component {
               </ModalFinish>
               <ModalRe
                 pickerVisible = {this.state.displayRe}
-<<<<<<< HEAD
-                onPress1 = { () => {
-                  //this.setState({displayRe: false})
-                  this._refresh()
-                }}
-                onPress2 = { () => {
-                  this.setState({displayRe: false})
-                }}
-=======
                 onPress1 = { () => this._refresh() }
                 onPress2 = { () => this.setState({displayRe: false}) }
->>>>>>> UI_by_Thomas
                 value = {this.state.bloodWant}
                 onChangeText = {(bloodWant) => this.setState({bloodWant})}
                 loading = {this.state.loadingModal}
@@ -238,18 +228,8 @@ export default class RequestBloodDetailScreen extends Component {
     }
 
     _refresh = () => {
-<<<<<<< HEAD
-      this.setState({loadingModal : true})
-      setTimeout(() => {
-        this.setState({loadingModal : false})
-        this.setState({displayRe: false})
-        this._backHistory()
-      },1000)
-      /* console.log(addressServer.APIRequest + '/api/req/refresh');
-=======
       this.setState({loadingModal:true})
       console.log(addressServer.APIRequest + '/api/req/refresh');
->>>>>>> UI_by_Thomas
       const api = addressServer.APIRequest + '/api/req/refresh';
       console.log(this.props.navigation.state.params.params)
       console.log(this.state.bloodWant)
@@ -262,20 +242,10 @@ export default class RequestBloodDetailScreen extends Component {
         }
       })
         .then(() => {
-<<<<<<< HEAD
-          this._backHistory()
-          this.setState({loadingModal : false})
-        })
-        .catch((error) => {
-          console.log(error)
-          this.setState({loadingModal : false})
-        }) */
-=======
           this.setState({displayRe: false, loadingModal:false})
           this._backHistory()
         })
         .catch((error) => console.log(error)) 
->>>>>>> UI_by_Thomas
     }
     
     _thankyou = () => {
@@ -335,11 +305,7 @@ const ModalFinish = ({pickerVisible,onPress1,onPress2,loading}) => {
 
 
 const ModalRe = ({pickerVisible,onPress1,onPress2,value,onChangeText,loading}) => {
-<<<<<<< HEAD
-  return (
-=======
   return(
->>>>>>> UI_by_Thomas
       <Modal
         animationType={"fade"}
         transparent={true}
@@ -383,11 +349,7 @@ const ModalRe = ({pickerVisible,onPress1,onPress2,value,onChangeText,loading}) =
                 </View> 
             </View>
         </View>}
-<<<<<<< HEAD
-      </Modal> 
-=======
       </Modal>
->>>>>>> UI_by_Thomas
   );
 }
 
@@ -463,10 +425,6 @@ const styles = StyleSheet.create({
 
 const LoadingModal = () => {
   return (
-<<<<<<< HEAD
-    <View style={{flex:1,justifyContent:'center',backgroundColor:'transparent',alignItems:'center'}}>
-      <ActivityIndicator style={{marginRight:-3,marginBottom:-4}} size="large" />
-=======
     <View style={{flex:1,justifyContent:'center',backgroundColor:'transparent',alignItems:'center',backgroundColor:'rgba(52, 52, 52, 0.3)'}}>
       <View style={{backgroundColor:'white',height:134,paddingHorizontal:20,marginTop:-10,alignItems:'center',justifyContent:'space-around',borderRadius:10}}>
         <View/>
@@ -474,7 +432,6 @@ const LoadingModal = () => {
         <CmPrasanmitText style={{fontSize:20,color:Colors.textgreydetail,marginTop:15}}>กำลังดาวน์โหลด</CmPrasanmitText>
         <View/>
       </View>
->>>>>>> UI_by_Thomas
     </View>   
   )
 }

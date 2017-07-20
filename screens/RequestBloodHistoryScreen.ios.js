@@ -73,12 +73,8 @@ export default class RequestBloodHistoryScreen extends Component {
         history: [],
         token: '',
         test_ajax: '',
-<<<<<<< HEAD
-        loading: false,
-=======
         loading : false ,
         listen : false,
->>>>>>> UI_by_Thomas
     }
 
     componentWillMount() {
@@ -92,16 +88,6 @@ export default class RequestBloodHistoryScreen extends Component {
                 method: 'get', 
                 headers: {'Authorization' : 'Bearer ' + this.state.token},
             })
-<<<<<<< HEAD
-            .then(response => {
-                //console.log(response.data)
-                this.state.history = response.data
-                this.setState({ history: response.data, loading : true })
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-=======
                 .then(response => {
                     //console.log(response.data)
                     this.state.history = response.data
@@ -110,7 +96,6 @@ export default class RequestBloodHistoryScreen extends Component {
                 .catch(function (error) {
                     console.log(error);
                 });
->>>>>>> UI_by_Thomas
         })
     }
 
@@ -195,11 +180,7 @@ export default class RequestBloodHistoryScreen extends Component {
     
 
     render() {
-<<<<<<< HEAD
-        return !this.state.loading ? <Loading/> : (
-=======
         return !this.state.loading ?  <Loading/> : (
->>>>>>> UI_by_Thomas
             <ScrollView style={{flex: 1,backgroundColor:'white'}}> 
                 <View style={[styles.center, {paddingTop:16}]}>
                     {this.renderHistory()}
