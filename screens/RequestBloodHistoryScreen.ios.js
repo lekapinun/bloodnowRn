@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import { Font } from 'expo'
 import { NavigationActions } from 'react-navigation'
-import { TestButton, NavigatorBackground,ExNavigationState,CardHistoryRequest} from '../components/common';
+import { TestButton, NavigatorBackground,ExNavigationState,CardHistoryRequest,Loading} from '../components/common';
 import Colors from '../constants/Colors';
 import Layout from '../constants/Layout';
 import RequestBloodScreen from './RequestBloodScreen';
@@ -73,6 +73,7 @@ export default class RequestBloodHistoryScreen extends Component {
         history: [],
         token: '',
         test_ajax: '',
+        loading: false,
     }
 
     componentWillMount() {
@@ -86,14 +87,14 @@ export default class RequestBloodHistoryScreen extends Component {
                 method: 'get', 
                 headers: {'Authorization' : 'Bearer ' + this.state.token},
             })
-                .then(response => {
-                    //console.log(response.data)
-                    this.state.history = response.data
-                    this.setState({ history: response.data })
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
+            .then(response => {
+                //console.log(response.data)
+                this.state.history = response.data
+                this.setState({ history: response.data, loading : true })
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
         })
     }
 
@@ -183,7 +184,7 @@ export default class RequestBloodHistoryScreen extends Component {
     
 
     render() {
-        return(
+        return !this.state.loading ? <Loading/> : (
             <ScrollView style={{flex: 1,backgroundColor:'white'}}> 
                 <View style={[styles.center, {paddingTop:16}]}>
                     {this.renderHistory()}
@@ -201,5 +202,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
 });
+
+
 
 
