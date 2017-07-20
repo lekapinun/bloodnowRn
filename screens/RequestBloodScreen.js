@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Text, TextInput, Modal, TouchableOpacity, Picker, StyleSheet,AsyncStorage,Dimensions, TouchableWithoutFeedback ,Animated,Image} from 'react-native';
+import { ScrollView, View, Text, TextInput, Modal, TouchableOpacity, Picker, StyleSheet,AsyncStorage,Dimensions, TouchableWithoutFeedback ,Animated,Image,Linking} from 'react-native';
 import { Font } from 'expo';
 import { Map, InputText, InputTextLarge , PickerPartTouch, PickerModalDate, PickerModalBlood, BaseButton, Button, ButtonBack,DetailBox,PickerModalProvince} from '../components/common';
 import Colors from '../constants/Colors';
@@ -161,7 +161,7 @@ export default class RequestBloodScreen extends Component {
         (this.state.countblood !== '' ) ? canSubmit = canSubmit.replaceAt(4,'1') : canSubmit = canSubmit.replaceAt(4,'0') ;
         (this.state.patient_detail !== '' ) ? canSubmit = canSubmit.replaceAt(5,'1') : canSubmit = canSubmit.replaceAt(5,'0') ;
         (this.state.patient_hos !== '' ) ? canSubmit = canSubmit.replaceAt(6,'1') : canSubmit = canSubmit.replaceAt(6,'0') ;
-
+        const url="http://maps.google.com/maps?daddr=("+ this.state.region.latitude + "," + this.state.region.longitude + ")";
         return(
             <View style={{flex: 1,flexDirection: 'column',alignItems: 'center', backgroundColor: '#FAFAFA'}}>
                 <Modal
@@ -257,13 +257,14 @@ export default class RequestBloodScreen extends Component {
                                     <Map
                                     region={this.state.region}
                                     onRegionChange={(region) => {this.setState({region})}}
+                                    onPress={() => Linking.openURL(url)}
                                     />
                                     <View style={{marginTop:20}}></View>
                                         <Button
                                             title="ส่งคำร้องขอ"
-                                            touchable={(canSubmit === '0000000') ? true : false}
-                                            onPress={(canSubmit === '0000000') ? null : this._goToConfirmRequest}
-                                            buttonColor={(canSubmit === '0000000') ? '#F6B6BF' : '#E84A5F'}
+                                            touchable={(canSubmit.search("0") !== -1) ? true : false}
+                                            onPress={(canSubmit.search("0") !== -1) ? null : this._goToConfirmRequest}
+                                            buttonColor={(canSubmit.search("0") !== -1) ? '#F6B6BF' : '#E84A5F'}
                                             sizeFont={25}
                                             ButtonWidth={300}
                                             ButtonHeight={50}
