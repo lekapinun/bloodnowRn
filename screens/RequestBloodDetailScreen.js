@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { ScrollView, View , TextInput, Text ,StyleSheet, Dimensions, AsyncStorage, TouchableOpacity, Image, Modal } from 'react-native';
+import { ScrollView, View , TextInput, Text ,StyleSheet, Dimensions, AsyncStorage, TouchableOpacity, Image, Modal, ActivityIndicator } from 'react-native';
 import { RequestDetailInDonor, BaseButton , Button, Map, Loading } from '../components/common';
 import Colors from '../constants/Colors';
 import Expo,{ Font } from 'expo';
@@ -37,12 +37,13 @@ export default class RequestBloodDetailScreen extends Component {
       loading: false,
       thankyou: '',
       thankyou_temp: '',
-      bloodWant: ''
+      bloodWant: '',
+      loadingModal: false,
     }
 
     componentWillMount() {
-      this.state.detail_id = this.props.navigation.state.params
-      console.log(this.props.navigation.state.params)
+      this.state.detail_id = this.props.navigation.state.params.params
+      console.log(this.props.navigation.state.params.params)
       AsyncStorage.getItem('@loginData:key')
       .then((loginStatus) => {
         const temp = JSON.parse(loginStatus)
@@ -53,7 +54,7 @@ export default class RequestBloodDetailScreen extends Component {
         axios(api,{ 
           method: 'post', 
           headers: {'Authorization' : 'Bearer ' + this.state.token},
-          data: { 'roomreq_id': this.props.navigation.state.params}
+          data: { 'roomreq_id': this.props.navigation.state.params.params}
         })
           .then(response => {
             //console.log(response.data)
@@ -148,25 +149,18 @@ export default class RequestBloodDetailScreen extends Component {
             <View style={{flex: 1,width:Dimensions.get('window').width,flexDirection: 'column',alignItems: 'center'}}>
               <ModalFinish
                 pickerVisible = {this.state.displayFinish}
-                onPress1 = { () => {
-                  this.setState({displayFinish: false})
-                  this._success()
-                }}
-                onPress2 = { () => {
-                  this.setState({displayFinish: false})
-                }}
+                onPress1 = { () =>  this._success() }
+                onPress2 = { () => this.setState({displayFinish: false})}
+                loading = {this.state.loadingModal}
               >
               </ModalFinish>
               <ModalRe
                 pickerVisible = {this.state.displayRe}
-                onPress1 = { () => {
-                  this._refresh()
-                }}
-                onPress2 = { () => {
-                  this.setState({displayRe: false})
-                }}
+                onPress1 = { () => this._refresh() }
+                onPress2 = { () => this.setState({displayRe: false}) }
                 value = {this.state.bloodWant}
                 onChangeText = {(bloodWant) => this.setState({bloodWant})}
+                loading = {this.state.loadingModal}
               >
               </ModalRe>
               <ModalThankyou
@@ -176,10 +170,8 @@ export default class RequestBloodDetailScreen extends Component {
                 onPress1 = { () => {
                   this.setState({displayThankyou: false})
                 }}
-                onPress2 = { () => {
-                  this.setState({displayThankyou: false})
-                  this._thankyou()
-                }}
+                onPress2 = { () => this._thankyou()}
+                loading = {this.state.loadingModal}
               >
               </ModalThankyou>
               {this._renderThankBox()}
@@ -218,23 +210,24 @@ export default class RequestBloodDetailScreen extends Component {
     }
 
     _success = () => {
+      this.setState({loadingModal:true})
       console.log(addressServer.APIRequest + '/api/req/success');
       const api = addressServer.APIRequest + '/api/req/success';
       axios(api,{ 
         method: 'post', 
         headers: {'Authorization' : 'Bearer ' + this.state.token},
-        data : { 'roomreq_id' : this.props.navigation.state.params}
+        data : { 'roomreq_id' : this.props.navigation.state.params.params}
       })
-        .then(() => this._backHistory())
+        .then(() => {
+          this.setState({displayFinish: false, loadingModal:false})
+          this._backHistory()
+        })
         .catch((error) => console.log(error))
     }
 
     _refresh = () => {
-      setTimeout(() => {
-        this.setState({displayRe: false})
-          this._backHistory()
-      },1000)
-      /* console.log(addressServer.APIRequest + '/api/req/refresh');
+      this.setState({loadingModal:true})
+      console.log(addressServer.APIRequest + '/api/req/refresh');
       const api = addressServer.APIRequest + '/api/req/refresh';
       console.log(this.props.navigation.state.params.params)
       console.log(this.state.bloodWant)
@@ -247,36 +240,42 @@ export default class RequestBloodDetailScreen extends Component {
         }
       })
         .then(() => {
-          this.setState({displayRe: false})
+          this.setState({displayRe: false, loadingModal:false})
           this._backHistory()
         })
-        .catch((error) => console.log(error)) */
+        .catch((error) => console.log(error)) 
     }
     
     _thankyou = () => {
+      this.setState({loadingModal:true})
       console.log(addressServer.APIRequest + '/api/req/thankyou');
       const api = addressServer.APIRequest + '/api/req/thankyou';
       axios(api,{ 
         method: 'post', 
         headers: {'Authorization' : 'Bearer ' + this.state.token},
         data : { 
-          'roomreq_id' : this.props.navigation.state.params,
+          'roomreq_id' : this.props.navigation.state.params.params,
           'thankyou' : this.state.thankyou,
         }
       })
-        .then((response) => this._backHistory())
+
+        .then((response) => {
+          this.setState({displayThankyou: false, loadingModal:false})
+          this._backHistory()
+        })
         .catch((error) => console.log(error))
-    }
+    } 
 }
 
-const ModalFinish = ({pickerVisible,onPress1,onPress2}) => {
+const ModalFinish = ({pickerVisible,onPress1,onPress2,loading}) => {
   return(
       <Modal
         animationType={"fade"}
         transparent={true}
         visible={pickerVisible}
       >
-        <View style={[styles.container,{flex:1,backgroundColor:'rgba(52, 52, 52, 0.3)'}]}>
+        { loading && <LoadingModal/> }
+        {!loading && <View style={[styles.container,{flex:1,backgroundColor:'rgba(52, 52, 52, 0.3)'}]}>
             <View style={{paddingTop:25,alignItems: 'center',height:188,width:230,backgroundColor:'white',borderRadius:10}}>
                 <Image source={require('../assets/images/conf.png')} style={{height:70,width:70}}/>
                 <Text style={[Font.style('CmPrasanmit'),{paddingTop:5,fontSize:23}]}>คำร้องขอของคุณเสร็จสิ้นแล้ว?</Text>
@@ -297,20 +296,21 @@ const ModalFinish = ({pickerVisible,onPress1,onPress2}) => {
                   />
                 </View> 
             </View>
-        </View>
+        </View>}
       </Modal>
   );
 }
 
 
-const ModalRe = ({pickerVisible,onPress1,onPress2,value,onChangeText}) => {
+const ModalRe = ({pickerVisible,onPress1,onPress2,value,onChangeText,loading}) => {
   return(
       <Modal
         animationType={"fade"}
         transparent={true}
         visible={pickerVisible}
       >
-        <View style={[styles.container,{flex:1,backgroundColor:'rgba(52, 52, 52, 0.3)'}]}>
+        { loading && <LoadingModal/> }
+        {!loading && <View style={[styles.container,{flex:1,backgroundColor:'rgba(52, 52, 52, 0.3)'}]}>
             <View style={{paddingTop:25,alignItems: 'center',height:154,width:260,backgroundColor:'white',borderRadius:10}}>
                 <View style={{height:67,justifyContent:'space-around',alignItems:'center'}}>
                   <Text style={[Font.style('CmPrasanmitBold'),{paddingTop:5,fontSize:23,color:Colors.textgrey}]}>คุณต้องการส่งคำขออีกครั้ง?</Text>
@@ -346,19 +346,20 @@ const ModalRe = ({pickerVisible,onPress1,onPress2,value,onChangeText}) => {
                   />
                 </View> 
             </View>
-        </View>
+        </View>}
       </Modal>
   );
 }
 
-const ModalThankyou = ({pickerVisible,onPress1,onPress2,value,onChangeText}) => {
+const ModalThankyou = ({pickerVisible,onPress1,onPress2,value,onChangeText,loading}) => {
   return(
       <Modal
         animationType={"fade"}
         transparent={true}
         visible={pickerVisible}
       >
-        <View style={[styles.container,{flex:1,backgroundColor:'rgba(52, 52, 52, 0.3)'}]}>
+        { loading && <LoadingModal/> }
+        {!loading && <View style={[styles.container,{flex:1,backgroundColor:'rgba(52, 52, 52, 0.3)'}]}>
             <View style={{height:200,width:300,backgroundColor:'white',borderRadius:10}}>
                 <View style={{height:40,width:300,flexDirection:'row',borderBottomColor: '#DCDCDC',borderBottomWidth: 1,backgroundColor:'transparent'}}>
                   <View style={{flex:1}}/>
@@ -388,7 +389,7 @@ const ModalThankyou = ({pickerVisible,onPress1,onPress2,value,onChangeText}) => 
                   </View>
                 </View>
             </View>
-        </View>
+        </View>}
       </Modal>
   );
 }
@@ -419,3 +420,16 @@ const styles = StyleSheet.create({
     color: Colors.textgreydetail
   },
 });
+
+const LoadingModal = () => {
+  return (
+    <View style={{flex:1,justifyContent:'center',backgroundColor:'transparent',alignItems:'center',backgroundColor:'rgba(52, 52, 52, 0.3)'}}>
+      <View style={{backgroundColor:'white',height:134,paddingHorizontal:20,marginTop:-10,alignItems:'center',justifyContent:'space-around',borderRadius:10}}>
+        <View/>
+        <ActivityIndicator style={{marginRight:-3,marginBottom:-4}} size="large" />
+        <CmPrasanmitText style={{fontSize:20,color:Colors.textgreydetail,marginTop:15}}>กำลังดาวน์โหลด</CmPrasanmitText>
+        <View/>
+      </View>
+    </View>   
+  )
+}
