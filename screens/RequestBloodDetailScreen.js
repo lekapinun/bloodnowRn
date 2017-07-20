@@ -160,7 +160,6 @@ export default class RequestBloodDetailScreen extends Component {
               <ModalRe
                 pickerVisible = {this.state.displayRe}
                 onPress1 = { () => {
-                  this.setState({displayRe: false})
                   this._refresh()
                 }}
                 onPress2 = { () => {
@@ -206,14 +205,16 @@ export default class RequestBloodDetailScreen extends Component {
     }
 
     _backHistory = () => {
-      const resetAction = NavigationActions.reset(
+      /* const resetAction = NavigationActions.reset(
       {
         index: 0,
         actions: [ 
           NavigationActions.navigate({ routeName: 'RequestHistory'}) ,
         ]
       })
-      this.props.navigation.dispatch(resetAction)
+      this.props.navigation.dispatch(resetAction) */
+      this.props.navigation.goBack()
+      this.props.navigation.state.params.onSelect({listen: true})
     }
 
     _success = () => {
@@ -229,18 +230,27 @@ export default class RequestBloodDetailScreen extends Component {
     }
 
     _refresh = () => {
-      console.log(addressServer.APIRequest + '/api/req/refresh');
+      setTimeout(() => {
+        this.setState({displayRe: false})
+          this._backHistory()
+      },1000)
+      /* console.log(addressServer.APIRequest + '/api/req/refresh');
       const api = addressServer.APIRequest + '/api/req/refresh';
+      console.log(this.props.navigation.state.params.params)
+      console.log(this.state.bloodWant)
       axios(api,{ 
         method: 'post', 
         headers: {'Authorization' : 'Bearer ' + this.state.token},
         data : { 
-          'roomreq_id' : this.props.navigation.state.params,
+          'roomreq_id' : this.props.navigation.state.params.params,
           'countblood' : this.state.bloodWant
         }
       })
-        .then(() => this._backHistory())
-        .catch((error) => console.log(error))
+        .then(() => {
+          this.setState({displayRe: false})
+          this._backHistory()
+        })
+        .catch((error) => console.log(error)) */
     }
     
     _thankyou = () => {
@@ -306,15 +316,15 @@ const ModalRe = ({pickerVisible,onPress1,onPress2,value,onChangeText}) => {
                   <Text style={[Font.style('CmPrasanmitBold'),{paddingTop:5,fontSize:23,color:Colors.textgrey}]}>คุณต้องการส่งคำขออีกครั้ง?</Text>
                   <View style={{flexDirection: 'row',paddingTop:5}}>
                     <CmPrasanmitText style={{fontSize:21,color: Colors.textgreydetail}}>ต้องการเลือดอีก </CmPrasanmitText>
-                    <View style={{borderBottomWidth : 0.5,borderBottomColor : Colors.textgreydetail,alignItems:'center'}}>
-                    <TextInput
-                      style={[Font.style('CmPrasanmit'),styles.input,{alignSelf:'center'}]}
-                      value={value}
-                      onChangeText={onChangeText}
-                      autoCorrect={false}
-                      keyboardType='number-pad'
-                      maxLength={2}
-                    />
+                    <View style={{width:60,borderBottomWidth : 0.5,borderBottomColor : Colors.textgreydetail,alignItems:'center'}}>
+                      <TextInput
+                        style={[Font.style('CmPrasanmit'),styles.input,{alignSelf:'center', marginLeft : (value.length < 2) ? 10 : 0}]}
+                        value={value}
+                        onChangeText={onChangeText}
+                        autoCorrect={false}
+                        keyboardType='number-pad'
+                        maxLength={2}
+                      />
                     </View>
                     <CmPrasanmitText style={{fontSize:21,color: Colors.textgreydetail}}> ถุง</CmPrasanmitText>
                   </View>
