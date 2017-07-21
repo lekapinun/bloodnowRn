@@ -38,6 +38,8 @@ export default class App extends React.Component{
         require('./assets/images/user.png'),
         require('./assets/images/error.png'),
         require('./assets/images/conf.png'),
+        require('./assets/images/intro12.png'),
+        require('./assets/images/keyboard-right-arrow-button.png'),
       ],
       fonts: [
         FontAwesome.font,

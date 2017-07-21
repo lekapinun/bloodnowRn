@@ -14,10 +14,9 @@ import { CmPrasanmitBoldText, CmPrasanmitText } from '../components';
 export default class InstructionFirstScreen extends Component {
   static navigationOptions = props => {
     return {
-      title: "● ○ ○",
+      headerTitle : <View style={{flexDirection:'row'}}><Text style={{fontSize: 15, marginBottom: 20,color:Colors.tabBar}}>●</Text><Text style={{color:'#F8CDD2',fontSize: 15, marginBottom: 20}}> ● ●</Text></View> ,
       headerTintColor: '#E84A5F',
       gesturesEnabled: true,
-      headerTitleStyle: {fontSize: 20, marginBottom: 20},
       headerStyle: {
         height: 50,
         position: 'absolute',
@@ -25,17 +24,19 @@ export default class InstructionFirstScreen extends Component {
         left: 0,
         right: 0,
         backgroundColor: 'white',
-        shadowColor: 'grey',
-        shadowOffset: {width: 2, height: -1},
-        shadowOpacity: 0.5,
+        /* shadowColor: 'grey',
+        borderColor: 'white',
+        shadowOffset: {width: 1, height: -1},
+        shadowOpacity: 0.3,
+        shadowRadius: 5, */
       },
       headerRight:
       <TouchableOpacity title="Next" onPress={() => props.navigation.navigate('Instruction2')}>
-        <Image style={{ height: 30, width: 30, marginBottom: 15}} source={require('../assets/images/keyboard-right-arrow-button.png')} />
+        <Image style={{ height: 22, width: 22, marginBottom: 15,marginRight:10}} source={require('../assets/images/keyboard-right-arrow-button.png')} />
       </TouchableOpacity>,
       headerLeft: <BaseButton
         title='ข้าม'
-        fontStyle = {[Font.style('CmPrasanmitBold'),{fontSize:29,color: Colors.tabBar, marginBottom: 25}]}
+        fontStyle = {[Font.style('CmPrasanmit'),{fontSize:29,color: Colors.tabBar, marginBottom: 20}]}
         ButtonStyle = {{backgroundColor: 'transparent', width: 60, height: 40}}
         onPress={() => props.screenProps.rootNavigation.navigate('Login')}
         loadColor='white'
@@ -76,7 +77,7 @@ const styles = StyleSheet.create({
     width: 320,
     borderRadius: 160,
     alignSelf: 'center',
-    marginTop: 35,
+    marginTop: 50,
   },
   descriptionContainer: {
     alignItems: 'center',
@@ -85,11 +86,11 @@ const styles = StyleSheet.create({
   descriptionHeader: {
     alignSelf: 'center',
     fontSize: 45,
-    marginTop: 50,
-    color: '#575757',
+    marginTop: 35,
+    color: Colors.textgrey,
   },
   descriptionText: {
     fontSize: 25,
-    color:'#575757',
+    color: Colors.textgrey,
   }
 })
