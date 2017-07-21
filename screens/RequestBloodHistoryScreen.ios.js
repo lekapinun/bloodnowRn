@@ -25,17 +25,7 @@ import { CmPrasanmitBoldText } from '../components/CmPrasanmitBoldText'
 class ButtonRequest extends Component {
     _handlePress = () => {
         const { navigate } = this.props.navigation;
-        navigate('RequestBlood')
-        /* const resetAction = NavigationActions.reset(
-            {
-                index: 1,
-                actions: [ 
-                    NavigationActions.navigate({ routeName: 'RequestHistory'}) ,
-                    NavigationActions.navigate({ routeName: 'RequestBlood'})   
-                ]
-            }
-        )
-        this.props.navigation.dispatch(resetAction) */
+        navigate('RequestForm', { onSelect: this.props.navigation.state.params.onSelect})
     };
     render(){
         return(
@@ -57,27 +47,28 @@ export default class RequestBloodHistoryScreen extends Component {
         const { navigation } = props;
         const { state, setParams } = navigation;
         const { params } = state;
-        //console.log(navigation)
         return {
             title: 'ขอเลือด',
             headerTintColor: Colors.tintColor,
             headerTitleStyle: [Font.style('CmPrasanmitBold'),{fontSize:29}],
             headerStyle: {backgroundColor: Colors.tabBar},
             gesturesEnabled: false,
-            headerRight: <ButtonRequest navigation={navigation}/>,
+            headerRight: <ButtonRequest navigation={navigation} />,
             tabBarVisible: false
-        };
+        }
     };
-    
+
     state = {
         history: [],
         token: '',
         test_ajax: '',
         loading : false ,
         listen : false,
+        listen_Request : false
     }
 
     componentWillMount() {
+        this.props.navigation.setParams({ title: 'Hello',onSelect: this._update })
         AsyncStorage.getItem('@loginData:key')
         .then((loginStatus) => {
             const temp = JSON.parse(loginStatus)
@@ -167,14 +158,6 @@ export default class RequestBloodHistoryScreen extends Component {
     }
 
     goTodetail(detail_id) {
-        //console.log(detail_id)
-        /* const resetAction = NavigationActions.navigate(
-            {
-                routeName: 'RequestDetail',
-                params: detail_id, 
-            }
-        )
-        this.props.navigation.dispatch(resetAction) */
         this.props.navigation.navigate('RequestDetail', {params: detail_id, onSelect: this._update})
     }
     

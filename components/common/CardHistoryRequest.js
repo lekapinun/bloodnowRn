@@ -45,7 +45,7 @@ const CardHistoryRequest = ({blood,bloodType,name,hospital,status,onPress}) => {
           <CmPrasanmitBoldText style={{fontSize:18,color:Colors.tabBar}}>คงเหลือ</CmPrasanmitBoldText>
           <View style={{width:75}}>
             <CmPrasanmitBoldText style={{fontSize:30,alignSelf: 'center',color:Colors.tabBar}}>{status}</CmPrasanmitBoldText>
-            <CmPrasanmitBoldText style={{fontSize:18,color:Colors.tabBar,position:'absolute',bottom:2,right: 10}}>วัน</CmPrasanmitBoldText>
+            <CmPrasanmitBoldText style={{fontSize:18,color:Colors.tabBar,position:'absolute',bottom:2,right:12}}>วัน</CmPrasanmitBoldText>
           </View>
         </View>
       )
@@ -65,7 +65,9 @@ const CardHistoryRequest = ({blood,bloodType,name,hospital,status,onPress}) => {
         </View>
         <View style={{flex:14,alignItems: 'center',justifyContent: 'center'}}>
           {this.renderStatus()}  
-        </View>                        
+        </View>   
+        <View style={{flex:2}}/>
+        <View style={{flex:2,backgroundColor: status === 'complete' ? Colors.textgreydetail : status === 'refresh' ? Colors.redHis : Colors.greenHis }}/>
       </View>
     </TouchableOpacity>
   );
