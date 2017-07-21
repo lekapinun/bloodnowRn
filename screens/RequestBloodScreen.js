@@ -17,8 +17,6 @@ export default class RequestBloodScreen extends Component {
         const { navigation } = props;
         const { state, setParams } = navigation;
         const { params } = state;
-        //console.log(navigation)
-        //console.log(props)
         return {
             title: 'คำร้องขอรับเลือด',
             headerTintColor: Colors.tintColor,
@@ -72,6 +70,7 @@ export default class RequestBloodScreen extends Component {
         displayRequest: true,
         displayConfirm: false,
         displayValidate: false,
+        loadingModal: false,
     }
 
     setModalpatient_bloodVisible(visible) {
@@ -262,9 +261,9 @@ export default class RequestBloodScreen extends Component {
                                     <View style={{marginTop:20}}></View>
                                         <Button
                                             title="ส่งคำร้องขอ"
-                                            touchable={(canSubmit.search("0") !== -1) ? true : false}
-                                            onPress={(canSubmit.search("0") !== -1) ? null : this._goToConfirmRequest}
-                                            buttonColor={(canSubmit.search("0") !== -1) ? '#F6B6BF' : '#E84A5F'}
+                                            touchable={(canSubmit.search("0") === -1) ? true : false}
+                                            onPress={(canSubmit.search("0") === -1) ? null : this._goToConfirmRequest}
+                                            buttonColor={(canSubmit.search("0") === -1) ? '#F6B6BF' : '#E84A5F'}
                                             sizeFont={25}
                                             ButtonWidth={300}
                                             ButtonHeight={50}
@@ -287,13 +286,12 @@ export default class RequestBloodScreen extends Component {
     
 
     _backToHistory = () => {
-        this.setState({displayRequest : false,displayConfirm : false})
-        const resetAction = NavigationActions.reset({index: 0,
-            actions: [ 
-                NavigationActions.navigate({ routeName: 'RequestHistory'}) ,
-            ]
-        })
-        this.props.navigation.dispatch(resetAction)
+        this.setState({loadingModal:true})
+        setTimeout(() => {
+            this.setState({displayRequest : false,displayConfirm : false})
+            this.props.navigation.goBack()
+            this.props.navigation.state.params.onSelect({listen: true})
+        },1000)
     }
 
     _backToRequest = () => {
@@ -309,8 +307,6 @@ export default class RequestBloodScreen extends Component {
         },500)
     }
 
-    
-
     _goToConfirmRequest = () => {
         this.setState({displayConfirm: true})
         var rand_x = Layout.window.height; 
@@ -323,7 +319,9 @@ export default class RequestBloodScreen extends Component {
     }
 
     _ConfirmRequest = () => {
-        this.state.patient_hos_la = this.state.region.latitude.toString()
+        this.props.navigation.goBack()
+        this.props.navigation.state.params.onSelect({listen: true})
+       /*  this.state.patient_hos_la = this.state.region.latitude.toString()
         this.state.patient_hos_long = this.state.region.longitude.toString()
         console.log(this.state)
         console.log(addressServer.APIRequest + '/api/req');
@@ -351,7 +349,7 @@ export default class RequestBloodScreen extends Component {
             })
             .catch((error) => {
                 console.log(error)
-            })
+            }) */
     }
 
     _findLocation() {

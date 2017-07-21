@@ -29,9 +29,9 @@ export default class ProfileScreen extends Component {
   };
 
   componentWillMount() {
-    console.log('222222222')
+    /* console.log('222222222')
     console.log(this.props.screenProps)
-    console.log('222222222')
+    console.log('222222222') */
     AsyncStorage.getItem('@loginData:key')
     .then((loginStatus) => {
       const temp = JSON.parse(loginStatus)

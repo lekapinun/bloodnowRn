@@ -3,9 +3,8 @@ import Expo, { Font } from 'expo';
 import { Text, View, Button } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import RequestHistoryScreen from '../screens/RequestBloodHistoryScreen'
-import RequestBloodScreen from '../screens/RequestBloodScreen'
-import RequestSubmitScreen from '../screens/RequestBloodSubmitScreen'
-import RequestBloodDetailScreen from '../screens/RequestBloodDetailScreen'
+import RequestFormStack from './RequestForm'
+import RequsetBloodDetailScreen from '../screens/RequestBloodDetailScreen'
 import {
   FontAwesome,
   MaterialCommunityIcons,
@@ -38,9 +37,8 @@ export default class RequestStack extends React.Component {
     const RequestStack = StackNavigator(
     {
       RequestHistory : {screen: RequestHistoryScreen},
-      RequestBlood : {screen: RequestBloodScreen},
-      RequestSubmit : {screen: RequestSubmitScreen},
-      RequestDetail : {screen: RequestBloodDetailScreen},
+      RequestForm : {screen: RequestFormStack},
+      RequestDetail : {screen: RequsetBloodDetailScreen}
     },{
         initialRouteName: 'RequestHistory',
         mode: 'modal',

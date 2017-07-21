@@ -6,9 +6,9 @@ import { CmPrasanmitText } from '../CmPrasanmitText'
 import { CmPrasanmitBoldText } from '../CmPrasanmitBoldText'
 
 const CardDetail = ({ list, onPress, img, visible, gropBlood ,ready}) => {
-  console.log('sadfdsafadsfdsaf')
+  /* console.log('sadfdsafadsfdsaf')
   console.log(list)
-  console.log('sadfdsafadsfdsaf')
+  console.log('sadfdsafadsfdsaf') */
   if(visible && list !== ''){
     return(
       <TouchableOpacity onPress={onPress} style={[styles.requestCardContainerStyle,{borderWidth: 1, borderColor: Colors.greylight,}]} >

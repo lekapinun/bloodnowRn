@@ -18,4 +18,6 @@ export default {
   greylight: '#DADBDC',
   textgreydetail : '#95989A',
   underlinePopup : '#F7BCC4',
+  redHis:'#E84A5F',
+  greenHis:'#4ED239',
 };
