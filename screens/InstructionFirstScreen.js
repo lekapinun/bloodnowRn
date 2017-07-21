@@ -9,9 +9,9 @@ import {
 import Colors from '../constants/Colors';
 import { Font } from 'expo';
 import { BaseButton } from '../components/common/';
+import { CmPrasanmitBoldText, CmPrasanmitText } from '../components';
 
 export default class InstructionFirstScreen extends Component {
-
   static navigationOptions = props => {
     return {
       title: "● ○ ○",
@@ -24,16 +24,20 @@ export default class InstructionFirstScreen extends Component {
         bottom: 0,
         left: 0,
         right: 0,
+        backgroundColor: 'white',
+        shadowColor: 'grey',
+        shadowOffset: {width: 2, height: -1},
+        shadowOpacity: 0.5,
       },
       headerRight:
-        <TouchableOpacity title="Next" onPress={() => props.navigation.navigate('Instruction2')}>
-          <Image style={{ height: 30, width: 30, marginBottom: 15}} source={require('../assets/images/keyboard-right-arrow-button.png')} />
-        </TouchableOpacity>,
+      <TouchableOpacity title="Next" onPress={() => props.navigation.navigate('Instruction2')}>
+        <Image style={{ height: 30, width: 30, marginBottom: 15}} source={require('../assets/images/keyboard-right-arrow-button.png')} />
+      </TouchableOpacity>,
       headerLeft: <BaseButton
         title='ข้าม'
-        fontStyle = {[Font.style('CmPrasanmitBold'),{fontSize:29,color: Colors.tabBar, marginBottom: 10}]}
+        fontStyle = {[Font.style('CmPrasanmitBold'),{fontSize:29,color: Colors.tabBar, marginBottom: 25}]}
         ButtonStyle = {{backgroundColor: 'transparent', width: 60, height: 40}}
-        onPress={() => props.navigation.navigate('Instruction3')}
+        onPress={() => props.screenProps.rootNavigation.navigate('Login')}
         loadColor='white'
       />,
     }
@@ -41,13 +45,51 @@ export default class InstructionFirstScreen extends Component {
 
   render() {
     return (
-      <View style={{marginTop: 44}}>
-        <View style={{ flexDirection: 'row' }}>
+      <View style={{flex: 1, backgroundColor: 'white'}}>
+        <Image
+          style={styles.imageBox}
+          source={require('../assets/images/intro12.png')}
+        />
+        <CmPrasanmitBoldText style={styles.descriptionHeader}>
+          Blood Now
+        </CmPrasanmitBoldText>
 
-
-          <Text style={{color: '#E84A5F'}}>● ○ ○</Text>
+        <View style={styles.descriptionContainer}>
+          <CmPrasanmitText style={styles.descriptionText}>
+            แอพบริจาคเลือกที่มาพร้อมกับความสามารถ
+          </CmPrasanmitText>
+          <CmPrasanmitText style={styles.descriptionText}>
+            หลากหลายและยังช่วยให้คุณหาเลือด
+          </CmPrasanmitText>
+          <CmPrasanmitText style={styles.descriptionText}>
+            ได้รวดเร็วขึ้น!
+          </CmPrasanmitText>
         </View>
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  imageBox: {
+    height: 320,
+    width: 320,
+    borderRadius: 160,
+    alignSelf: 'center',
+    marginTop: 35,
+  },
+  descriptionContainer: {
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  descriptionHeader: {
+    alignSelf: 'center',
+    fontSize: 45,
+    marginTop: 50,
+    color: '#575757',
+  },
+  descriptionText: {
+    fontSize: 25,
+    color:'#575757',
+  }
+})

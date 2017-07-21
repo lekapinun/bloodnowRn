@@ -11,6 +11,10 @@ export default class InstructionTab extends React.Component {
     header: null
   }
 
+  componentWillMount() {
+    console.log(this.props)
+  }
+
   render(){
     const InstructionTab = StackNavigator({
         MyTab: {
@@ -30,7 +34,7 @@ export default class InstructionTab extends React.Component {
     });
 
     return(
-      <InstructionTab />
+      <InstructionTab screenProps={{ rootNavigation: this.props.navigation }}/>
     );
 
   }
