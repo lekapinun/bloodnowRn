@@ -6,14 +6,21 @@ import {
   TouchableOpacity,
   StyleSheet
 } from 'react-native';
+import Colors from '../../constants/Colors';
 import { Font } from 'expo';
-import { BaseButton } from '../components/common/';
-import { CmPrasanmitBoldText, CmPrasanmitText } from '../components';
+import { BaseButton } from '../../components/common/';
+import { CmPrasanmitBoldText, CmPrasanmitText } from '../../components';
 
-export default class InstructionThirdScreen extends Component {
+class InstructionThirdScreen extends Component {
   static navigationOptions = props => {
+    const headerThird = (
+      <View style={{flexDirection:'row',marginBottom: 20}}>
+        <Text style={{color:'#F8CDD2',fontSize: 15}}> ● ●</Text>
+        <Text style={{fontSize: 15,color:Colors.tabBar}}>●</Text>
+      </View>
+    )
     return {
-      title: "○ ○ ●",
+      headerTitle: headerThird,
       headerTintColor: '#E84A5F',
       gesturesEnabled: true,
       headerTitleStyle: {fontSize: 20, marginBottom: 20},
@@ -25,14 +32,15 @@ export default class InstructionThirdScreen extends Component {
         left: 0,
         right: 0,
         backgroundColor: 'white',
-        shadowColor: 'grey',
-        shadowOffset: {width: 2, height: -1},
-        shadowOpacity: 0.5,
       },
       headerRight:
-      <TouchableOpacity onPress={() => props.screenProps.rootNavigation.navigate('Login') } >
-        <Image style={{ height: 30, width: 30, marginBottom: 15}} source={require('../assets/images/keyboard-right-arrow-button.png')} />
-      </TouchableOpacity>,
+      <BaseButton
+        title='เริ่มใช้งาน'
+        fontStyle = {[Font.style('CmPrasanmit'),{fontSize:29,color: Colors.tabBar, marginBottom: 20}]}
+        ButtonStyle = {{backgroundColor: 'transparent', height: 40,marginRight:10}}
+        onPress={() =>props.screenProps.rootNavigation.navigate('Login')}
+        loadColor='white'
+      />,
     }
   }
   render() {
@@ -40,7 +48,7 @@ export default class InstructionThirdScreen extends Component {
       <View style={{flex: 1, backgroundColor: 'white'}}>
         <Image
           style={styles.imageBox}
-          source={require('../assets/images/intro2v6.png')}
+          source={require('../../assets/images/intro2v6.png')}
         />
 
         <CmPrasanmitBoldText style={styles.descriptionHeader}>
@@ -69,7 +77,9 @@ const styles = StyleSheet.create({
     width: 320,
     borderRadius: 160,
     alignSelf: 'center',
-    marginTop: 35,
+    marginTop: 50,
+    borderColor: Colors.greylight,
+    borderWidth: 0.5,
   },
   descriptionContainer: {
     alignItems: 'center',
@@ -77,12 +87,14 @@ const styles = StyleSheet.create({
   },
   descriptionHeader: {
     alignSelf: 'center',
-    fontSize: 45,
-    marginTop: 50,
+    fontSize: 40,
+    marginTop: 35,
     color: '#575757',
   },
   descriptionText: {
-    fontSize: 25,
+    fontSize: 23,
     color:'#575757',
   }
 })
+
+export {InstructionThirdScreen}
