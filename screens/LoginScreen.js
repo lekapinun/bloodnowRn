@@ -122,7 +122,8 @@ export default class LoginScreen extends Component {
                         {this.renderErrorMessage()}
                         <View style={{height: 30, marginTop:5,justifyContent: 'flex-start',alignItems: 'flex-end'}}>
                             <TouchableOpacity>
-                                <CmPrasanmitText style={{ fontSize: 20,color:'#95989A'}}>ลืมรหัสผ่าน?</CmPrasanmitText>
+                                {/* <CmPrasanmitText style={{ fontSize: 20,color:'#95989A'}}>ลืมรหัสผ่าน?</CmPrasanmitText> */}
+                                <CmPrasanmitText style={{ fontSize: 20,color:'#95989A'}}></CmPrasanmitText>
                             </TouchableOpacity>
                         </View>
                         <BaseButton

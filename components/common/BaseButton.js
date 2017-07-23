@@ -16,7 +16,7 @@ class BaseButton extends Component {
         onPress={this.props.onPress}
         disabled={this.props.press}
       >
-        {this.props.press && <ActivityIndicator color={this.props.loadColor}/>}
+        {this.props.press && <ActivityIndicator  style ={{alignSelf:'center'}} color={this.props.loadColor}/>}
         {!this.props.press && <Text style={this.props.fontStyle}>
           {this.props.title}
         </Text>}
