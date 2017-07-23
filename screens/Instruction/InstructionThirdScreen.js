@@ -4,7 +4,8 @@ import {
   Text,
   Image,
   TouchableOpacity,
-  StyleSheet
+  StyleSheet,
+  AsyncStorage
 } from 'react-native';
 import Colors from '../../constants/Colors';
 import { Font } from 'expo';
@@ -38,7 +39,10 @@ class InstructionThirdScreen extends Component {
         title='เริ่มใช้งาน'
         fontStyle = {[Font.style('CmPrasanmit'),{fontSize:29,color: Colors.tabBar, marginBottom: 20}]}
         ButtonStyle = {{backgroundColor: 'transparent', height: 40,marginRight:10}}
-        onPress={() =>props.screenProps.rootNavigation.navigate('Login')}
+        onPress={() => {
+          props.screenProps.rootNavigation.navigate('Login')
+          AsyncStorage.setItem('@FirstTime:key', 'NotaFirstTime')
+        }}
         loadColor='white'
       />,
     }

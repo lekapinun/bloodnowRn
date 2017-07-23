@@ -4,7 +4,8 @@ import {
   Text,
   Image,
   TouchableOpacity,
-  StyleSheet
+  StyleSheet,
+  AsyncStorage
 } from 'react-native';
 import Colors from '../../constants/Colors';
 import { Font } from 'expo';
@@ -42,7 +43,10 @@ class InstructionSecondScreen extends Component {
         title='ข้าม'
         fontStyle = {[Font.style('CmPrasanmit'),{fontSize:29,color: Colors.tabBar, marginBottom: 20}]}
         ButtonStyle = {{backgroundColor: 'transparent', width: 60, height: 40}}
-        onPress={() => props.screenProps.rootNavigation.navigate('Login')}
+        onPress={() => {
+          props.screenProps.rootNavigation.navigate('Login')
+          AsyncStorage.setItem('@FirstTime:key', 'NotaFirstTime')
+        }}
         loadColor='white'
       />,
     };

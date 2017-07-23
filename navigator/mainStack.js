@@ -13,6 +13,19 @@ import InstructionTab from './InstructionTab';
 
 export default class Stack extends React.Component {
 
+  componentWillMount() {
+    AsyncStorage.getItem('@FirstTime:key')
+    .then((response) => {
+      console.log(response)
+      if(response !== null){
+        this.setState({home : 'Login'})
+      }
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+  }
+
   state = {
     home: 'Instruction',
     finish: false,
