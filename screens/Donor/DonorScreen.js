@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { Text, View, TouchableOpacity, Modal, StyleSheet, Button, Switch, AsyncStorage} from 'react-native';
 import { Font } from 'expo';
 import { NavigationActions } from 'react-navigation';
-import { CardDetail, Countdown, PickerModalDate } from '../components/common';
-import Colors from '../constants/Colors';
-import Layout from '../constants/Layout';
-import { CmPrasanmitText } from '../components/CmPrasanmitText'
-import { CmPrasanmitBoldText } from '../components/CmPrasanmitBoldText'
+import { CardDetail, Countdown, PickerModalDate } from '../../components/common';
+import Colors from '../../constants/Colors';
+import Layout from '../../constants/Layout';
+import { CmPrasanmitText } from '../../components/CmPrasanmitText'
+import { CmPrasanmitBoldText } from '../../components/CmPrasanmitBoldText'
 import axios from 'axios'
-import addressServer from '../utilities/addressServer';
+import addressServer from '../../utilities/addressServer';
 
 
 export default class DonorScreen extends Component {

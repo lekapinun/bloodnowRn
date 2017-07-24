@@ -1,14 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import { Text, ScrollView, StyleSheet, View, Modal, Image, ActivityIndicator,AsyncStorage,TouchableOpacity } from 'react-native';
 import { Font } from 'expo';
-import { NavigatorBackground, Button, RegisterInput, PickerPartTouch, PickerModalDate, ButtonBack } from '../components/common';
+import { NavigatorBackground, Button, RegisterInput, PickerPartTouch, PickerModalDate, ButtonBack } from '../../components/common';
 import { NavigationActions } from 'react-navigation'
 import axios from 'axios'
-import addressServer from '../utilities/addressServer';
-import { CmPrasanmitText } from '../components/CmPrasanmitText'
-import { CmPrasanmitBoldText } from '../components/CmPrasanmitBoldText'
-import Colors from '../constants/Colors'
-import Layout from '../constants/Layout'
+import addressServer from '../../utilities/addressServer';
+import { CmPrasanmitText } from '../../components/CmPrasanmitText'
+import { CmPrasanmitBoldText } from '../../components/CmPrasanmitBoldText'
+import Colors from '../../constants/Colors'
+import Layout from '../../constants/Layout'
 
 export default class RegisterScreen3 extends Component {
 
@@ -203,7 +203,7 @@ const Checklist = ({label,isSelected,onPress}) => {
         <TouchableOpacity onPress={onPress}  style={{flexDirection:'row',height:25,width:80,marginVertical:5}}>
             <View style={{alignSelf:'center',marginLeft:20}}>
                 <Image
-                    source = { isSelected ? require('../assets/icons/check.png') : require('../assets/icons/uncheck.png')}
+                    source = { isSelected ? require('../../assets/icons/check.png') : require('../../assets/icons/uncheck.png')}
                     style={{height:20,width:20}}
                 />
             </View>
@@ -221,7 +221,7 @@ const ModalRegister = ({pickerVisible,onPress}) => {
       >
         <View style={[styles.container,{flex:1,backgroundColor:'rgba(52, 52, 52, 0.3)'}]}>
           <View style={{paddingTop:25,alignItems: 'center',height:190,width:220,backgroundColor:'white'}}>
-            <Image source={require('../assets/icons/cr.png')} style={{height:70,width:70}}/>
+            <Image source={require('../../assets/icons/cr.png')} style={{height:70,width:70}}/>
             <Text style={[Font.style('CmPrasanmitBold'),{paddingTop:5,fontSize:27,color: '#4ED239'}]}>ลงทะเบียนสำเร็จ</Text>
             <View style={{borderBottomColor: '#B2ECA9', width:220, marginTop:20,borderBottomWidth: 1,}}/>
             <View style={{marginVertical:10}}>

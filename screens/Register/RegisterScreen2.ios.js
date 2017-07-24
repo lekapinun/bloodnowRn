@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { Text, ScrollView, StyleSheet, View, Modal, Image, ActivityIndicator, AsyncStorage, Keyboard, Animated } from 'react-native';
 import { Font } from 'expo';
-import { NavigatorBackground, Button, RegisterInput, PickerPartTouch, PickerModalBlood, PickerModalProvince, ButtonBack } from '../components/common';
-import Colors from '../constants/Colors'
-import addressServer from '../utilities/addressServer';
+import { NavigatorBackground, Button, RegisterInput, PickerPartTouch, PickerModalBlood, PickerModalProvince, ButtonBack } from '../../components/common';
+import Colors from '../../constants/Colors'
+import addressServer from '../../utilities/addressServer';
 
 export default class RegisterScreen2 extends Component {
 
@@ -193,7 +193,7 @@ export default class RegisterScreen2 extends Component {
                     label='ปีเกิด(พ.ศ.)'
                     value={this.state.birthyear}
                     onChangeText={(birthyear) => this.setState({birthyear})}
-                    keyboardType='numeric'
+                    keyboardType='number-pad'
                     maxLength={4}
                     validate = {canSubmit.charAt(3) + checkInput.charAt(3) + + subValidated.charAt(3)}
                     onFocus={() => this.setState({avoid: -130})}

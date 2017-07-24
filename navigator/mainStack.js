@@ -3,9 +3,9 @@ import Expo, { Font } from 'expo';
 import { Text, View, Button,AsyncStorage, ActivityIndicator } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import LoginScreen from '../screens/LoginScreen'
-import RegisterScreen from '../screens/RegisterScreen'
-import RegisterScreen2 from '../screens/RegisterScreen2'
-import RegisterScreen3 from '../screens/RegisterScreen3'
+import RegisterScreen from '../screens/Register/RegisterScreen'
+import RegisterScreen2 from '../screens/Register/RegisterScreen2'
+import RegisterScreen3 from '../screens/Register/RegisterScreen3'
 import Tab from './TabNavigator.js'
 import axios from 'axios'
 import addressServer from '../utilities/addressServer';

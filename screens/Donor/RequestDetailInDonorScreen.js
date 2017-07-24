@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import { ScrollView, View , Text ,StyleSheet, Dimensions, AsyncStorage,Linking } from 'react-native';
-import { RequestDetailInDonor, Button, Map, Loading } from '../components/common';
+import { RequestDetailInDonor, Button, Map, Loading } from '../../components/common';
 import { NavigationActions } from 'react-navigation';
-import Colors from '../constants/Colors';
+import Colors from '../../constants/Colors';
 import { Font } from 'expo';
 import axios from 'axios';
-import addressServer from '../utilities/addressServer';
+import addressServer from '../../utilities/addressServer';
 
 export default class RequestDetailInDonorScreen extends Component {
   static navigationOptions = props => {

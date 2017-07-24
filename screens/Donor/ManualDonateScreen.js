@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { Button, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { NavigationActions } from 'react-navigation'
 import { Font } from 'expo';
-import { PickerModalDate, BaseButton } from '../components/common';
-import { CmPrasanmitBoldText, CmPrasanmitText } from '../components';
-import Colors from '../constants/Colors'
+import { PickerModalDate, BaseButton } from '../../components/common';
+import { CmPrasanmitBoldText, CmPrasanmitText } from '../../components';
+import Colors from '../../constants/Colors'
 import axios from 'axios'
-import addressServer from '../utilities/addressServer';
+import addressServer from '../../utilities/addressServer';
 
 export default class ManualDonateScreen extends Component {
   static navigationOptions =  {
@@ -59,12 +59,12 @@ export default class ManualDonateScreen extends Component {
                 {recentDate}
             </View>
             </TouchableOpacity>
-            <View style={{flexDirection:'row',marginTop:10}}>  
+            {/* <View style={{flexDirection:'row',marginTop:10}}>  
               <CmPrasanmitText style={{ color: Colors.textgreydetail, fontSize: 21, flex:2.7}}>โปรดทราบ : </CmPrasanmitText>
               <CmPrasanmitText style={{ color: Colors.textgreydetail, fontSize: 21, flex:7.3}}>
                 คุณจะไม่สามารถแก้ไขวันบริจาคล่าสุดในช่วง 3 วันนับจากนี้
               </CmPrasanmitText>
-            </View>
+            </View> */}
             <BaseButton
               title="บันทึกการเปลี่ยนแปลง"
               onPress={this._sendTime}
