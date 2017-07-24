@@ -41,7 +41,8 @@ export default class App extends React.Component{
         require('./assets/images/intro12.png'),
         require('./assets/images/keyboard-right-arrow-button.png'),
         require('./assets/images/intro1v3.png'),
-        require('./assets/images/intro2v6.png')
+        require('./assets/images/intro2v6.png'),
+        require('./assets/images/google-maps-marker.png')
       ],
       fonts: [
         FontAwesome.font,

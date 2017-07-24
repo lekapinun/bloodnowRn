@@ -7,6 +7,11 @@ import RequestDetailInDonorScreen from '../screens/Donor/RequestDetailInDonorScr
 import ManualDonateScreen from '../screens/Donor/ManualDonateScreen';
 
 export default class DonorStack extends React.Component {
+  componentWillMount(){
+    console.log('111111111')
+    console.log(this.props)
+  }
+
   render(){
     const DonorStack = StackNavigator(
     {
@@ -19,7 +24,7 @@ export default class DonorStack extends React.Component {
         headerMode: 'float',
     });
     return(
-      <DonorStack/>
+      <DonorStack screenProps={this.props}/>
     );
   }
 }

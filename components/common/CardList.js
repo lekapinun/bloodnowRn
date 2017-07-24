@@ -23,7 +23,7 @@ export class CardList extends Component{
     axios(api,{ method: 'get', headers: {'Authorization' : 'Bearer ' + this.props.token} })
     .then(response =>
     {
-      console.log('asdfjkdsaknfmjdsa')
+      //console.log('asdfjkdsaknfmjdsa')
       console.log(response.data)
       this.setState({ list: response.data,loading: true })
     })
