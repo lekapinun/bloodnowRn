@@ -5,8 +5,8 @@ import {
   StyleSheet,
 } from 'react-native';
 import { Font } from 'expo'
-import { CmPrasanmitBoldText, CmPrasanmitText } from '../components/';
-import Colors from '../constants/Colors'
+import { CmPrasanmitBoldText, CmPrasanmitText } from '../../components/';
+import Colors from '../../constants/Colors'
 
 export default class InformationThirdScreen extends Component {
     static navigationOptions =  {
@@ -18,7 +18,7 @@ export default class InformationThirdScreen extends Component {
     };
 
     renderSection() {
-      var customData = require('../constants/InformationPrepare.json');
+      var customData = require('../../constants/InformationPrepare.json');
       return customData.map(list =>
         <Section
           key = {list.step}
