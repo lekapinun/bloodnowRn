@@ -12,11 +12,11 @@ import {
 } from 'react-native';
 import { TabNavigator } from 'react-navigation';
 import { Font } from 'expo'
-import { TestButton, NavigatorBackground,ExNavigationState} from '../components/common';
-import { MonoText } from '../components/StyledText';
-import Colors from '../constants/Colors';
+import { TestButton, NavigatorBackground,ExNavigationState} from '../../components/common';
+import { MonoText } from '../../components/StyledText';
+import Colors from '../../constants/Colors';
 import axios from 'axios'
-import addressServer from '../utilities/addressServer';
+import addressServer from '../../utilities/addressServer';
 import FriendListScreen from './FriendListScreen'
 
 export default class FriendScreen extends Component {

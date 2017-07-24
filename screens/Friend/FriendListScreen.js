@@ -12,15 +12,15 @@ import {
   ActivityIndicator
 } from 'react-native';
 import { Font } from 'expo';
-import { TestButton, NavigatorBackground, ExNavigationState } from '../components/common';
-import { MonoText } from '../components/StyledText';
-import Colors from '../constants/Colors';
-import Layout from '../constants/Layout';
+import { TestButton, NavigatorBackground, ExNavigationState } from '../../components/common';
+import { MonoText } from '../../components/StyledText';
+import Colors from '../../constants/Colors';
+import Layout from '../../constants/Layout';
 import axios from 'axios';
 import { NavigationActions } from 'react-navigation'
-import { CmPrasanmitText } from '../components/CmPrasanmitText'
-import { CmPrasanmitBoldText } from '../components/CmPrasanmitBoldText'
-import addressServer from '../utilities/addressServer';
+import { CmPrasanmitText } from '../../components/CmPrasanmitText'
+import { CmPrasanmitBoldText } from '../../components/CmPrasanmitBoldText'
+import addressServer from '../../utilities/addressServer';
 
 
 export default class FriendListScreen extends Component {
@@ -92,7 +92,7 @@ export default class FriendListScreen extends Component {
             <View style={{width:Layout.window.width,height:Layout.window.height}}>
               <Image
                 style={{marginTop:100,height:200,width:200,alignSelf:'center'}}
-                source={require('../assets/images/cm.png')}
+                source={require('../../assets/images/cm.png')}
               />
               <CmPrasanmitText style={{color: '#DCDCDC',fontSize:27,marginTop:10,alignSelf:'center'}}>ไม่มีเพื่อนให้แสดง</CmPrasanmitText>
             </View>
@@ -117,7 +117,7 @@ const CardDetail = ({ list, onPress }) => {
 
   _renderImg = () => {
     if(list.img === null){
-      return <Image style={styles.imageRequestStyle} source={require('../assets/images/user.png')}/>
+      return <Image style={styles.imageRequestStyle} source={require('../../assets/images/user.png')}/>
     }
     return <Image style={styles.imageRequestStyle} source={{uri : list.img}}/>
   }
