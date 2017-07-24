@@ -21,7 +21,8 @@ export default class LoginScreen extends Component {
     };
 
     static navigationOptions = {
-        header: null
+        header: null,
+        gesturesEnabled: false,
     };
 
     componentWillMount () {

@@ -49,8 +49,8 @@ export default class RequestSubmitScreen extends Component {
         region: {
             latitude: 18.788488, 
             longitude: 98.971420, 
-            latitudeDelta: 0.00922, 
-            longitudeDelta: 0.00421
+            latitudeDelta: 0.01, 
+            longitudeDelta: 0.01
         },
         modalpatient_bloodVisible: false,
         modalProvinceVisible: false,
@@ -188,7 +188,7 @@ export default class RequestSubmitScreen extends Component {
         fetch(APIGeocodingRequest)
         .then((response) => response.json())
         .then((responseJSON) => {
-            this.setState({region : { latitude: responseJSON.results[0].geometry.location.lat, longitude: responseJSON.results[0].geometry.location.lng, latitudeDelta: 0.00922, longitudeDelta: 0.00421}});
+            this.setState({region : { latitude: responseJSON.results[0].geometry.location.lat, longitude: responseJSON.results[0].geometry.location.lng, latitudeDelta: 0.0015, longitudeDelta: 0.0015}});
         })
         .catch((error) => {
             console.log(error)

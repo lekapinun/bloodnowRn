@@ -166,7 +166,7 @@ export default class DonorScreen extends Component {
       index: 1,
       actions: [
         NavigationActions.navigate({ routeName: 'Donor'}) ,
-        NavigationActions.navigate({ routeName: 'RequestInDonor', params: this.state.req})
+        NavigationActions.navigate({ routeName: 'RequestInDonor', params: this.state.req, navi: this.props.screenProps})
       ]
     })
     this.props.navigation.dispatch(resetAction)

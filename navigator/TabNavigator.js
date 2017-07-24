@@ -1,6 +1,6 @@
 import React from 'react';
 import Expo, { Font } from 'expo';
-import { Text, View, Button, Modal, ActivityIndicator } from 'react-native';
+import { Text, View, Button, Modal, ActivityIndicator, TouchableOpacity} from 'react-native';
 import { TabNavigator } from 'react-navigation';
 import Colors from '../constants/Colors';
 import {
@@ -19,7 +19,8 @@ import InformationTab from './InformationTab';
 
 export default class Tab extends React.Component {
     static navigationOptions =  {
-        header: null
+        header: null,
+        gesturesEnabled: false,
     };
 
     state = {

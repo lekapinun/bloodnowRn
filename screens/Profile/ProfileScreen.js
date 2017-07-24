@@ -117,18 +117,6 @@ export default class ProfileScreen extends Component {
     })
     this.props.navigation.dispatch(resetAction) */
   }
-
-  _goToDetailDonate = () => {
-    const resetAction = NavigationActions.reset({
-      index: 1,
-      actions: [
-        NavigationActions.navigate({ routeName: 'Profile'}) ,
-        NavigationActions.navigate({ routeName: 'DonateHistory'})
-      ]
-    })
-    this.props.navigation.dispatch(resetAction)
-  }
-
 }
 
 const styles = StyleSheet.create({

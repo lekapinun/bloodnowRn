@@ -22,17 +22,19 @@ export default class RequestDetailInDonorScreen extends Component {
     };
 
     componentWillMount() {
+      console.log('2222222222222')
+      console.log(this.props)
       console.log('adsfadsfdsafsdaf')
       console.log(this.props.navigation.state.params.id)
-      console.log('adsfadsfdsafsdaf') 
+      console.log('adsfadsfdsafsdaf')
       AsyncStorage.getItem('@loginData:key')
       .then((loginStatus) => {
         const temp = JSON.parse(loginStatus)
         this.state.token = temp.token
         console.log(addressServer.APIRequest + '/api/donate/detail');
         const api = addressServer.APIRequest + '/api/donate/detail';
-        axios(api,{ 
-          method: 'post', 
+        axios(api,{
+          method: 'post',
           headers: {'Authorization' : 'Bearer ' + this.state.token},
           data: { 'roomreq_id': this.props.navigation.state.params.id}
         })
@@ -84,8 +86,11 @@ export default class RequestDetailInDonorScreen extends Component {
             <Map
               width={250}
               height={120}
+              markerYPosition={20}
               region={this.state.region}
               onPress={() => Linking.openURL(url)}
+              onRegionChange={() => {}}
+              scrollEnabled={false}
             />
             <View style={{marginTop:25,flexDirection:'row'}}>
               <View style={styles.borderBottom}>
@@ -123,10 +128,10 @@ export default class RequestDetailInDonorScreen extends Component {
   _Accept = () => {
     console.log(addressServer.APIRequest + '/api/donate');
     const api = addressServer.APIRequest + '/api/donate';
-    axios(api,{ 
-      method: 'post', 
+    axios(api,{
+      method: 'post',
       headers: {'Authorization' : 'Bearer ' + this.state.token},
-      data: { 
+      data: {
         'roomreq_id': this.props.navigation.state.params.id,
         'status': 'Accept'
       }
@@ -136,16 +141,16 @@ export default class RequestDetailInDonorScreen extends Component {
     })
     .catch((error) => {
       console.log(error)
-    })
+    }) 
   }
 
   _Decline = () => {
     console.log(addressServer.APIRequest + '/api/donate');
     const api = addressServer.APIRequest + '/api/donate';
-    axios(api,{ 
-      method: 'post', 
+    axios(api,{
+      method: 'post',
       headers: {'Authorization' : 'Bearer ' + this.state.token},
-      data: { 
+      data: {
         'roomreq_id': this.props.navigation.state.params.id,
         'status': 'Decline'
       }
@@ -162,7 +167,7 @@ export default class RequestDetailInDonorScreen extends Component {
     const resetAction = NavigationActions.reset(
       {
         index: 0,
-        actions: [ 
+        actions: [
           NavigationActions.navigate({ routeName: 'Donor'}) ,
         ]
       })
