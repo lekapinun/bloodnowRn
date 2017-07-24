@@ -20,7 +20,7 @@ export default class InformationFirstScreen extends Component {
             <View style={{backgroundColor: 'white', flex: 1, justifyContent: 'center', alignItems: 'center'}}>
                 <Image
                   style={{height: '90%', width: '90%'}}
-                  source={require('../assets/images/step_donate.png')}
+                  source={require('../../assets/images/step_donate.png')}
                 />
             </View>
         );

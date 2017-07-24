@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView, Keyboard, Animated, TextInput,ActivityIndicator } from 'react-native';
-import { CmPrasanmitText } from '../components/CmPrasanmitText';
-import { CmPrasanmitBoldText } from '../components/CmPrasanmitBoldText';
-import { EditProfileDetail, BaseButton, Button, PickerModalBlood, PickerPartTouch, PickerModalDate, PickerModalProvince } from '../components/common/';
-import { KeyboardAvoid } from '../components';
+import { CmPrasanmitText, CmPrasanmitBoldText, KeyboardAvoid } from '../../components/';
+import { EditProfileDetail, BaseButton, Button, PickerModalBlood, PickerPartTouch, PickerModalDate, PickerModalProvince } from '../../components/common/';
 import { Font, ImagePicker } from 'expo'
-import Colors from '../constants/Colors';
-import Layout from '../constants/Layout';
-import addressServer from '../utilities/addressServer';
+import Colors from '../../constants/Colors';
+import Layout from '../../constants/Layout';
+import addressServer from '../../utilities/addressServer';
 import { NavigationActions } from 'react-navigation';
 import axios from 'axios'
 
@@ -67,7 +65,7 @@ export default class EditProfileScreen extends Component{
 
       return(
         <KeyboardAvoid>
-        <ScrollView style={{height:Layout.window.height,backgroundColor:'white'}}> 
+        <ScrollView style={{height:Layout.window.height,backgroundColor:'white'}}>
           <PickerModalBlood
             pickerVisible = {this.state.modalBloodVisible}
             onPressCancel = {() => { this.setModalBloodVisible(!this.state.modalBloodVisible)}}
@@ -76,19 +74,19 @@ export default class EditProfileScreen extends Component{
                 this.setState({blood: this.props.navigation.state.params.user.blood});
               }else{
                 this.setState({blood: this.state.bloodTemp});
-              }  
+              }
               if(this.state.blood_typeTemp === ''){
                 this.setState({blood_type: this.props.navigation.state.params.user.blood_type});
               }else{
                 this.setState({blood_type: this.state.blood_typeTemp});
-              }          
+              }
               this.setModalBloodVisible(!this.state.modalBloodVisible);
             }}
             selectOne = {this.state.bloodTemp}
             onChangeOne = {(itemValue, itemIndex) => this.setState({bloodTemp: itemValue})}
             selectTwo = {this.state.blood_typeTemp}
             onChangeTwo = {(itemValue2, itemIndex2) => this.setState({blood_typeTemp: itemValue2})}
-          /> 
+          />
           <PickerModalProvince
             pickerVisible = {this.state.modalProvinceVisible}
             onPressCancel = {() => { this.setModalProvinceVisible(!this.state.modalProvinceVisible) }}
@@ -108,7 +106,7 @@ export default class EditProfileScreen extends Component{
               <TouchableOpacity onPress={showPhotos} style={styles.changeProfileImageButtonContainer}>
                 <Image
                   style={styles.changeProfileImageButton}
-                  source={require('../assets/images/camera.png')}
+                  source={require('../../assets/images/camera.png')}
                 />
               </TouchableOpacity>
             </View>
@@ -155,7 +153,7 @@ export default class EditProfileScreen extends Component{
       this.setState({pressEdit: true,loading: true})
       console.log(addressServer.APIRequest.toString() + '/api/user/edit');
       const api = addressServer.APIRequest.toString() + '/api/user/edit';
-      axios(api,{ 
+      axios(api,{
         method: 'post',
         headers: {'Authorization' : 'Bearer ' + this.state.token},
         data: {

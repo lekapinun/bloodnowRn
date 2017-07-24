@@ -6,8 +6,8 @@ import {
   StyleSheet,
 } from 'react-native';
 import { Font } from 'expo'
-import Colors from '../constants/Colors'
-import { CmPrasanmitText, CmPrasanmitBoldText } from '../components/';
+import Colors from '../../constants/Colors'
+import { CmPrasanmitText, CmPrasanmitBoldText } from '../../components/';
 
 export default class InformationSecondScreen extends Component {
   static navigationOptions =  {
@@ -19,7 +19,7 @@ export default class InformationSecondScreen extends Component {
   };
 
   renderList() {
-    var customData = require('../constants/InformationQualification.json');
+    var customData = require('../../constants/InformationQualification.json');
     return customData.map(list =>
       <CardDetail
         key = {list.key}

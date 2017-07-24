@@ -11,11 +11,11 @@ import {
 } from 'react-native';
 import Expo,{ Font } from 'expo'
 import { NavigationActions } from 'react-navigation';
-import { TestButton, NavigatorBackground,ExNavigationState, ProfileBox, CardList } from '../components/common';
-import { MonoText } from '../components/StyledText';
-import Colors from '../constants/Colors';
-import { CmPrasanmitBoldText } from '../components/CmPrasanmitBoldText';
-import addressServer from '../utilities/addressServer';
+import { TestButton, NavigatorBackground,ExNavigationState, ProfileBox, CardList } from '../../components/common';
+import { MonoText } from '../../components/StyledText';
+import Colors from '../../constants/Colors';
+import { CmPrasanmitBoldText } from '../../components/CmPrasanmitBoldText';
+import addressServer from '../../utilities/addressServer';
 import axios from 'axios'
 
 export default class ProfileScreen extends Component {
@@ -96,7 +96,7 @@ export default class ProfileScreen extends Component {
     AsyncStorage.removeItem('@loginData:key')
     .then(() => {
       const resetAction = NavigationActions.navigate({routeName: 'Login'})
-      this.props.screenProps.navigation.dispatch(resetAction)  
+      this.props.screenProps.navigation.dispatch(resetAction)
       console.log('logout')
     })
   }

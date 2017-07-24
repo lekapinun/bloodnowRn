@@ -2,7 +2,7 @@ import React from 'react';
 import Expo, { Font } from 'expo';
 import { Text, View, Button } from 'react-native';
 import { StackNavigator } from 'react-navigation';
-import FriendScreen from '../screens/FriendScreen'
+import FriendScreen from '../screens/Friend/FriendScreen'
 
 
 export default class FriendStack extends React.Component {

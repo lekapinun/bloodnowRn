@@ -3,9 +3,9 @@ import Expo, { Font } from 'expo';
 import { Text, View, Button } from 'react-native';
 import { StackNavigator, TabNavigator } from 'react-navigation';
 import Colors from '../constants/Colors';
-import InformationFirstScreen from '../screens/InformationFirstScreen';
-import InformationSecondScreen from '../screens/InformationSecondScreen';
-import InformationThirdScreen from '../screens/InformationThirdScreen';
+import InformationFirstScreen from '../screens/Information/InformationFirstScreen';
+import InformationSecondScreen from '../screens/Information/InformationSecondScreen';
+import InformationThirdScreen from '../screens/Information/InformationThirdScreen';
 
 export default class InformationTab extends React.Component {
 

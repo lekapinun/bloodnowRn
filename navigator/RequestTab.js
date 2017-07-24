@@ -2,9 +2,9 @@ import React from 'react';
 import Expo, { Font } from 'expo';
 import { Text, View, Button } from 'react-native';
 import { StackNavigator } from 'react-navigation';
-import RequestHistoryScreen from '../screens/RequestBloodHistoryScreen'
+import RequestHistoryScreen from '../screens/Request/RequestBloodHistoryScreen'
 import RequestFormStack from './RequestForm'
-import RequsetBloodDetailScreen from '../screens/RequestBloodDetailScreen'
+import RequsetBloodDetailScreen from '../screens/Request/RequestBloodDetailScreen'
 import {
   FontAwesome,
   MaterialCommunityIcons,

@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { View, Image, StyleSheet } from 'react-native';
 import Expo, { Font } from 'expo';
-import Colors from '../constants/Colors';
-import { CmPrasanmitText } from '../components/CmPrasanmitText';
-import { CmPrasanmitBoldText } from '../components/CmPrasanmitBoldText';
-import { RequestDetailInDonor, Loading  } from '../components/common';
-import addressServer from '../utilities/addressServer';
+import Colors from '../../constants/Colors';
+import { CmPrasanmitText, CmPrasanmitBoldText } from '../../components/';
+import { RequestDetailInDonor, Loading  } from '../../components/common';
+import addressServer from '../../utilities/addressServer';
 import axios from 'axios';
 
 export default class DonateHistoryScreen extends Component {
@@ -22,8 +21,8 @@ export default class DonateHistoryScreen extends Component {
     //console.log(params)
     console.log(addressServer.APIRequest + '/api/user/donate/detail');
     const api = addressServer.APIRequest + '/api/user/donate/detail';
-     axios(api,{ 
-      method: 'post', 
+     axios(api,{
+      method: 'post',
       headers: {'Authorization' : 'Bearer ' + params.token},
       data: {'roomreq_id' : params.detail_id}
     })
@@ -34,13 +33,13 @@ export default class DonateHistoryScreen extends Component {
       var date = response.data[0].created_at.split(' ')[0]
       date = date.split('-')
       var dateTime = date[2] + '/' + date[1] + '/' + date[0]
-      this.setState({donateDate: dateTime}) 
+      this.setState({donateDate: dateTime})
       this.setState({loading: false})
     })
     .catch((error) =>  {
       console.log(error.toString() + ' @DonateHistoryScreen')
       this.setState({ loading: false })
-    }) 
+    })
   }
 
   state = {
