@@ -13,7 +13,7 @@ const Map = (props) => {
       onRegionChange={props.onRegionChange}
     >
       <View pointerEvents="none" style={{position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, backgroundColor: 'transparent'}}>
-       <Image style={{width:25, height: 40, marginTop: 85, alignSelf: 'center'}} pointerEvents="none" source={require('../../assets/images/google-maps-marker.png')}/>
+       <Image style={{width:23, height: 40, marginTop: 85, alignSelf: 'center'}} pointerEvents="none" source={require('../../assets/images/google-maps-marker.png')}/>
       </View>
     </MapView>
   );
