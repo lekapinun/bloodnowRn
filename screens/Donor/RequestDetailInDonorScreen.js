@@ -126,8 +126,7 @@ export default class RequestDetailInDonorScreen extends Component {
   }
 
   _Accept = () => {
-    this.props.navigation.state.navi.navigation.dispatch({"routeName": "profile","type": "Navigation/NAVIGATE"})
-    /* console.log(addressServer.APIRequest + '/api/donate');
+    console.log(addressServer.APIRequest + '/api/donate');
     const api = addressServer.APIRequest + '/api/donate';
     axios(api,{
       method: 'post',
@@ -142,7 +141,7 @@ export default class RequestDetailInDonorScreen extends Component {
     })
     .catch((error) => {
       console.log(error)
-    }) */
+    }) 
   }
 
   _Decline = () => {

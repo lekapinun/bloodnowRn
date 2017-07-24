@@ -19,7 +19,8 @@ import InformationTab from './InformationTab';
 
 export default class Tab extends React.Component {
     static navigationOptions =  {
-        header: null
+        header: null,
+        gesturesEnabled: false,
     };
 
     state = {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Text, TouchableOpacity, Image, StyleSheet,ActivityIndicator } from 'react-native';
+import { ScrollView, View, Text, TouchableOpacity, Image, StyleSheet,ActivityIndicator,RefreshControl } from 'react-native';
 import axios from 'axios';
 import Colors from '../../constants/Colors';
 import { NavigationActions } from 'react-navigation'
@@ -13,6 +13,7 @@ export class CardList extends Component{
     list: [],
     loading: false,
     pressDetail: false,
+    isRefreshing: false,
   }
 
   componentWillMount() {
@@ -58,11 +59,30 @@ export class CardList extends Component{
     },1000) 
    }
 
+  onRefresh = () => {
+    this.setState({ isRefreshing: true });
+    console.log(addressServer.APIRequest.toString() + '/api/user/donate');
+    const api = addressServer.APIRequest.toString() + '/api/user/donate';
+    axios(api,{ method: 'get', headers: {'Authorization' : 'Bearer ' + this.props.token} })
+    .then(response => this.setState({ list: response.data,isRefreshing: false }))
+    .catch((error) =>  {
+      console.log(error + ' @CardList')
+      this.setState({ isRefreshing: false });
+    })
+  };
+
   render() {
     if(this.state.loading) {
       if( this.state.list.length === 0 ) {
         return(
-          <ScrollView style={styles.requestListContainerStyle}>
+          <ScrollView 
+            style={styles.requestListContainerStyle}
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.isRefreshing}
+                onRefresh={this.onRefresh}
+              />}
+          >
           <View style={{borderBottomWidth: 1, borderBottomColor: '#DCDCDC',}}>
             <View style={[styles.requestCardContainerStyle,{marginLeft:28,justifyContent: 'center'}]}>
               <CmPrasanmitText style={{fontSize:22,color:Colors.textgreydetail}}> ไม่มีรายการการให้เลือด</CmPrasanmitText>
@@ -72,7 +92,14 @@ export class CardList extends Component{
         )
       } else {
         return(
-          <ScrollView style={styles.requestListContainerStyle}>
+          <ScrollView 
+            style={styles.requestListContainerStyle}
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.isRefreshing}
+                onRefresh={this.onRefresh}
+              />}
+          >
             {this.renderList()}
           </ScrollView>
         )
