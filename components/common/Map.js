@@ -1,5 +1,5 @@
 import React from 'react';
-import { Linking } from 'react-native';
+import { Linking, View, Image } from 'react-native';
 import MapView, {PROVIDER_GOOGLE } from 'react-native-maps';
 
 const Map = (props) => {
@@ -12,11 +12,9 @@ const Map = (props) => {
       region={props.region}
       onRegionChange={props.onRegionChange}
     >
-    <MapView.Marker
-      title="TESTTitle"
-      description="test descriptionp"
-      coordinate={props.region}
-      />
+      <View pointerEvents="none" style={{position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, backgroundColor: 'transparent', borderWidth: 1, borderColor: 'black'}}>
+       <Image style={{width:25, height: 40, marginTop: 85, alignSelf: 'center'}} pointerEvents="none" source={require('../../assets/images/google-maps-marker.png')}/>
+      </View>
     </MapView>
   );
 }
