@@ -1,11 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import { Text, ScrollView, StyleSheet, View, Modal, Image, ActivityIndicator,AsyncStorage,Keyboard, Animated  } from 'react-native';
 import { Font } from 'expo';
-import { NavigatorBackground, Button, RegisterInput } from '../components/common';
+import { NavigatorBackground, Button, RegisterInput } from '../../components/common';
 import { NavigationActions } from 'react-navigation'
 import axios from 'axios'
-import Colors from '../constants/Colors'
-import addressServer from '../utilities/addressServer';
+import Colors from '../../constants/Colors'
+import addressServer from '../../utilities/addressServer';
 
 export default class RegisterScreen extends Component {
 
@@ -62,7 +62,7 @@ export default class RegisterScreen extends Component {
       (this.state.password === this.state.password_confirmation && this.state.password !== '' && this.state.password_confirmation !== '') ? canSubmit = canSubmit.replaceAt(2,'1') : canSubmit = canSubmit.replaceAt(2,'0');
       (this.state.password !== '' && this.state.password.length > 5) ? canSubmit = canSubmit.replaceAt(1,'1') : canSubmit = canSubmit.replaceAt(1,'0');
       (this.state.phone !== '' && this.state.phone.search(/[^0-9]/) === -1) ? canSubmit = canSubmit.replaceAt(3,'1') : canSubmit = canSubmit.replaceAt(3,'0') ;
-      (this.state.email !== '' && this.state.email.search("@") !== -1 && this.state.email.search(".com") !== -1) ? canSubmit = canSubmit.replaceAt(4,'1') : canSubmit = canSubmit.replaceAt(4,'0') ;
+      (this.state.email !== '' && this.state.email.search("@") !== -1 && this.state.email.search(".co") !== -1) ? canSubmit = canSubmit.replaceAt(4,'1') : canSubmit = canSubmit.replaceAt(4,'0') ;
       let checkInput = '00000';
       (this.state.name !== '') ? checkInput = checkInput.replaceAt(0,'1') : checkInput = checkInput.replaceAt(0,'0') ;
       (this.state.password !== '' ) ? checkInput = checkInput.replaceAt(1,'1') : checkInput = checkInput.replaceAt(1,'0');
@@ -126,7 +126,7 @@ export default class RegisterScreen extends Component {
             maxLength={30}
             validate = {canSubmit.charAt(4) + checkInput.charAt(4) + this.state.subValidated.charAt(4)}
             placeholder='address@example.com'
-            subvalidate = 'อีเมลล์นี้มีอยู่แล้ว'
+            subvalidate = 'อีเมลล์นี้มีอยู่แล้วหรือไม่ถูกต้อง'
             onFocus={() => this.setState({avoid: -130})}
           />
           <RegisterInput
@@ -169,6 +169,7 @@ export default class RegisterScreen extends Component {
       const api = addressServer.APIRequest.toString() + '/api/auth/check';
       axios(api, { method: 'post', data : this.state })
         .then(response => {
+          console.log(response.data)
           if( response.data !== 'ok'){
             if( response.data.name !== undefined){
               this.setState({subValidated: this.state.subValidated.replaceAt(0,'1')})
@@ -181,9 +182,9 @@ export default class RegisterScreen extends Component {
             }
             this.setState({pressGotoRegis2 : false})
           } else {
-            console.log('clear')
             AsyncStorage.setItem('@RegisData:key', JSON.stringify(this.state))
-            .then(() => {
+            .then((response) => {
+              console.log(response.data)
               const { navigate } = this.props.navigation;
               navigate('Register2')
               this.setState({pressGotoRegis2 : false})
