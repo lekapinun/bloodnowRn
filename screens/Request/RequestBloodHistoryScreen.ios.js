@@ -13,14 +13,14 @@ import {
 } from 'react-native';
 import { Font } from 'expo'
 import { NavigationActions } from 'react-navigation'
-import { TestButton, NavigatorBackground,ExNavigationState,CardHistoryRequest,Loading} from '../components/common';
-import Colors from '../constants/Colors';
-import Layout from '../constants/Layout';
+import { TestButton, NavigatorBackground,ExNavigationState,CardHistoryRequest,Loading} from '../../components/common';
+import Colors from '../../constants/Colors';
+import Layout from '../../constants/Layout';
 import RequestBloodScreen from './RequestBloodScreen';
 import axios from 'axios';
-import addressServer from '../utilities/addressServer';
-import { CmPrasanmitText } from '../components/CmPrasanmitText'
-import { CmPrasanmitBoldText } from '../components/CmPrasanmitBoldText'
+import addressServer from '../../utilities/addressServer';
+import { CmPrasanmitText } from '../../components/CmPrasanmitText'
+import { CmPrasanmitBoldText } from '../../components/CmPrasanmitBoldText'
 
 class ButtonRequest extends Component {
     _handlePress = () => {
@@ -34,7 +34,7 @@ class ButtonRequest extends Component {
                 style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginRight: 10, paddingTop: 1,}}
             >
                 <Image
-                    source={require('../assets/images/addRequest.png')}
+                    source={require('../../assets/images/addRequest.png')}
                     style={{ width: 30, height: 30 ,marginRight:10,marginBottom:5}}
                 />
             </TouchableOpacity>
@@ -99,7 +99,7 @@ export default class RequestBloodHistoryScreen extends Component {
                     <View style = {{flexDirection:'row'}}>
                         <CmPrasanmitText style={{marginLeft:15,fontSize:22,color:'#575757'}}>การจะชอเลือด กดปุ่ม </CmPrasanmitText>
                         <Image
-                            source={require('../assets/images/addRequest.png')}
+                            source={require('../../assets/images/addRequest.png')}
                             style={{marginTop:6,width: 15, height: 15 ,marginRight:10,marginBottom:5}}
                         />
                     </View>

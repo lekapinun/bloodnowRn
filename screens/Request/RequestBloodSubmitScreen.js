@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { ScrollView, View, Text, TextInput, Modal, TouchableOpacity, StyleSheet,AsyncStorage,Dimensions,Image,Linking} from 'react-native';
 import { Font } from 'expo';
-import { Map, InputText, InputTextLarge , PickerPartTouch, PickerModalDate, PickerModalBlood, BaseButton, Button, ButtonBack,PickerModalProvince} from '../components/common';
-import Colors from '../constants/Colors';
-import Layout from '../constants/Layout';
+import { Map, InputText, InputTextLarge , PickerPartTouch, PickerModalDate, PickerModalBlood, BaseButton, Button, ButtonBack,PickerModalProvince} from '../../components/common';
+import Colors from '../../constants/Colors';
+import Layout from '../../constants/Layout';
 import MapView, {PROVIDER_GOOGLE } from 'react-native-maps';
 import { NavigationActions } from 'react-navigation'
-import addressServer from '../utilities/addressServer';
+import addressServer from '../../utilities/addressServer';
 import axios from 'axios'
-import { CmPrasanmitText, CmPrasanmitBoldText } from '../components'
+import { CmPrasanmitText, CmPrasanmitBoldText } from '../../components'
 
 export default class RequestSubmitScreen extends Component {
 

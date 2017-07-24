@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { ScrollView, View, Text, TextInput, Modal, TouchableOpacity, Picker, StyleSheet,AsyncStorage,Dimensions, TouchableWithoutFeedback ,Animated,Image,Linking} from 'react-native';
 import { Font } from 'expo';
-import { Map, InputText, InputTextLarge , PickerPartTouch, PickerModalDate, PickerModalBlood, BaseButton, Button, ButtonBack,DetailBox,PickerModalProvince} from '../components/common';
-import Colors from '../constants/Colors';
-import Layout from '../constants/Layout';
+import { Map, InputText, InputTextLarge , PickerPartTouch, PickerModalDate, PickerModalBlood, BaseButton, Button, ButtonBack,DetailBox,PickerModalProvince} from '../../components/common';
+import Colors from '../../constants/Colors';
+import Layout from '../../constants/Layout';
 import MapView, {PROVIDER_GOOGLE } from 'react-native-maps';
 import { NavigationActions } from 'react-navigation'
-import addressServer from '../utilities/addressServer';
+import addressServer from '../../utilities/addressServer';
 import RequestSubmitScreen from './RequestBloodSubmitScreen';
 import axios from 'axios'
-import { CmPrasanmitText, CmPrasanmitBoldText } from '../components'
+import { CmPrasanmitText, CmPrasanmitBoldText } from '../../components'
 
 export default class RequestBloodScreen extends Component {
 
@@ -382,7 +382,7 @@ const ModalValidate = ({pickerVisible,onPress}) => {
       >
         <View style={[styles.container,{flex:1,backgroundColor:'rgba(52, 52, 52, 0.3)'}]}>
             <View style={{paddingTop:25,alignItems: 'center',height:200,width:230,backgroundColor:'white',borderRadius:10}}>
-                <Image source={require('../assets/images/error.png')} style={{height:70,width:70}}/>
+                <Image source={require('../../assets/images/error.png')} style={{height:70,width:70}}/>
                 <CmPrasanmitText style={{paddingTop:10,height:40,fontSize:25}}>คำร้องขอนี้ถูกสร้างแล้ว</CmPrasanmitText>
                 <View style={{borderBottomColor: Colors.underlinePopup, width:230, marginTop:20,borderBottomWidth: 1,}}/>
                 <View style={{marginTop: 10}}>

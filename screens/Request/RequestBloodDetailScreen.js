@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import { ScrollView, View , TextInput, Text ,StyleSheet, Dimensions, AsyncStorage, TouchableOpacity, Image, Modal, ActivityIndicator } from 'react-native';
-import { RequestDetailInDonor, BaseButton , Button, Map, Loading } from '../components/common';
-import Colors from '../constants/Colors';
+import { RequestDetailInDonor, BaseButton , Button, Map, Loading } from '../../components/common';
+import Colors from '../../constants/Colors';
 import Expo,{ Font } from 'expo';
 import { NavigationActions } from 'react-navigation'
-import addressServer from '../utilities/addressServer';
+import addressServer from '../../utilities/addressServer';
 import axios from 'axios'
-import { CmPrasanmitText } from '../components/CmPrasanmitText'
-import { CmPrasanmitBoldText } from '../components/CmPrasanmitBoldText'
+import { CmPrasanmitText } from '../../components/CmPrasanmitText'
+import { CmPrasanmitBoldText } from '../../components/CmPrasanmitBoldText'
 
 export default class RequestBloodDetailScreen extends Component {
   static navigationOptions = props => {
@@ -111,7 +111,7 @@ export default class RequestBloodDetailScreen extends Component {
               onPress={() => this.setState({displayRe: true})}
             >
               <Image
-                source={require('../assets/images/refresh.png')} style={{marginRight:5,height:18,width:18}}
+                source={require('../../assets/images/refresh.png')} style={{marginRight:5,height:18,width:18}}
               />
               <Text style={[Font.style('CmPrasanmit'),{fontSize: 20,color: Colors.tabBar}]}>ส่งคำขอร้องอีกครั้ง</Text>
             </TouchableOpacity>
@@ -279,7 +279,7 @@ const ModalFinish = ({pickerVisible,onPress1,onPress2,loading}) => {
         { loading && <LoadingModal/> }
         {!loading && <View style={[styles.container,{flex:1,backgroundColor:'rgba(52, 52, 52, 0.3)'}]}>
             <View style={{paddingTop:25,alignItems: 'center',height:188,width:230,backgroundColor:'white',borderRadius:10}}>
-                <Image source={require('../assets/images/conf.png')} style={{height:70,width:70}}/>
+                <Image source={require('../../assets/images/conf.png')} style={{height:70,width:70}}/>
                 <Text style={[Font.style('CmPrasanmit'),{paddingTop:5,fontSize:23}]}>คำร้องขอของคุณเสร็จสิ้นแล้ว?</Text>
                 <View style={{borderBottomColor: Colors.underlinePopup, width:230, marginTop:20,borderBottomWidth: 1,}}/>
                 <View style={{marginTop: 10,flexDirection:'row'}}>

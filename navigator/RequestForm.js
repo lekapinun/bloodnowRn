@@ -2,8 +2,8 @@ import React from 'react';
 import Expo, { Font } from 'expo';
 import { Text, View, Button, Modal } from 'react-native'
 import { StackNavigator } from 'react-navigation'
-import RequestSubmitScreen from '../screens/RequestBloodSubmitScreen'
-import RequestBloodConfirmScreen from '../screens/RequestBloodConfirmScreen'
+import RequestSubmitScreen from '../screens/Request/RequestBloodSubmitScreen'
+import RequestBloodConfirmScreen from '../screens/Request/RequestBloodConfirmScreen'
 import {
   FontAwesome,
   MaterialCommunityIcons,
