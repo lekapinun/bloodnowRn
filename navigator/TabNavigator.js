@@ -10,13 +10,6 @@ import {
   SimpleLineIcons,
  } from '@expo/vector-icons';
 
-import FriendScreen from '../screens/FriendScreen';
-import ProfileScreen from '../screens/ProfileScreen';
-import DonorScreen from '../screens/DonorScreen';
-import RequestBloodScreen from '../screens/RequestBloodScreen';
-import RequestBloodHistoryScreen from '../screens/RequestBloodHistoryScreen';
-import RequestBloodSubmitScreen from '../screens/RequestBloodSubmitScreen';
-
 import ProfileStack from './ProfileTab';
 import RequestStack from './RequestTab';
 import DonorStack from './DonorTab';

@@ -70,7 +70,7 @@ export default class FriendListScreen extends Component {
   renderList() {
     return this.state.list.map(list =>
       <CardDetail
-        key = {list.user_id + list.friend_id}
+        key = {list.user_id.toString() + list.friend_id.toString()}
         list = {list}
         visible = {true}
         onPress = {() => {}}
