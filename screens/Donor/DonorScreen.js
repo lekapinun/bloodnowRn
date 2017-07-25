@@ -56,13 +56,13 @@ export default class DonorScreen extends Component {
         headers: {'Authorization' : 'Bearer ' + this.state.token},
       })
       .then((response) => {
-        /* console.log('adsfdsafsdafdsafdasf')
-        console.log(response.data)
-        console.log('adsfdsafsdafdsafdasf') */
         if(response.data.user !== null){
           this.setState({req: response.data.user[0], img: response.data.img})
         }
+        console.log('adsfdsafsdafdsafdasf')
         console.log(response.data)
+        console.log(this.state)
+        console.log('adsfdsafsdafdsafdasf')
         if(response.data.last_date_donate !== null){
           var date = response.data.last_date_donate.split(' ')[0]
           date = date.split('-')
@@ -97,16 +97,6 @@ export default class DonorScreen extends Component {
     }
     return(
       <View style={[styles.center, {height:Layout.window.height,flex:1,paddingTop:16,backgroundColor:'white'}]}>
-        {/*<PickerModalDate
-          pickerVisible = {this.state.modalDateVisible}
-          onPressCancel = {() => { this.setModalDateVisible(!this.state.modalDateVisible) }}
-          onPressSubmit = {() => {
-            this.setState({last_donate: this.state.last_donateTemp});
-            this.setModalDateVisible(!this.state.modalDateVisible);
-          }}
-          selectOne = {this.state.last_donateTemp}
-          onChangeOne = {date => this.setState({ last_donate: date })}
-        />*/}
         <Countdown
           recentDonateDate={this.state.nextReady}
           last_donate={this.state.last_donate}
@@ -137,7 +127,7 @@ export default class DonorScreen extends Component {
             list={this.state.req}
             onPress={this._goToDetail}
             visible={this.state.readyDonate}
-            gropBlood={this.state.req.patient_blood + this.state.req.patient_blood_type}
+            gropBlood={this.state.req.patient_blood || null + this.state.req.patient_blood_type || null}
             ready={this.state.nextReady <= 0}
             img={this.state.img}
           />
