@@ -68,7 +68,7 @@ export default class InformationThirdScreen extends Component {
       width: 350,
       alignSelf: 'center',
       marginTop: 15,
-      backgroundColor: "#FCD462",
+      backgroundColor: "#FFAC3F",
     },
     cardStyle: {
       width: 350,
