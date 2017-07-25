@@ -2,6 +2,7 @@ import React from 'react';
 import { View, TouchableOpacity,  StyleSheet, Modal, Text } from 'react-native';
 import { Font } from 'expo'
 import { BloodModal } from './BloodModal'
+import Colors from '../../constants/Colors'
 
 const PickerModalBlood = ({pickerVisible,onPressCancel,onPressSubmit,selectOne,onChangeOne,selectTwo,onChangeTwo}) => {
   return(
@@ -16,10 +17,10 @@ const PickerModalBlood = ({pickerVisible,onPressCancel,onPressSubmit,selectOne,o
         <View style={{ flex: 0.35, backgroundColor:'white', borderColor:'#C7C7C7', borderWidth: 0.5 }} >
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' , alignItems:'flex-start' }}>
             <TouchableOpacity style={{marginTop:10,marginLeft:10}} onPress={onPressCancel}>
-              <Text style={[Font.style('CmPrasanmit'),{fontSize: 28,color: '#2D213F'}]}>ยกเลิก</Text>
+              <Text style={[Font.style('CmPrasanmit'),{fontSize: 28,color: Colors.tabBar}]}>ยกเลิก</Text>
             </TouchableOpacity>
             <TouchableOpacity style={{marginTop:10,marginRight:10}} onPress={onPressSubmit}>
-              <Text style={[Font.style('CmPrasanmit'),{fontSize: 28,color: '#2D213F'}]}>ยืนยัน</Text>
+              <Text style={[Font.style('CmPrasanmit'),{fontSize: 28,color: Colors.tabBar}]}>ยืนยัน</Text>
             </TouchableOpacity>
           </View>
           <BloodModal

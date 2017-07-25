@@ -2,6 +2,7 @@ import React from 'react';
 import { Modal, TouchableOpacity, View, Text, StyleSheet } from 'react-native';
 import { Font } from 'expo'
 import { DateModal } from './DateModal'
+import Colors from '../../constants/Colors'
 
 const PickerModalDate = ({pickerVisible,onPressCancel,onPressSubmit,selectOne,onChangeOne}) => {
   return(
@@ -35,7 +36,7 @@ const PickerModalDate = ({pickerVisible,onPressCancel,onPressSubmit,selectOne,on
 const styles = StyleSheet.create({
   textHadePicker: {
     fontSize: 28,
-    color: '#2D213F'
+    color: Colors.tabBar
   },
 });
 

@@ -134,7 +134,20 @@ export default class EditProfileScreen extends Component{
                   </TouchableOpacity>
                 </View>
             </View>
-            <EditProfileDetail keyboardType='number-pad' label = "ปีเกิด" information= {this.state.birthyear} onChange={(birthyear) => this.setState({ birthyear })}/>
+            <EditProfileDetail keyboardType='number-pad' label = "ปีเกิด" information= {this.state.birthyear} 
+              onChange={(birthyear) => {
+                if(birthyear.length === 4 ) {
+                  if((new Date()).getFullYear() + 543 - parseInt(birthyear) > 120 ) {
+                    this.setState({ birthyear :  ((new Date()).getFullYear() + 543 - 120).toString() })
+                  } else if((new Date()).getFullYear() + 543 - parseInt(birthyear) < 1 ){
+                    this.setState({ birthyear :  ((new Date()).getFullYear() + 543).toString() })
+                  } else {
+                    this.setState({ birthyear })
+                  }
+                } else {
+                  this.setState({ birthyear })
+                }
+              }}/>
             <BaseButton
               title='บันทึกการเปลี่ยนแปลง'
               fontStyle = {[Font.style('CmPrasanmit'),{fontSize:23,color:'white'}]}
