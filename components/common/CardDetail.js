@@ -6,9 +6,6 @@ import { CmPrasanmitText } from '../CmPrasanmitText'
 import { CmPrasanmitBoldText } from '../CmPrasanmitBoldText'
 
 const CardDetail = ({ list, onPress, img, visible, gropBlood ,ready}) => {
-  /* console.log('sadfdsafadsfdsaf')
-  console.log(list)
-  console.log('sadfdsafadsfdsaf') */
   if(visible && list !== ''){
     return(
       <TouchableOpacity onPress={onPress} style={[styles.requestCardContainerStyle,{borderWidth: 1, borderColor: Colors.greylight,}]} >
@@ -57,7 +54,16 @@ const CardDetail = ({ list, onPress, img, visible, gropBlood ,ready}) => {
   }
   else {
     return (
-      <View />
+      <View style={{flexDirection:'row',height:120,width:340,alignSelf:'center',marginTop: 15,paddingLeft:15}}>
+        <View style={{flex:2}}>
+          <CmPrasanmitBoldText style={{fontSize:20,color:'#444444'}}>โปรดทราบ : </CmPrasanmitBoldText>
+        </View>
+        <View style={{flex:6}}>
+          <CmPrasanmitText style={{fontSize:20,color:'#444444'}}>
+            คุณจะไม่สามารถเห็นคำร้องขอที่เข้ามาได้จนกว่าคุณจะกดปุ่มพร้อมที่จะบริจาคเลือด
+          </CmPrasanmitText>
+        </View>
+      </View>
     );}
 }
 

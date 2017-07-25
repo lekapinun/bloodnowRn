@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, TouchableOpacity, Modal, StyleSheet, Button, Switch, AsyncStorage} from 'react-native';
 import { Font } from 'expo';
 import { NavigationActions } from 'react-navigation';
-import { CardDetail, Countdown, PickerModalDate } from '../../components/common';
+import { CardDetail, Countdown, PickerModalDate, Loading } from '../../components/common';
 import Colors from '../../constants/Colors';
 import Layout from '../../constants/Layout';
 import { CmPrasanmitText } from '../../components/CmPrasanmitText'
@@ -32,6 +32,7 @@ export default class DonorScreen extends Component {
     img: '',
     manualDonate: false,
     last_donateTemp: new Date(),
+    loading : false,
   }
 
   constructor(props) {
@@ -59,10 +60,6 @@ export default class DonorScreen extends Component {
         if(response.data.user !== null){
           this.setState({req: response.data.user[0], img: response.data.img})
         }
-        console.log('adsfdsafsdafdsafdasf')
-        console.log(response.data)
-        console.log(this.state)
-        console.log('adsfdsafsdafdsafdasf')
         if(response.data.last_date_donate !== null){
           var date = response.data.last_date_donate.split(' ')[0]
           date = date.split('-')
@@ -75,8 +72,10 @@ export default class DonorScreen extends Component {
           if(response.data.status === 'ready'){
             this.setState({readyDonate: true})
           }
+          this.setState({loading: true})
         } else {
           this.setState({last_donate : '', nextReady : 0})
+          this.setState({loading: true})
         }
       })
       .catch((error) => {
@@ -95,7 +94,7 @@ export default class DonorScreen extends Component {
     } else {
       status_donate = 'ตอนนี้คุณสามารถบริจาคได้แล้ว'
     }
-    return(
+    return this.loading ? <Loading /> : (
       <View style={[styles.center, {height:Layout.window.height,flex:1,paddingTop:16,backgroundColor:'white'}]}>
         <Countdown
           recentDonateDate={this.state.nextReady}
