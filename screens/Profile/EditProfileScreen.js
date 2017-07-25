@@ -48,6 +48,13 @@ export default class EditProfileScreen extends Component{
       this.setState({modalProvinceVisible: visible});
     }
 
+    _renderImg = () => {
+      if(this.state.image === null){
+        return <Image style={styles.imageStyle} source={require('../../assets/images/user.png')}/>
+      }
+      return <Image style={styles.imageStyle} source={{uri : this.state.image}}/>
+    }
+
     render() {
       const showPhotos = async () => {
       let result = await ImagePicker.launchImageLibraryAsync({});
@@ -99,10 +106,7 @@ export default class EditProfileScreen extends Component{
           />
           <View style={styles.pageStyle}>
             <View>
-              <Image
-                style={styles.imageStyle}
-                source={{uri: this.state.image}}
-              />
+              {this._renderImg()}
               <TouchableOpacity onPress={showPhotos} style={styles.changeProfileImageButtonContainer}>
                 <Image
                   style={styles.changeProfileImageButton}

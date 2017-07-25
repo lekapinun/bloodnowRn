@@ -183,7 +183,7 @@ export default class RequestBloodDetailScreen extends Component {
                 <RequestDetailInDonor label='จังหวัด' information={this.state.data.patient_province} height={height_detail}/>
                 <RequestDetailInDonor label='สถานพยาบาล' information={this.state.data.patient_hos} height={height_detail}/>
                 <RequestDetailInDonor label='วันที่ขอบริจาค' information={this.state.time} height={height_detail}/>
-                <RequestDetailInDonor label='วันที่สื้นสุด' information={this.state.time_exp} height={height_detail}/>
+                <RequestDetailInDonor label='วันที่สิ้นสุด' information={this.state.time_exp} height={height_detail}/>
                 { this.state.complete === false && <RequestDetailInDonor label='จำนวนที่บริจาค' information={this.state.data.countblood + ' ถุง'} height={height_detail}/>}
                 <View style={{marginTop:40,flexDirection:'row',justifyContent:'center'}}>
                   {this._renderButtonRe()}

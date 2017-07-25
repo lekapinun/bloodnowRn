@@ -131,7 +131,7 @@ export default class RequestSubmitScreen extends Component {
                             />
                             <InputText
                                 label = 'จำนวนเลือดที่ต้องการ (ไม่เกิน 10 ถุง)'
-                                onChangeText={(countblood) => countblood > 10 ? this.setState({countblood : '10'}) : this.setState({countblood})}
+                                onChangeText={(countblood) => countblood > 10 ? this.setState({countblood : '10'}) : countblood < 1 && countblood.length > 0 ? this.setState({countblood : '1'}) : this.setState({countblood})}
                                 value={this.state.countblood}
                                 keyboardType='number-pad'
                             />
