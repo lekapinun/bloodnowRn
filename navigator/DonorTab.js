@@ -8,8 +8,8 @@ import ManualDonateScreen from '../screens/Donor/ManualDonateScreen';
 
 export default class DonorStack extends React.Component {
   componentWillMount(){
-    console.log('111111111')
-    console.log(this.props)
+    /* console.log('111111111')
+    console.log(this.props) */
   }
 
   render(){

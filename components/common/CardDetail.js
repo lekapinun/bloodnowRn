@@ -5,8 +5,8 @@ import Colors from '../../constants/Colors';
 import { CmPrasanmitText } from '../CmPrasanmitText'
 import { CmPrasanmitBoldText } from '../CmPrasanmitBoldText'
 
-const CardDetail = ({ list, onPress, img, visible, gropBlood ,ready}) => {
-  if(visible && list !== ''){
+const CardDetail = ({ list, onPress, visible ,ready}) => {
+  if(visible && list !== undefined){
     return(
       <TouchableOpacity onPress={onPress} style={[styles.requestCardContainerStyle,{borderWidth: 1, borderColor: Colors.greylight,}]} >
         <View style={{height:40, justifyContent: 'center',alignItems: 'center',flexDirection:'row',borderBottomWidth: 1, borderColor: '#DCDCDC',}}>
@@ -15,10 +15,7 @@ const CardDetail = ({ list, onPress, img, visible, gropBlood ,ready}) => {
         </View >
         <View style={{height:78,backgroundColor:'#E8E8E8',flexDirection:'row'}}>
           <View style={{flex:19,alignItems: 'center',justifyContent: 'center',}}>
-            <Image
-              style={styles.imageRequestStyle}
-              source={{ uri: list.img }}
-            />
+            {_renderImg()}
             {/* <View style={{height:15,width:30,position:'absolute',bottom:12,left:18,backgroundColor:Colors.tabBar,borderRadius:15,alignItems: 'center',justifyContent:'center'}}>
               <CmPrasanmitBoldText style={{fontSize:17,color:'white',backgroundColor:'transparent'}}>{gropBlood}</CmPrasanmitBoldText>
             </View> */}
@@ -33,7 +30,7 @@ const CardDetail = ({ list, onPress, img, visible, gropBlood ,ready}) => {
       </TouchableOpacity>
     );
   }
-  else if (visible && list === '' ) {
+  else if (visible && list === undefined ) {
     let message
     if(ready){
       message = 'ไม่มีคำร้องขอ'

@@ -58,7 +58,7 @@ export default class DonorScreen extends Component {
       })
       .then((response) => {
         if(response.data.user !== null){
-          this.setState({req: response.data.user[0], img: response.data.img})
+          this.setState({req: response.data.user[0]})
         }
         if(response.data.last_date_donate !== null){
           var date = response.data.last_date_donate.split(' ')[0]
@@ -116,6 +116,7 @@ export default class DonorScreen extends Component {
                 //if(this.state.nextReady <= 0){
                 this.setState({readyDonate: !this.state.readyDonate})
                 this._updateReady()
+                this._checkReq()
                 //}
               }} />
             </View>
@@ -126,13 +127,38 @@ export default class DonorScreen extends Component {
             list={this.state.req}
             onPress={this._goToDetail}
             visible={this.state.readyDonate}
-            gropBlood={this.state.req.patient_blood || null + this.state.req.patient_blood_type || null}
             ready={this.state.nextReady <= 0}
-            img={this.state.img}
           />
 
         </View>
       );
+    }
+
+    _checkReq = () => {
+      console.log(addressServer.APIRequest + '/api/donate');
+      const api = addressServer.APIRequest + '/api/donate';
+      axios(api,{
+        method: 'get',
+        headers: {'Authorization' : 'Bearer ' + this.state.token},
+      })
+      .then((response) => {
+        if(response.data.user !== null){
+          this.setState({req: response.data.user[0], img: response.data.img})
+        }
+        if(response.data.last_date_donate !== null){
+          var date = response.data.last_date_donate.split(' ')[0]
+          date = date.split('-')
+          var dateTime = new Date(date[1] + '/' + date[2] + '/' + date[0])
+          var nextTime = new Date((dateTime).getTime() + (86400000*91))
+          nextTime = nextTime.getDate() + '/' + (nextTime.getMonth() + 1) + '/' + nextTime.getFullYear()
+          this.setState({last_donate: date[2] + '/' + date[1] + '/' + date[0]})
+          this.setState({next_donate: nextTime})
+          this.setState({nextReady: (new Date(dateTime).getTime() + (86400000*91)) - new Date().getTime() })
+        }
+      })
+      .catch((error) => {
+        console.log(error)
+      })
     }
 
     _updateReady = () => {
