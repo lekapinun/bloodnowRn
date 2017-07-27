@@ -21,6 +21,18 @@ export default class RequestDetailInDonorScreen extends Component {
         };
     };
 
+    state = {
+        region: {
+            latitude: 18.788488,
+            longitude: 98.971420,
+            latitudeDelta: 0.00922,
+            longitudeDelta: 0.00421
+        },
+        accept: false,
+        room: '',
+        finish: false,
+    }
+
     componentWillMount() {
       console.log('2222222222222')
       console.log(this.props)
@@ -31,42 +43,40 @@ export default class RequestDetailInDonorScreen extends Component {
       .then((loginStatus) => {
         const temp = JSON.parse(loginStatus)
         this.state.token = temp.token
-        console.log(addressServer.APIRequest + '/api/donate/detail');
-        const api = addressServer.APIRequest + '/api/donate/detail';
+        console.log(addressServer.APIRequest + '/api/donate/show');
+        const api = addressServer.APIRequest + '/api/donate/show';
+        /* console.log(addressServer.APIRequest + '/api/donate/detail');
+        const api = addressServer.APIRequest + '/api/donate/detail'; */
         axios(api,{
-          method: 'post',
+          //method: 'post',
+          method: 'get',
           headers: {'Authorization' : 'Bearer ' + this.state.token},
-          data: { 'roomreq_id': this.props.navigation.state.params.id}
+          //data: { 'roomreq_id': this.props.navigation.state.params.id}
         })
           .then(response => {
-            console.log(response.data[0])
-            this.setState({room : response.data[0]})
+/*             console.log('1111111111')
+            console.log(response)
+            console.log('1111111111') */
+            //console.log(response.data[0])
+            console.log(response.data.user[0])
+            //this.setState({room : response.data[0]})
+            this.setState({room : response.data.user[0]})
             this.setState({region : {
-              latitude: parseFloat(response.data[0].patient_hos_la),
-              longitude: parseFloat(response.data[0].patient_hos_long),
+              /* latitude: parseFloat(response.data[0].patient_hos_la),
+              longitude: parseFloat(response.data[0].patient_hos_long), */
+              latitude: parseFloat(response.data.user[0].patient_hos_la),
+              longitude: parseFloat(response.data.user[0].patient_hos_long),
               latitudeDelta: 0.00922,
               longitudeDelta: 0.00421
               }
             })
             this.setState({finish : true})
           })
-          .catch(function (error) {
+          .catch((error) => {
             console.log(error);
             this.setState({finish : true})
           });
       })
-    }
-
-    state = {
-        region: {
-            latitude: 18.788488,
-            longitude: 98.971420,
-            latitudeDelta: 0.00922,
-            longitudeDelta: 0.00421
-        },
-        accept: false,
-        room: '',
-        loading: false,
     }
 
     render() {

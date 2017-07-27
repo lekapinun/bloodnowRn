@@ -65,12 +65,14 @@ export default class ManualDonateScreen extends Component {
                 คุณจะไม่สามารถแก้ไขวันบริจาคล่าสุดในช่วง 3 วันนับจากนี้
               </CmPrasanmitText>
             </View> */}
+            <View style={{alignItems:'center'}}>
             <BaseButton
               title="บันทึกการเปลี่ยนแปลง"
               onPress={this._sendTime}
               fontStyle={[Font.style('CmPrasanmit'),{fontSize:23,color:'white'}]}
               ButtonStyle={{backgroundColor: Colors.tabBar,height:40,width:300,marginTop:50}}
             /> 
+            </View>
         </View>
           
         </View>
