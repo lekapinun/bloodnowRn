@@ -50,14 +50,17 @@ export default class DonorScreen extends Component {
     .then((loginStatus) => {
       const temp = JSON.parse(loginStatus)
       this.state.token = temp.token
-      console.log(addressServer.APIRequest + '/api/donate');
-      const api = addressServer.APIRequest + '/api/donate';
+      console.log(addressServer.APIRequest + '/api/donate/show');
+      const api = addressServer.APIRequest + '/api/donate/show';
       axios(api,{
         method: 'get',
         headers: {'Authorization' : 'Bearer ' + this.state.token},
       })
       .then((response) => {
-        if(response.data.user !== null){
+        console.log('1111111111111111111111')
+        console.log(response.data)
+        console.log('1111111111111111111111')
+        if(response.data.user !== 'no data'){
           this.setState({req: response.data.user[0]})
         }
         if(response.data.last_date_donate !== null){
@@ -135,14 +138,14 @@ export default class DonorScreen extends Component {
     }
 
     _checkReq = () => {
-      console.log(addressServer.APIRequest + '/api/donate');
-      const api = addressServer.APIRequest + '/api/donate';
+      console.log(addressServer.APIRequest + '/api/donate/show');
+      const api = addressServer.APIRequest + '/api/donate/show';
       axios(api,{
         method: 'get',
         headers: {'Authorization' : 'Bearer ' + this.state.token},
       })
       .then((response) => {
-        if(response.data.user !== null){
+        if(response.data.user !== 'no data'){
           this.setState({req: response.data.user[0], img: response.data.img})
         }
         if(response.data.last_date_donate !== null){
