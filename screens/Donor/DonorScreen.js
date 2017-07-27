@@ -50,8 +50,8 @@ export default class DonorScreen extends Component {
     .then((loginStatus) => {
       const temp = JSON.parse(loginStatus)
       this.state.token = temp.token
-      console.log(addressServer.APIRequest + '/api/donate/show');
-      const api = addressServer.APIRequest + '/api/donate/show';
+      console.log(addressServer.APIRequest + '/api/donates/show');
+      const api = addressServer.APIRequest + '/api/donates/show';
       axios(api,{
         method: 'get',
         headers: {'Authorization' : 'Bearer ' + this.state.token},
@@ -136,8 +136,8 @@ export default class DonorScreen extends Component {
     }
 
     _checkReq = () => {
-      console.log(addressServer.APIRequest + '/api/donate/show');
-      const api = addressServer.APIRequest + '/api/donate/show';
+      console.log(addressServer.APIRequest + '/api/donates/show');
+      const api = addressServer.APIRequest + '/api/donates/show';
       axios(api,{
         method: 'get',
         headers: {'Authorization' : 'Bearer ' + this.state.token},

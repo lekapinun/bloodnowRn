@@ -64,15 +64,23 @@ export default class RequestBloodDetailScreen extends Component {
               this.setState({complete : true})
             }
             this.setState({data: response.data[0]})
-            var date = response.data[0].updated_at.split(' ')[0]
+            var date = response.data[0].created_at.split(' ')[0]
             date = date.split('-')
             var dateTime = new Date(date[1] + '/' + date[2] + '/' + date[0])
             var temp_time = Math.floor((new Date().getTime() - dateTime.getTime())/(86400000)) 
             this.setState({date_rem: temp_time})
-            var dateTime_exp = new Date( dateTime.getTime() + (86400000 * 3) )
             dateTime = dateTime.getDate() + '/' + (dateTime.getMonth() + 1) + '/' + dateTime.getFullYear()
-            dateTime_exp = dateTime_exp.getDate() + '/' + (dateTime_exp.getMonth() + 1) + '/' + dateTime_exp.getFullYear()
-            this.setState({time : dateTime, time_exp: dateTime_exp,thankyou_temp : response.data[0].patient_thankyou})
+            if(response.data[0].complete_time !== null){
+              console.log(response.data[0].complete_time)
+              var date_exp = response.data[0].complete_time.split(' ')[0]
+              date_exp = date_exp.split('-')
+              var month_temp = date_exp[1]
+              var dateTime_exp = date_exp[2] + '/' + ( month_temp[0] === '0' ? month_temp[1] : month_temp ) + '/' + date_exp[0]
+              console.log(dateTime_exp)
+              //dateTime_exp = dateTime_exp.getDate() + '/' + (dateTime_exp.getMonth() + 1) + '/' + dateTime_exp.getFullYear()
+              this.setState({time_exp: dateTime_exp})
+            }
+            this.setState({time : dateTime,thankyou_temp : response.data[0].patient_thankyou})
             this.setState({loading : true, bloodWant: response.data[0].countblood.toString()})
             //console.log(dateTime)
             //console.log(dateTime_exp)
@@ -183,7 +191,7 @@ export default class RequestBloodDetailScreen extends Component {
                 <RequestDetailInDonor label='จังหวัด' information={this.state.data.patient_province} height={height_detail}/>
                 <RequestDetailInDonor label='สถานพยาบาล' information={this.state.data.patient_hos} height={height_detail}/>
                 <RequestDetailInDonor label='วันที่ขอบริจาค' information={this.state.time} height={height_detail}/>
-                <RequestDetailInDonor label='วันที่สิ้นสุด' information={this.state.time_exp} height={height_detail}/>
+                {this.state.time_exp !== '' && <RequestDetailInDonor label='วันที่สิ้นสุด' information={this.state.time_exp} height={height_detail}/> }
                 { this.state.complete === false && <RequestDetailInDonor label='จำนวนเลือดที่ขอ' information={this.state.data.countblood + ' ถุง'} height={height_detail}/>}
                 <View style={{marginTop:40,flexDirection:'row',justifyContent:'center'}}>
                   {this._renderButtonRe()}

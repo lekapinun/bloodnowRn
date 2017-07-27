@@ -43,8 +43,8 @@ export default class RequestDetailInDonorScreen extends Component {
       .then((loginStatus) => {
         const temp = JSON.parse(loginStatus)
         this.state.token = temp.token
-        console.log(addressServer.APIRequest + '/api/donate/show');
-        const api = addressServer.APIRequest + '/api/donate/show';
+        console.log(addressServer.APIRequest + '/api/donates/show');
+        const api = addressServer.APIRequest + '/api/donates/show';
         /* console.log(addressServer.APIRequest + '/api/donate/detail');
         const api = addressServer.APIRequest + '/api/donate/detail'; */
         axios(api,{
@@ -146,7 +146,8 @@ export default class RequestDetailInDonorScreen extends Component {
         'status': 'accept'
       }
     })
-    .then(() => {
+    .then((response) => {
+      console.log(response.data)
       this._backToDonor()
     })
     .catch((error) => {
@@ -165,7 +166,8 @@ export default class RequestDetailInDonorScreen extends Component {
         'status': 'decline'
       }
     })
-    .then(() => {
+    .then((response) => {
+      console.log(response.data)
       this._backToDonor()
     })
     .catch((error) => {
