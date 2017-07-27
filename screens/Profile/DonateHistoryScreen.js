@@ -55,6 +55,12 @@ export default class DonateHistoryScreen extends Component {
   }
 
   render() {
+    let Image_req
+    if( this.state.img !== null) {
+      Image_req = <Image style={styles.profileImageStyle} source={{ uri: this.state.img }}/>
+      } else {
+      Image_req = <Image style={styles.profileImageStyle} source={require('../../assets/images/user.png')}/>
+    }
     var height_detail = 51
     if( this.state.loading ) {
       return <Loading />
@@ -64,10 +70,11 @@ export default class DonateHistoryScreen extends Component {
         <CmPrasanmitBoldText style={{height:28,marginTop:12,marginLeft:28,fontSize:25,color:Colors.tabBar}}>ผู้ส่งคำขอ</CmPrasanmitBoldText>
         <View style={styles.receiverProfileContainer}>
           <View style={{ height: 70, width: 70,marginLeft: 25,}}>
-            <Image
+            {Image_req}
+            {/* <Image
               style={styles.profileImageStyle}
               source={{uri: this.state.img}}
-            />
+            /> */}
           </View>
           <View style={styles.requestInfotmationContainer}>
             <View>

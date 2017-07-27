@@ -57,11 +57,8 @@ export default class DonorScreen extends Component {
         headers: {'Authorization' : 'Bearer ' + this.state.token},
       })
       .then((response) => {
-        console.log('1111111111111111111111')
-        console.log(response.data)
-        console.log('1111111111111111111111')
         if(response.data.user !== 'no data'){
-          this.setState({req: response.data.user[0]})
+          this.setState({req: response.data.user[0], img: response.data.user.img})
         }
         if(response.data.last_date_donate !== null){
           var date = response.data.last_date_donate.split(' ')[0]
@@ -74,6 +71,7 @@ export default class DonorScreen extends Component {
           this.setState({nextReady: (new Date(dateTime).getTime() + (86400000*91)) - new Date().getTime() })
           if(response.data.status === 'ready'){
             this.setState({readyDonate: true})
+            this.setState({loading: true})
           }
           this.setState({loading: true})
         } else {
@@ -97,7 +95,7 @@ export default class DonorScreen extends Component {
     } else {
       status_donate = 'ตอนนี้คุณสามารถบริจาคได้แล้ว'
     }
-    return this.loading ? <Loading /> : (
+    return !this.state.loading ? <Loading /> : (
       <View style={[styles.center, {height:Layout.window.height,flex:1,paddingTop:16,backgroundColor:'white'}]}>
         <Countdown
           recentDonateDate={this.state.nextReady}
@@ -146,7 +144,7 @@ export default class DonorScreen extends Component {
       })
       .then((response) => {
         if(response.data.user !== 'no data'){
-          this.setState({req: response.data.user[0], img: response.data.img})
+          this.setState({req: response.data.user[0], img: response.data.user.img})
         }
         if(response.data.last_date_donate !== null){
           var date = response.data.last_date_donate.split(' ')[0]

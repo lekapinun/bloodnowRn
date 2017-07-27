@@ -115,16 +115,23 @@ export class CardList extends Component{
 }
 
 const CardDetail = ({ name,img ,onPress, visible, disable }) => {
+  let Image_req
+  if( img !== null) {
+    Image_req = <Image style={styles.imageRequestStyle} source={{ uri: img }}/>
+    } else {
+    Image_req = <Image style={styles.imageRequestStyle} source={require('../../assets/images/user.png')}/>
+  }
   if(visible){
     return(
       <View style={{borderBottomWidth: 1, borderBottomColor: '#DCDCDC',}}>
       <TouchableOpacity disabled={disable} onPress={onPress} style={styles.requestCardContainerStyle} >
         <View style={{height:78,backgroundColor:'white',flexDirection:'row'}}>
           <View style={{flex:19,alignItems: 'center',justifyContent: 'center',}}>
-            <Image
+            {Image_req}
+            {/* <Image
               style={styles.imageRequestStyle}
               source={{ uri: img }}
-            />
+            /> */}
           </View>
           <View style={{flex:35,justifyContent: 'center',}}>
             <CmPrasanmitBoldText style={{fontSize:22,color:'#575757'}}>{capitalizeFirstLetter(name)}</CmPrasanmitBoldText>

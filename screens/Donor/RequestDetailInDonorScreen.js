@@ -133,7 +133,7 @@ export default class RequestDetailInDonorScreen extends Component {
       headers: {'Authorization' : 'Bearer ' + this.state.token},
       data: {
         'roomreq_id': this.props.navigation.state.params.id,
-        'status': 'Accept'
+        'status': 'accept'
       }
     })
     .then(() => {
@@ -152,7 +152,7 @@ export default class RequestDetailInDonorScreen extends Component {
       headers: {'Authorization' : 'Bearer ' + this.state.token},
       data: {
         'roomreq_id': this.props.navigation.state.params.id,
-        'status': 'Decline'
+        'status': 'decline'
       }
     })
     .then(() => {

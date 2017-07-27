@@ -40,7 +40,7 @@ export default class RequestBloodConfirmScreen extends Component {
             <View style={{marginTop:15}}></View>
             <DetailBox label='ชื่อผู้ป่วย' information={this.state.data.patient_name} />
             <DetailBox label='รหัสผู้ป่วย' information={this.state.data.patient_id}/>
-            <DetailBox label='กรุ๊ปเลือด' information={this.state.data.patient_blood+this.state.patient_blood_type} />
+            <DetailBox label='กรุ๊ปเลือด' information={this.state.data.patient_blood+this.state.data.patient_blood_type} />
             <DetailBox label='จำนวนเลือดที่ต้องการ' information={this.state.data.countblood + ' ถุง'} />
             <DetailBox label='รายละเอียด' information={this.state.data.patient_detail}/>
             <DetailBox label='จังหวัด' information={this.state.data.patient_province}/>
